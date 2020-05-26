@@ -26,10 +26,11 @@ export default {
         position: fixed;
         top: 0;
         width: 100%;
+        padding: 0;
     }
     .el-main{
-        height: calc(100vh - 60px) ;
-        margin-top: 60px;
-        border: solid 1px red;
+        height: calc(100vh) ;
+        padding-top: 60px;
+        background: radial-gradient(circle at 50% 200px, #185160, #011026);
     }
 </style>
