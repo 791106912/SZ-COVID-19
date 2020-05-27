@@ -8,7 +8,9 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@antv/g2": "^4.0.8",
     "@antv/l7": "^2.2.8",
+    "@antv/l7-district": "^2.2.9",
     "@antv/l7-maps": "^2.2.8",
     "core-js": "^3.6.4",
     "element-ui": "^2.13.2",
