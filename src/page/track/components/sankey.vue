@@ -6,7 +6,7 @@
 
 <script>
     export default {
-        name: 'CityMap'
+        name: 'SanKey',
     }
 </script>
 
