@@ -1,12 +1,17 @@
 <template>
     <div>
-        I am Case
+        <Force />
     </div>
 </template>
 
 <script>
+    import Force from './components/force'
+
     export default {
-        name: 'Case'
+        name: 'Case',
+        components: {
+            Force,
+        }
     }
 </script>
 

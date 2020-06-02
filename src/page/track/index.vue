@@ -1,11 +1,7 @@
 <template>
     <div>
-        <div>
-            <Map></Map>
-        </div>
-        <SanKey
-            height="1200px"
-        ></SanKey>
+        <Map />
+        <SanKey />
     </div>
 </template>
 

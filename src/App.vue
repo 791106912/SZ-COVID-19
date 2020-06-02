@@ -31,6 +31,6 @@ export default {
     .el-main{
         height: calc(100vh) ;
         padding-top: 60px;
-        background: radial-gradient(circle at 50% 200px, #185160, #011026);
+        background: #071226;
     }
 </style>

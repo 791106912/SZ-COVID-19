@@ -1,11 +1,11 @@
 <template>
     <div class="vis-nav">
-        <div class="vis-brand">
+        <!-- <div class="vis-brand">
             <div class="vis-brand-title">深圳市疫情可视分析系统</div>
             <div class="vis-brand-time">{{date}}</div>
-        </div>
-        <div class="vis-triangle-small vis-triangle-indie-left vis-triangle-indie"></div>
-        <div class="vis-triangle-big vis-triangle-indie-left vis-triangle-indie"></div>
+        </div> -->
+        <!-- <div class="vis-triangle-small vis-triangle-indie-left vis-triangle-indie"></div> -->
+        <!-- <div class="vis-triangle-big vis-triangle-indie-left vis-triangle-indie"></div> -->
         <div class="vis-menu">
             <div class="vis-triangle-left"></div>
             <el-menu
@@ -25,8 +25,8 @@
             </el-menu>
             <div class="vis-triangle-right"></div>
         </div>
-        <div class="vis-triangle-big vis-triangle-indie-right vis-triangle-indie"></div>
-        <div class="vis-triangle-small vis-triangle-indie-right vis-triangle-indie"></div>
+        <!-- <div class="vis-triangle-big vis-triangle-indie-right vis-triangle-indie"></div> -->
+        <!-- <div class="vis-triangle-small vis-triangle-indie-right vis-triangle-indie"></div> -->
     </div>
 </template>
 
@@ -36,13 +36,14 @@
     .vis-nav{
         display: flex;
         justify-content: center;
-        color: #fff;
+        color: #4f94bf;
         .vis-menu{
-            width: 30%;
+            font-size: 14px;
+            width: 50%;
             position: relative;
             display: flex;
             .vis-triangle-left{
-                top: 0;
+                top: 20px;
                 float: left;
                 width: 30px;
                 height: 62px;
@@ -60,23 +61,27 @@
                 border-left: solid @borderWidth @green;
             }
              .el-menu{
+                padding: 0 20px;
                 background: rgba(0, 0, 0, 0);
-                border-width: 0 0 @borderWidth 0;
-                border-bottom: solid @borderWidth @green;
                 flex: 1;
+                border: none;
                 display: flex !important;
                 justify-content: space-around;
                 .el-menu-item{
                     display: block;
                     border: none !important;
+                    color: #4f94bf !important;
                     &:hover,&:focus{
                         color: @green !important;
                         background: none;
                     }
                     &.is-active{
-                        color: @green !important;
-                        border: none !important;
+                        color: #fff !important;
+                        background: radial-gradient(100% 90% ellipse, #4e99ce 10%, #071227 48%, transparent 20%) !important;
                     }
+                }
+                &::after{
+                    
                 }
             }
         }
