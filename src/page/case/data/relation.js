@@ -4335,7 +4335,9 @@ const RelationJSON = [
         "time": "2020/1/31",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -4362,7 +4364,9 @@ const RelationJSON = [
         "time": "2020/1/31",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "病例308老公",
@@ -4399,7 +4403,9 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例268儿子",
@@ -4421,7 +4427,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例245女儿",
@@ -4448,7 +4456,9 @@ const RelationJSON = [
         "time": "2020/1/24",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例245妻子",
@@ -4475,7 +4485,9 @@ const RelationJSON = [
         "time": "2020/1/24",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例309妻子",
@@ -4507,7 +4519,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -4539,7 +4553,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -4576,7 +4592,9 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '境外返回',
+    "detailReason": '境外返回'
 },
 {
     "yqtblgx": "",
@@ -4608,7 +4626,9 @@ const RelationJSON = [
         "time": "2020/1/26",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -4635,7 +4655,9 @@ const RelationJSON = [
         "time": "2020/1/24",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '境外返回',
+    "detailReason": '境外返回'
 },
 {
     "yqtblgx": "",
@@ -4662,7 +4684,9 @@ const RelationJSON = [
         "time": "2020/1/27",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '境外返回',
+    "detailReason": '境外返回'
 },
 {
     "yqtblgx": "",
@@ -4684,7 +4708,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -4711,7 +4737,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -4738,7 +4766,9 @@ const RelationJSON = [
         "time": "2020/1/18",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '',
+    "detailReason": ''
 },
 {
     "yqtblgx": "",
@@ -4780,7 +4810,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例299男友",
@@ -4807,7 +4839,9 @@ const RelationJSON = [
         "time": "2020/1/28",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -4834,7 +4868,9 @@ const RelationJSON = [
         "time": "2020/1/28",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -4861,7 +4897,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -4888,7 +4926,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -4915,7 +4955,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -4947,7 +4989,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -4974,7 +5018,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -4996,7 +5042,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -5018,7 +5066,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -5040,7 +5090,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -5067,7 +5119,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -5090,11 +5144,11 @@ const RelationJSON = [
     ],
     "track": [{
         "from": "宁波",
-        "to": "汉口",
+        "to": "武汉",
         "time": "2020/1/3",
         "tran": "",
     }, {
-        "from": "汉口",
+        "from": "武汉",
         "to": "景德镇",
         "time": "2020/1/5",
         "tran": "",
@@ -5104,7 +5158,9 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -5126,7 +5182,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '',
+    "detailReason": ''
 },
 {
     "yqtblgx": "",
@@ -5153,7 +5211,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -5180,7 +5240,9 @@ const RelationJSON = [
         "time": "2020/1/26",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例209儿媳",
@@ -5207,7 +5269,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例278丈夫",
@@ -5229,7 +5293,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例141妻子",
@@ -5251,7 +5317,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例280女儿",
@@ -5278,7 +5346,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例280妻子",
@@ -5305,7 +5375,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -5332,7 +5404,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -5364,7 +5438,9 @@ const RelationJSON = [
         "time": "2020/1/27",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -5386,7 +5462,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -5413,7 +5491,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -5440,7 +5520,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例89女儿",
@@ -5462,7 +5544,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例135婆婆",
@@ -5489,7 +5573,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -5531,7 +5617,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "的士",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -5558,7 +5646,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -5590,7 +5680,9 @@ const RelationJSON = [
         "time": "2020/1/27",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -5612,7 +5704,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '',
+    "detailReason": ''
 },
 {
     "yqtblgx": "",
@@ -5649,7 +5743,9 @@ const RelationJSON = [
         "time": "2020/2/1",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -5671,7 +5767,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '',
+    "detailReason": ''
 },
 {
     "yqtblgx": "病例255阿姨",
@@ -5693,7 +5791,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -5720,7 +5820,9 @@ const RelationJSON = [
         "time": "2020/1/19",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -5757,7 +5859,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例255女儿",
@@ -5779,7 +5883,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -5801,7 +5907,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -5828,7 +5936,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例255妻子",
@@ -5850,7 +5960,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -5872,7 +5984,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '',
+    "detailReason": ''
 },
 {
     "yqtblgx": "",
@@ -5909,7 +6023,9 @@ const RelationJSON = [
         "time": "2020/1/27",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -5931,7 +6047,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例126女儿",
@@ -5963,7 +6081,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例251儿子",
@@ -5990,7 +6110,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例133同事",
@@ -6012,7 +6134,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -6044,7 +6168,9 @@ const RelationJSON = [
         "time": "2020/1/24",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例214儿媳",
@@ -6066,7 +6192,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -6093,7 +6221,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -6120,7 +6250,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -6147,7 +6279,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "病例220丈夫",
@@ -6174,7 +6308,9 @@ const RelationJSON = [
         "time": "2020/1/26",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例206父亲",
@@ -6206,7 +6342,9 @@ const RelationJSON = [
         "time": "2020/1/26",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例47外婆",
@@ -6228,7 +6366,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -6255,7 +6395,9 @@ const RelationJSON = [
         "time": "2020/1/28",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -6282,7 +6424,9 @@ const RelationJSON = [
         "time": "2020/1/24",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例114岳父",
@@ -6309,7 +6453,9 @@ const RelationJSON = [
         "time": "2020/1/27",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -6341,7 +6487,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "病例209儿子",
@@ -6368,7 +6516,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -6400,7 +6550,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -6427,7 +6579,9 @@ const RelationJSON = [
         "time": "2020/1/20",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -6454,7 +6608,9 @@ const RelationJSON = [
         "time": "2020/1/24",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "病例220儿子",
@@ -6481,7 +6637,9 @@ const RelationJSON = [
         "time": "2020/1/26",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例210妻子",
@@ -6503,7 +6661,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -6525,7 +6685,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '',
+    "detailReason": ''
 },
 {
     "yqtblgx": "",
@@ -6547,7 +6709,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -6574,7 +6738,9 @@ const RelationJSON = [
         "time": "2020/1/30",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '',
+    "detailReason": ''
 },
 {
     "yqtblgx": "病例172妻子",
@@ -6596,7 +6762,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例106小姨",
@@ -6618,7 +6786,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例132丈夫",
@@ -6645,7 +6815,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例198女儿",
@@ -6677,7 +6849,9 @@ const RelationJSON = [
         "time": "2020/1/28",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -6699,7 +6873,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '',
+    "detailReason": ''
 },
 {
     "yqtblgx": "病例199孙子",
@@ -6731,7 +6907,9 @@ const RelationJSON = [
         "time": "2020/1/28",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例185女儿",
@@ -6763,7 +6941,9 @@ const RelationJSON = [
         "time": "2020/1/26",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -6795,7 +6975,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "病例183母亲",
@@ -6822,7 +7004,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "自驾车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例183父亲",
@@ -6849,7 +7033,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "自驾车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例217妻子",
@@ -6876,7 +7062,9 @@ const RelationJSON = [
         "time": "2020/1/26",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例78妻子",
@@ -6898,7 +7086,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例220女儿",
@@ -6925,7 +7115,9 @@ const RelationJSON = [
         "time": "2020/1/26",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -6952,7 +7144,9 @@ const RelationJSON = [
         "time": "2020/1/26",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "病例186母亲",
@@ -6979,7 +7173,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例24妻子",
@@ -7001,7 +7197,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -7028,7 +7226,9 @@ const RelationJSON = [
         "time": "2020/1/26",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "病例133同事",
@@ -7050,7 +7250,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -7077,7 +7279,9 @@ const RelationJSON = [
         "time": "2020/1/18",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -7099,7 +7303,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -7121,7 +7327,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -7143,7 +7351,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -7170,7 +7380,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -7197,7 +7409,9 @@ const RelationJSON = [
         "time": "2020/1/24",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '境外返回',
+    "detailReason": '境外返回'
 },
 {
     "yqtblgx": "",
@@ -7224,7 +7438,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -7251,7 +7467,9 @@ const RelationJSON = [
         "time": "2020/1/24",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -7278,7 +7496,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -7310,7 +7530,9 @@ const RelationJSON = [
         "time": "2020/1/26",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例179妻子",
@@ -7337,7 +7559,9 @@ const RelationJSON = [
         "time": "2020/1/24",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例179孙子",
@@ -7364,7 +7588,9 @@ const RelationJSON = [
         "time": "2020/1/24",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例179儿子",
@@ -7391,7 +7617,9 @@ const RelationJSON = [
         "time": "2020/1/24",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例201妻子",
@@ -7418,7 +7646,9 @@ const RelationJSON = [
         "time": "2020/1/20",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -7445,7 +7675,9 @@ const RelationJSON = [
         "time": "2020/1/20",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -7472,7 +7704,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -7499,7 +7733,9 @@ const RelationJSON = [
         "time": "2020/1/26",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -7526,7 +7762,9 @@ const RelationJSON = [
         "time": "2020/1/27",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例190丈夫",
@@ -7558,7 +7796,9 @@ const RelationJSON = [
         "time": "2020/1/28",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -7585,7 +7825,9 @@ const RelationJSON = [
         "time": "2020/1/27",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "病例193妻子",
@@ -7612,7 +7854,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -7644,7 +7888,9 @@ const RelationJSON = [
         "time": "2020/1/11",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -7671,7 +7917,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -7698,7 +7946,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例131母亲",
@@ -7730,7 +7980,9 @@ const RelationJSON = [
         "time": "2020/1/24",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -7762,7 +8014,9 @@ const RelationJSON = [
         "time": "2020/1/29",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -7794,7 +8048,9 @@ const RelationJSON = [
         "time": "2020/1/28",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例12密切接触者",
@@ -7816,7 +8072,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -7848,7 +8106,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -7875,7 +8135,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -7902,7 +8164,9 @@ const RelationJSON = [
         "time": "2020/1/26",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例180女儿",
@@ -7929,7 +8193,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -7961,7 +8227,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -7988,7 +8256,9 @@ const RelationJSON = [
         "time": "2020/1/26",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -8010,7 +8280,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '',
+    "detailReason": ''
 },
 {
     "yqtblgx": "",
@@ -8037,7 +8309,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北挺举',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -8064,7 +8338,9 @@ const RelationJSON = [
         "time": "2020/1/24",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "病例94妻子",
@@ -8091,7 +8367,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -8118,7 +8396,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -8145,7 +8425,9 @@ const RelationJSON = [
         "time": "2020/1/15",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -8172,7 +8454,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例166妻子",
@@ -8204,7 +8488,9 @@ const RelationJSON = [
         "time": "2020/1/24",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例167丈夫",
@@ -8231,7 +8517,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -8258,7 +8546,9 @@ const RelationJSON = [
         "time": "2020/1/19",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -8280,7 +8570,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -8312,7 +8604,9 @@ const RelationJSON = [
         "time": "2020/1/24",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '探亲'
 },
 {
     "yqtblgx": "病例115儿子",
@@ -8334,7 +8628,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例127丈夫",
@@ -8366,7 +8662,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -8393,7 +8691,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '探亲'
 },
 {
     "yqtblgx": "",
@@ -8425,7 +8725,9 @@ const RelationJSON = [
         "time": "2020/1/24",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '探亲'
 },
 {
     "yqtblgx": "病例132儿子",
@@ -8452,7 +8754,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -8479,7 +8783,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例162妻子",
@@ -8506,7 +8812,9 @@ const RelationJSON = [
         "time": "2020/1/18",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -8533,7 +8841,9 @@ const RelationJSON = [
         "time": "2020/1/18",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -8555,7 +8865,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -8582,7 +8894,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -8609,7 +8923,9 @@ const RelationJSON = [
         "time": "2020/1/17",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -8641,7 +8957,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -8668,7 +8986,9 @@ const RelationJSON = [
         "time": "2020/1/18",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "",
@@ -8690,7 +9010,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例114岳母",
@@ -8717,7 +9039,9 @@ const RelationJSON = [
         "time": "2020/1/27",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例114妻子",
@@ -8744,7 +9068,9 @@ const RelationJSON = [
         "time": "2020/1/27",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例84丈夫",
@@ -8766,7 +9092,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -8793,7 +9121,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例150女儿",
@@ -8820,7 +9150,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -8847,7 +9179,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '探亲'
 },
 {
     "yqtblgx": "",
@@ -8879,7 +9213,9 @@ const RelationJSON = [
         "time": "2020/1/24",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '探亲'
 },
 {
     "yqtblgx": "",
@@ -8901,7 +9237,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例105女儿",
@@ -8928,7 +9266,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例29父亲",
@@ -8960,7 +9300,9 @@ const RelationJSON = [
         "time": "2020/1/18",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -8987,7 +9329,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '探亲'
 },
 {
     "yqtblgx": "",
@@ -9014,7 +9358,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -9041,7 +9387,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -9068,7 +9416,9 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -9095,7 +9445,9 @@ const RelationJSON = [
         "time": "2020/1/16",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -9122,7 +9474,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例138妻子",
@@ -9149,7 +9503,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -9176,7 +9532,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -9203,7 +9561,9 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例98女儿",
@@ -9230,7 +9590,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -9257,7 +9619,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '探亲'
 },
 {
     "yqtblgx": "病例129女儿",
@@ -9279,7 +9643,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例129丈夫",
@@ -9301,7 +9667,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -9328,7 +9696,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '探亲'
 },
 {
     "yqtblgx": "",
@@ -9360,7 +9730,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -9387,7 +9759,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -9409,7 +9783,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '',
+    "detailReason": ''
 },
 {
     "yqtblgx": "",
@@ -9436,7 +9812,9 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -9468,7 +9846,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -9495,7 +9875,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例98妻子",
@@ -9522,7 +9904,9 @@ const RelationJSON = [
         "time": "2020/1/18",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例98女儿",
@@ -9549,7 +9933,9 @@ const RelationJSON = [
         "time": "2020/1/18",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例97妻子",
@@ -9576,7 +9962,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -9603,7 +9991,9 @@ const RelationJSON = [
         "time": "2020/1/18",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '密切接触'
 },
 {
     "yqtblgx": "病例87女婿",
@@ -9625,7 +10015,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例87女儿",
@@ -9647,7 +10039,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -9674,7 +10068,9 @@ const RelationJSON = [
         "time": "2020/1/17",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -9701,7 +10097,9 @@ const RelationJSON = [
         "time": "2020/1/18",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -9728,7 +10126,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -9755,7 +10155,9 @@ const RelationJSON = [
         "time": "2020/1/27",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -9782,7 +10184,9 @@ const RelationJSON = [
         "time": "2020/1/17",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -9814,7 +10218,9 @@ const RelationJSON = [
         "time": "2020/1/27",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '探亲'
 },
 {
     "yqtblgx": "",
@@ -9846,7 +10252,9 @@ const RelationJSON = [
         "time": "2020/1/27",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -9873,7 +10281,9 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -9900,7 +10310,9 @@ const RelationJSON = [
         "time": "2020/1/20",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例76女儿",
@@ -9927,7 +10339,9 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例76母亲",
@@ -9954,7 +10368,9 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例76姐姐",
@@ -9976,7 +10392,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例106母亲",
@@ -10008,7 +10426,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例105妻子",
@@ -10040,7 +10460,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例106丈夫",
@@ -10072,7 +10494,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -10099,7 +10523,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -10126,7 +10552,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例99朋友",
@@ -10148,7 +10576,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例99朋友",
@@ -10170,7 +10600,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例99朋友",
@@ -10192,7 +10624,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例100、101、102朋友",
@@ -10219,7 +10653,9 @@ const RelationJSON = [
         "time": "2020/1/20",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例97儿子",
@@ -10241,7 +10677,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例98父亲",
@@ -10268,7 +10706,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -10295,7 +10735,9 @@ const RelationJSON = [
         "time": "2020/1/18",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例94女儿",
@@ -10322,7 +10764,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例95父亲",
@@ -10349,7 +10793,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -10376,7 +10822,9 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -10398,7 +10846,8 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
 },
 {
     "yqtblgx": "",
@@ -10420,7 +10869,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '',
+    "detailReason": ''
 },
 {
     "yqtblgx": "",
@@ -10442,7 +10893,8 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
 },
 {
     "yqtblgx": "",
@@ -10469,7 +10921,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -10501,7 +10955,8 @@ const RelationJSON = [
         "time": "2020/1/19",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
 },
 {
     "yqtblgx": "病例120父亲",
@@ -10528,7 +10983,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -10555,7 +11012,9 @@ const RelationJSON = [
         "time": "2020/1/12",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -10582,7 +11041,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -10614,7 +11075,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -10646,7 +11109,9 @@ const RelationJSON = [
         "time": "2020/1/24",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -10668,7 +11133,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -10700,7 +11167,9 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例29女儿",
@@ -10722,7 +11191,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -10749,7 +11220,9 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -10776,7 +11249,9 @@ const RelationJSON = [
         "time": "2020/1/20",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -10803,7 +11278,9 @@ const RelationJSON = [
         "time": "2020/1/20",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例108妹妹",
@@ -10830,7 +11307,9 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -10857,7 +11336,9 @@ const RelationJSON = [
         "time": "2020/1/16",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例73妻子",
@@ -10884,7 +11365,9 @@ const RelationJSON = [
         "time": "2020/1/13",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例74丈夫",
@@ -10911,7 +11394,9 @@ const RelationJSON = [
         "time": "2020/1/13",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -10948,7 +11433,9 @@ const RelationJSON = [
         "time": "2020/1/25",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -10975,7 +11462,9 @@ const RelationJSON = [
         "time": "2020/1/24",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -11002,7 +11491,9 @@ const RelationJSON = [
         "time": "2020/1/20",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例20儿媳",
@@ -11024,7 +11515,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例20儿子",
@@ -11046,7 +11539,9 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例20妻子",
@@ -11073,7 +11568,9 @@ const RelationJSON = [
         "time": "2020/1/19",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例6妻子",
@@ -11100,7 +11597,9 @@ const RelationJSON = [
         "time": "2020/1/2",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -11127,7 +11626,9 @@ const RelationJSON = [
         "time": "2020/1/24",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -11154,7 +11655,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "病例62妻子",
@@ -11181,7 +11684,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "病例63丈夫",
@@ -11208,7 +11713,9 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播'
 },
 {
     "yqtblgx": "",
@@ -11235,7 +11742,9 @@ const RelationJSON = [
         "time": "2020/1/20",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -11262,7 +11771,9 @@ const RelationJSON = [
         "time": "2020/1/18",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -11289,7 +11800,9 @@ const RelationJSON = [
         "time": "2020/1/17",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -11316,7 +11829,9 @@ const RelationJSON = [
         "time": "2020/1/20",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露'
 },
 {
     "yqtblgx": "",
@@ -11348,7 +11863,11 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -11375,7 +11894,11 @@ const RelationJSON = [
         "time": "2020/1/19",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -11402,7 +11925,11 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -11429,7 +11956,11 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -11456,7 +11987,11 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '探亲',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -11488,7 +12023,11 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -11515,7 +12054,11 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -11542,7 +12085,11 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -11569,7 +12116,11 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '探亲',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -11596,7 +12147,11 @@ const RelationJSON = [
         "time": "2020/1/18",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "病例25、26孙女",
@@ -11623,7 +12178,11 @@ const RelationJSON = [
         "time": "2020/1/17",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -11650,7 +12209,11 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -11677,7 +12240,11 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -11704,7 +12271,11 @@ const RelationJSON = [
         "time": "2020/1/16",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -11731,7 +12302,11 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -11758,7 +12333,11 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -11790,7 +12369,11 @@ const RelationJSON = [
         "time": "2020/1/23",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -11817,7 +12400,11 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "病例13、14儿媳",
@@ -11839,7 +12426,11 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "病例22妻子",
@@ -11866,7 +12457,11 @@ const RelationJSON = [
         "time": "2020/1/18",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -11893,7 +12488,11 @@ const RelationJSON = [
         "time": "2020/1/19",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -11920,7 +12519,11 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -11947,7 +12550,10 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "私家车",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "origin": '湖北',
+    "detailOrigin":'黄石',
 },
 {
     "yqtblgx": "",
@@ -11974,7 +12580,11 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -12001,7 +12611,11 @@ const RelationJSON = [
         "time": "2020/1/18",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -12028,7 +12642,11 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -12055,7 +12673,11 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -12082,7 +12704,11 @@ const RelationJSON = [
         "time": "2020/1/19",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "病例80母亲",
@@ -12119,7 +12745,11 @@ const RelationJSON = [
         "time": "2020/1/20",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -12141,7 +12771,7 @@ const RelationJSON = [
         ""
     ],
     "track": [{
-        "from": "武昌",
+        "from": "武汉",
         "to": "黄冈",
         "time": "2020/1/12",
         "tran": "",
@@ -12151,7 +12781,11 @@ const RelationJSON = [
         "time": "2020/1/12",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -12178,7 +12812,11 @@ const RelationJSON = [
         "time": "2020/1/22",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "病例25妻子",
@@ -12205,7 +12843,11 @@ const RelationJSON = [
         "time": "2020/1/17",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "病例26丈夫",
@@ -12232,7 +12874,11 @@ const RelationJSON = [
         "time": "2020/1/17",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -12259,7 +12905,11 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -12286,7 +12936,11 @@ const RelationJSON = [
         "time": "2020/1/18",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "病例38丈夫",
@@ -12313,7 +12967,11 @@ const RelationJSON = [
         "time": "2020/1/18",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -12340,7 +12998,11 @@ const RelationJSON = [
         "time": "2020/1/17",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "病例67丈夫",
@@ -12367,7 +13029,11 @@ const RelationJSON = [
         "time": "2020/1/19",
         "tran": "",
     }],
-    "treatment_hospital": "深圳市定点医院"
+    "treatment_hospital": "深圳市定点医院",
+    "reason": '密切接触',
+    "detailReason": '家庭传播',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -12394,7 +13060,11 @@ const RelationJSON = [
         "time": "2020/1/18",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -12416,7 +13086,11 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -12443,7 +13117,11 @@ const RelationJSON = [
         "time": "2020/1/21",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "病例7妻子",
@@ -12470,7 +13148,11 @@ const RelationJSON = [
         "time": "2020/1/15",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -12497,7 +13179,11 @@ const RelationJSON = [
         "time": "2020/1/20",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北停留',
+    "detailReason": '探亲',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "病例13丈夫",
@@ -12524,7 +13210,11 @@ const RelationJSON = [
         "time": "2020/1/12",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "病例14妻子",
@@ -12551,7 +13241,11 @@ const RelationJSON = [
         "time": "2020/1/12",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "病例11丈夫",
@@ -12578,7 +13272,11 @@ const RelationJSON = [
         "time": "2020/1/15",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "病例12妻子",
@@ -12605,7 +13303,11 @@ const RelationJSON = [
         "time": "2020/1/15",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -12632,7 +13334,11 @@ const RelationJSON = [
         "time": "2020/1/17",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -12659,7 +13365,11 @@ const RelationJSON = [
         "time": "2020/1/16",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "",
@@ -12686,7 +13396,11 @@ const RelationJSON = [
         "time": "2020/1/15",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '湖北居住',
+    "detailReason": '武汉暴露',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "病例16丈夫",
@@ -12713,7 +13427,11 @@ const RelationJSON = [
         "time": "2020/1/15",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "病例66丈夫",
@@ -12740,7 +13458,11 @@ const RelationJSON = [
         "time": "2020/1/2",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "病例3母亲",
@@ -12762,7 +13484,11 @@ const RelationJSON = [
         ""
     ],
     "track": [],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播',
+    "origin": '深圳',
+    "detailOrigin":'',
 },
 {
     "yqtblgx": "病例1外孙",
@@ -12789,7 +13515,11 @@ const RelationJSON = [
         "time": "2020/1/4",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "病例1女婿",
@@ -12816,7 +13546,11 @@ const RelationJSON = [
         "time": "2020/1/4",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "病例1妻子",
@@ -12843,7 +13577,11 @@ const RelationJSON = [
         "time": "2020/1/4",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 },
 {
     "yqtblgx": "病例2丈夫",
@@ -12870,7 +13608,11 @@ const RelationJSON = [
         "time": "2020/1/4",
         "tran": "",
     }],
-    "treatment_hospital": ""
+    "treatment_hospital": "",
+    "reason": '密切接触',
+    "detailReason": '家庭传播',
+    "origin": '湖北',
+    "detailOrigin":'武汉',
 }
 ]
 export default RelationJSON
