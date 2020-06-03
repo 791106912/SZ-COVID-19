@@ -6,14 +6,12 @@
 <script>
     import * as d3 from 'd3'
     import _ from 'lodash'
-    import data from '../data'
     import RelationJSON from '../data/relation'
-    // import data2 from '../data2'
 
     export default {
         name: 'Force',
         data() {
-            const height = 680;
+            const height = 880;
             const width = 1080;
             
             return {
@@ -26,14 +24,41 @@
         },
         methods: {
             initChart() {
-    
-                const links = data.links.map(d => Object.create(d));
-                const nodes = data.nodes.map(d => Object.create(d));
-
                 this.svg = d3.select('#force-chart')
                     .append("svg")
                     .attr("viewBox", [-this.width / 2, -this.height / 2, this.width, this.height])
 
+                this.initTimeCircle();
+                this.initDemiCircle();
+                this.initForce();
+            },
+            initForce() {
+                const links = [];
+                const nodes = RelationJSON;
+                const linkIds = [];
+
+                _.forIn(nodes, d => {
+                    const relation = d.yqtblgx;
+                    const targetId = d.blh;
+                    if (relation) {
+                        const relationArr = relation.match(/\d+/g);
+                        relationArr.forEach(sourceid => {
+                            linkIds.push(sourceid, targetId)
+                            links.push({
+                               source: sourceid,
+                               target: targetId,
+                            })
+                        })
+                    }
+                })
+
+                nodes.forEach(d => {
+                    const count = linkIds.filter(d1 => d1 === d.blh).length;
+                    const r = 3;
+                    d.r = r + count * 2;
+                })
+
+                
                 const drag = simulation => {
                     function dragstarted(d) {
                         if (!d3.event.active) simulation.alphaTarget(0.3).restart();
@@ -59,15 +84,17 @@
                 }
 
                 const simulation = d3.forceSimulation(nodes)
-                    .force("link", d3.forceLink(links).id(d => d.id))
-                    .force("charge", d3.forceManyBody())
+                    .force("link", d3.forceLink(links).id(d => d.blh))
+                    .force("charge", 
+                        d3.forceManyBody()
+                            // .strength(-30)
+                    )
                     .force("x", d3.forceX())
                     .force("y", d3.forceY());
 
 
                 const link = this.svg.append("g")
-                    .attr("stroke", "#999")
-                    .attr("stroke-opacity", 0.6)
+                    .attr("stroke", "yellow")
                     .selectAll("line")
                     .data(links)
                     .join("line")
@@ -79,12 +106,12 @@
                     .selectAll("circle")
                     .data(nodes)
                     .join("circle")
-                    .attr("r", 5)
+                    .attr("r", d => d.r)
                     .attr("fill", 'red')
                     .call(drag(simulation));
 
-                node.append("title")
-                    .text(d => d.id);
+                node.append("text")
+                    .text(d => d.blh);
 
                 simulation.on("tick", () => {
                     link
@@ -97,60 +124,60 @@
                         .attr("cx", d => d.x)
                         .attr("cy", d => d.y);
                 });
-
-                return this.svg.node();
+                this.svg.node();
             },
-            appendCircle() {
-                const color = d3.scaleSequential(d3.interpolateRainbow).domain([0, 2 * Math.PI])
-                const radius = (this.width + 100) / 2
-                const fields = [
-                    {radius: 0.6 * radius, interval: d3.timeHour,   subinterval: d3.timeMinute, format: d3.timeFormat("%M")},
-                    {radius: 0.7 * radius, interval: d3.timeMinute, subinterval: d3.timeSecond, format: d3.timeFormat("%S")}
-                ]
-                const field = this.svg
-                    .append("g")
-                    .selectAll("g")
-                    .data(fields)
-                    .enter()
-                    .append("g");
+            initTimeCircle() {
+                window.d3 = d3
+                const timeArr = _.chain(RelationJSON)
+                    .reduce((obj, d) => {
+                        obj[d.fbrq] = {
+                            name: d.fbrq,
+                            value: obj[d.fbrq] ? obj[d.fbrq].value + 1 : 1,
+                        }
+                        return obj;
+                    }, {})
+                    .values()
+                    .orderBy(d => new Date(d).getTime(), 'desc')
+                    .value();
 
-                field.append("circle")
-                    .attr("fill", "none")
-                    .attr("stroke", "red")
-                    .attr("stroke-width", 1.5)
-                    .attr("r", d => d.radius);
+                const valueArr = timeArr.map(d => d.value);
+                valueArr.forEach((d, i) => {
+                    const addition = valueArr[i - 1] ? valueArr[i - 1] : 0;
+                    valueArr[i] = valueArr[i] + addition
+                })
+                timeArr.forEach((d, i) => {
+                    d.value = valueArr[i]
+                })
+                const [min, max] = d3.extent(timeArr, d => d.value);
+                const color = d3.scaleLinear()
+                    .domain([min, max / 2, max])
+                    .range(['#009688', '#ffc107', '#ff0000'])
 
-                const fieldTick = field.selectAll("g")
-                    .data(d => {
-                        const date = d.interval(new Date(2000, 0, 1));
-                        d.range = d.subinterval.range(date, d.interval.offset(date, 1));
-                        return d.range.map(t => ({time: t, field: d}));
-                    })
-                    .enter().append("g")
-                    .attr("class", "field-tick")
-                    .attr("transform", (d, i) => {
-                        const angle = i / d.field.range.length * 2 * Math.PI - Math.PI / 2;
-                        return `translate(${Math.cos(angle) * d.field.radius},${Math.sin(angle) * d.field.radius})`;
-                    });
+                const pie = d3.pie()
+                    .padAngle(0)
+                    .sort(null)
+                    .value(d => 1)
 
-                fieldTick.append("circle")
-                    .attr("r", 10)
-                    .attr("fill", "white")
-                    .style("color", (d, i) => color(i / d.field.range.length * 2 * Math.PI))
-                    .style("transition", "fill 750ms ease-out");
+                const radius = Math.min(this.width, this.height) / 2;
 
-                fieldTick.append("text")
-                    .attr("dy", "0.35em")
-                    .attr("fill", "#222")
-                    .text(d => d.field.format(d.time).slice(0, 2));
+                const arc = d3.arc()
+                    .innerRadius(radius - 20)
+                    .outerRadius(radius);
 
-                field.append("circle")
-                    .attr("r", 10)
-                    .attr("fill", "none")
-                    .attr("stroke", "#000")
-                    .attr("stroke-width", 3)
-                    .attr("cy", d => -d.radius)
-                    .style("transition", "transform 500ms ease");
+                const arcs = pie(timeArr);
+
+                this.svg
+                    .append('g')
+                    .classed('timeLine', true)
+                    .selectAll("path")
+                        .data(arcs)
+                        .join("path")
+                        .attr("fill", d => color(d.data.value))
+                        .attr("d", arc)
+                
+            },
+            initDemiCircle() {
+                console.log(RelationJSON);
             },
             initChart2() {
                 const numClusters = 20
@@ -328,25 +355,9 @@
                 simulation.on("tick", ticked);
                 return svg.node();
             },
-            initData() {
-                const Reason = _.chain(RelationJSON)
-                    .reduce((obj, d) => {
-                        const key = d.rbyy;
-                        const dataArr = obj[key] || [];
-                        dataArr.push(d);
-                        obj[key] = dataArr;
-                        return obj;
-                    }, {})
-                    .value()
-                console.log(RelationJSON);
-                console.log(Reason);
-            }
         },
         mounted() {
-            this.initData();
-            // this.initChart2();
-            // this.initChart();
-            // this.appendCircle();
+            this.initChart();
         }
     }
 </script>
