@@ -24,27 +24,27 @@
                     {
                         name: '现有确诊',
                         count: '0',
-                        color: 'red',
+                        color: '#c23e32',
                     },
                     {
                         name: '累计确诊',
                         count: '462',
-                        color: 'red',
+                        color: '#c23e32',
                     },
                     {
                         name: '累计出院',
                         count: '459',
-                        color: 'red',
+                        color: '#6ac3b9',
                     },
                     {
                         name: '累计死亡',
                         count: '3',
-                        color: 'red',
+                        color: '#a4a5aa',
                     },
                     {
                         name: '接受观察',
                         count: '1',
-                        color: 'red',
+                        color: '#70aff7',
                     },
                 ],
             }
@@ -61,7 +61,8 @@
         .sz-count-item{
             margin: 10px 0;
             .sz-count-item-count{
-                font-size: 20px;
+                margin-left: 10px;
+                font-size: 24px;
             }
         }
     }
