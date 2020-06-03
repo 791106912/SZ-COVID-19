@@ -6,3 +6,19 @@ body{
 *{
     box-sizing: border-box;
 }
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 10px;
+}
+::-webkit-scrollbar-track {
+    box-shadow:inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius:5px;
+    background: radial-gradient(95% 100% ellipse, #0c2350 44%, #223d70);
+}
+::-webkit-scrollbar-thumb {
+    border-radius:5px;
+    box-shadow:inset 0 0 6px rgba(0,0,0,.3);
+    background: linear-gradient(to right, #1f468b, 30%, #0f1f3c);
+}
