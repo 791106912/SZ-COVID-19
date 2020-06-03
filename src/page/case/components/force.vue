@@ -5,14 +5,25 @@
 
 <script>
     import * as d3 from 'd3'
+    import * as d3Fisheye from 'd3-fisheye'
     import _ from 'lodash'
     import RelationJSON from '../data/relation'
-
+    
     export default {
         name: 'Force',
         data() {
-            const height = 880;
-            const width = 1080;
+            const height = 680;
+            const width = 680;
+
+            const radius = Math.min(height, width) / 2;
+
+            const forceRadius = [0, radius - 80];
+
+            const fisheyeRadius = 100;
+
+            const timeRadius = [radius - 60, radius - 40] ;
+
+            const deminRadius = [radius - 20, radius];
             
             return {
                 width,
@@ -20,21 +31,39 @@
                 padding: 5,
                 maxRadius: 10,
                 clusterPadding: 20,
+                forceRadius,
+                timeRadius,
+                deminRadius,
+                fisheyeRadius
             }
         },
         methods: {
+            aggre(sortkey) {
+                return _.chain(RelationJSON)
+                    .reduce((obj, d) => {
+                        const key = d[sortkey] === '' ? '未知' : d[sortkey];
+                        obj[key] = {
+                            name: key,
+                            value: obj[key] ? obj[key].value + 1 : 1,
+                        }
+                        return obj;
+                    }, {})
+                    .values()
+                    .sortBy('value')
+                    .value()
+            },
             initChart() {
                 this.svg = d3.select('#force-chart')
                     .append("svg")
                     .attr("viewBox", [-this.width / 2, -this.height / 2, this.width, this.height])
 
                 this.initTimeCircle();
-                this.initDemiCircle();
                 this.initForce();
+                this.initDemiCircle();
             },
             initForce() {
                 const links = [];
-                const nodes = RelationJSON;
+                let nodes = RelationJSON;
                 const linkIds = [];
 
                 _.forIn(nodes, d => {
@@ -57,6 +86,8 @@
                     const r = 3;
                     d.r = r + count * 2;
                 })
+
+                nodes = nodes.filter(d => d.r > 3)
 
                 
                 const drag = simulation => {
@@ -84,34 +115,57 @@
                 }
 
                 const simulation = d3.forceSimulation(nodes)
-                    .force("link", d3.forceLink(links).id(d => d.blh))
+                    .force("link", 
+                        d3.forceLink(links).id(d => d.blh)
+                        .distance(20)
+                    )
                     .force("charge", 
                         d3.forceManyBody()
-                            // .strength(-30)
+                            .strength(-30)
                     )
                     .force("x", d3.forceX())
                     .force("y", d3.forceY());
 
+                const forceContainer = this.svg.append('g')
+                    .classed('force', true)
 
-                const link = this.svg.append("g")
+                const link = forceContainer
+                    .append("g")
+                    .classed('link', true)
                     .attr("stroke", "yellow")
                     .selectAll("line")
                     .data(links)
                     .join("line")
-                    .attr("stroke-width", d => Math.sqrt(d.value));
+                    .attr("stroke-width", 1);
 
-                const node = this.svg.append("g")
-                    .attr("stroke", "#fff")
-                    .attr("stroke-width", 1.5)
-                    .selectAll("circle")
+                const node = forceContainer.append("g")
+                    .classed('node', true)
+                    .selectAll(".circleG")
                     .data(nodes)
-                    .join("circle")
-                    .attr("r", d => d.r)
-                    .attr("fill", 'red')
+                    .enter()
+                    .append('g')
+                    .classed('circleG', true)
+                    .attr('transform', d => `translate(${d.x}, ${d.y})`)
                     .call(drag(simulation));
 
+                node.append("circle")
+                    .attr("stroke", "#fff")
+                    .attr("stroke-width", 1.5)
+                    .attr("r", d => d.r)
+                    .attr("fill", 'red')
+
                 node.append("text")
-                    .text(d => d.blh);
+                    .text(d => {
+                        let showText = d.blh;
+                        if(d.yqtblgx) {
+                            const blharr = d.yqtblgx.match(/(\d+、?)+/g)[0];
+                            showText = d.yqtblgx.split(blharr)[1];
+                        }
+                        return showText
+                    })
+                    .attr('fill', '#fff')
+                    .attr('text-anchor', 'middle')
+                    .attr('font-size', '5');
 
                 simulation.on("tick", () => {
                     link
@@ -120,14 +174,41 @@
                         .attr("x2", d => d.target.x)
                         .attr("y2", d => d.target.y);
 
-                    node
-                        .attr("cx", d => d.x)
-                        .attr("cy", d => d.y);
+                    node.attr('transform', d => `translate(${d.x}, ${d.y})`)
                 });
+
+
+                const fisheye = d3Fisheye.radial()
+                    .radius(this.fisheyeRadius)
+                    .distortion(2)
+                    .smoothing(0.5);
+                    
+                this.svg.on('mousemove', function() {
+                    const mouse = d3.mouse(this);
+                    fisheye.focus(mouse);
+                    node.each(d => {
+                            d.fisheye = fisheye([d.x, d.y]);
+                        })
+                        .attr('transform', d => `translate(${d.fisheye[0]}, ${d.fisheye[1]})`)
+                    node.select('circle')
+                        .attr('r', d => {
+                            return d.fisheye[2] * d.r
+                        })
+
+                    node.select('text')
+                        .attr('font-size', d => {
+                            return d.fisheye[2] * 5
+                        })
+
+                    link.attr("x1", d => d.source.fisheye[0])
+                        .attr("y1", d => d.source.fisheye[1])
+                        .attr("x2", d => d.target.fisheye[0])
+                        .attr("y2", d => d.target.fisheye[1]);
+                })
+
                 this.svg.node();
             },
             initTimeCircle() {
-                window.d3 = d3
                 const timeArr = _.chain(RelationJSON)
                     .reduce((obj, d) => {
                         obj[d.fbrq] = {
@@ -156,13 +237,11 @@
                 const pie = d3.pie()
                     .padAngle(0)
                     .sort(null)
-                    .value(d => 1)
-
-                const radius = Math.min(this.width, this.height) / 2;
+                    .value(() => 1)
 
                 const arc = d3.arc()
-                    .innerRadius(radius - 20)
-                    .outerRadius(radius);
+                    .innerRadius(this.timeRadius[0])
+                    .outerRadius(this.timeRadius[1]);
 
                 const arcs = pie(timeArr);
 
@@ -177,7 +256,103 @@
                 
             },
             initDemiCircle() {
-                console.log(RelationJSON);
+                RelationJSON.forEach(d => {
+                    let nlRange = ''
+                    const nl = Number(d.nl);
+                    if (nl <= 10) {
+                        nlRange = '0~10岁'
+                    } else if (nl > 10 && nl <= 20) {
+                        nlRange = '10~20岁'
+                    } else if (nl > 20 && nl <= 40) {
+                        nlRange = '20~40岁'
+                    } else if (nl > 40 && nl <= 60) {
+                        nlRange = '40~60岁'
+                    } else {
+                        nlRange = '60岁以上'
+                    }
+                    d.nlRange = nlRange;
+                })
+                const reasonData = this.aggre('reason');
+                const ageData = this.aggre('nlRange');
+                const sexData = this.aggre('xb');
+
+                const deminData = {
+                    name: 'root',
+                    children: [
+                        {
+                            name: 'reason',
+                            count: _.sumBy(reasonData, 'value'),
+                            children: reasonData.map( d => ({
+                                name: d.name,
+                                value: d.value,
+                            }))
+                        }, {
+                            name: 'age',
+                            count: _.sumBy(ageData, 'value'),
+                            children: ageData.map( d => ({
+                                name: d.name,
+                                value: d.value,
+                            }))
+                        }, {
+                            name: 'sex',
+                            count: _.sumBy(sexData, 'value'),
+                            children: sexData.map( d => ({
+                                name: d.name,
+                                value: d.value,
+                            }))
+                        }
+                    ] 
+                }
+                const partition = data => {
+                    const root = d3.hierarchy(data)
+                        .sum(d => d.value)
+                        .sort((a, b) => b.value - a.value);
+                    return d3.partition()
+                        .size([2 * Math.PI, root.height + 1])(root);
+                }
+
+                const root = partition(deminData)
+                root.each(d => d.current = d);
+
+                const g = this.svg.append("g")
+                    .classed('sunBrued', true)
+
+                const color = d3.scaleOrdinal(d3.quantize(d3.interpolateSinebow, deminData.children.length + 1))
+
+                const arc = d3.arc()
+                    .startAngle(d => d.x0)
+                    .endAngle(d =>d.x1)
+                    .padAngle(d => Math.min((d.x1 - d.x0) / 2, 0.005))
+                    .padRadius(0)
+                    .innerRadius(this.deminRadius[0])
+                    .outerRadius(this.deminRadius[1])
+
+                 g.append("g")
+                    .selectAll("path")
+                    .data(root.descendants().slice(1))
+                    .join("path")
+                    .attr("fill", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })
+                    .attr("d", d => {
+                        return arc(d.current)
+                    });
+                const labelTransform = d => {
+                    const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
+                    const y = (d.y0 + d.y1) / 2 * 200;
+                    return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;
+                }
+                // g.append("g")
+                //     .attr("pointer-events", "none")
+                //     .attr("text-anchor", "middle")
+                //     .style("user-select", "none")
+                //     .selectAll("text")
+                //     .data(root.descendants().slice(1))
+                //     .join("text")
+                //     .attr("dy", "0.35em")
+                //     .attr("fill", "#fff")
+                //     .attr("transform", d => {
+                //         return labelTransform(d.current)
+                //     })
+                //     .text(d => d.data.name);
             },
             initChart2() {
                 const numClusters = 20
@@ -365,5 +540,6 @@
 <style lang="less" scoped>
     #force-chart{
         height: 100px;
+        width: 600px;
     }
 </style>

@@ -8310,7 +8310,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
-    "reason": '湖北挺举',
+    "reason": '湖北停留',
     "detailReason": '密切接触'
 },
 {
@@ -10629,7 +10629,7 @@ const RelationJSON = [
     "detailReason": '家庭传播'
 },
 {
-    "yqtblgx": "病例100、101、102朋友",
+    "yqtblgx": "",
     "zwhsjqj": "2020/1/20",
     "rbyy": "武汉居住",
     "bzzzytjd": "",
@@ -10682,7 +10682,7 @@ const RelationJSON = [
     "detailReason": '家庭传播'
 },
 {
-    "yqtblgx": "病例98父亲",
+    "yqtblgx": "",
     "zwhsjqj": "",
     "rbyy": "居住湖北省十堰市",
     "bzzzytjd": "",
@@ -11283,7 +11283,7 @@ const RelationJSON = [
     "detailReason": '武汉暴露'
 },
 {
-    "yqtblgx": "病例108妹妹",
+    "yqtblgx": "",
     "zwhsjqj": "2020/1/21",
     "rbyy": "武汉居住",
     "bzzzytjd": "",
@@ -13005,7 +13005,7 @@ const RelationJSON = [
     "detailOrigin":'武汉',
 },
 {
-    "yqtblgx": "病例67丈夫",
+    "yqtblgx": "",
     "zwhsjqj": "2020/1/19",
     "rbyy": "来深途中在武汉逗留半小时",
     "bzzzytjd": "该病例是佛山籍人士，但收治在深圳市定点医院，因管辖权归属，计算在佛山新增病例中。",
