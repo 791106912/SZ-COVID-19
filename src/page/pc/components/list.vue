@@ -5,27 +5,33 @@
         <el-table-column
             prop="name"
             label="地区"
+            min-width="10%"
         />
         <el-table-column
             prop="now"
             label="现有确诊"
+            min-width="10%"
         />
         <el-table-column
             prop="acc"
             label="累计确诊"
+            min-width="10%"
         />
         <el-table-column
             prop="crue"
             label="治愈"
+            min-width="10%"
         />
         <el-table-column
             prop="death"
             label="死亡"
+            min-width="10%"
         />
         <el-table-column
-            width="600px"
             prop="chart"
             label="趋势"
+            min-width="50%"
+            class-name="scatter-chart"
         />
     </el-table>
 </template>
@@ -62,8 +68,13 @@
                 const final = _.chain(nameObj)
                     .keys()
                     .reduce((obj, d) => {
-                        const dataArr = PartJSON.map(d1 => {
+                        const dataArr = PartJSON.filter(d => d.jzsj === '24时')
+                        .map((d1, i, arr) => {
+                            const addCount = i === arr.length - 1
+                                ? 0
+                                : Number(d1[d]) - Number(arr[i + 1][d])
                             return {
+                                addCount,
                                 count: Number(d1[d]),
                                 time: d1.jzrq,
                             }
@@ -82,8 +93,7 @@
                 const dataArr = final
                     .map(d => d.data)
                     .flat()
-                    .map(d => d.count);
-
+                    .map(d => d.addCount);
                 _.forIn(final, d => {
                     d.chart = <Scatter
                         data={d.data}
@@ -104,9 +114,12 @@
 <style lang="less">
     .el-table{
         background-color: rgba(0, 0, 0, 0);
-        color: green !important;
+        color: #869ea7 !important;
+        .el-table__body-wrapper {
+            overflow: visible;
+        }
         thead{
-            color: green !important;
+            color: #97c9ef !important;
         }
         tr{
             background-color: rgba(0, 0, 0, 0) !important;
@@ -126,6 +139,12 @@
         }
         &::before{
             content: none;
+        }
+        .scatter-chart {
+            .cell {
+                width: 100%;
+                overflow: visible;
+            }
         }
     }
 </style>

@@ -13,7 +13,7 @@
         methods: {
             initMap() {
                 const useData = this.data
-                    .map(d => [d.time, d.count])
+                    .map(d => [d.time, d.addCount])
                     .reverse()
 
                 const scale = scaleLinear()
@@ -23,6 +23,7 @@
                 const option = {
                     singleAxis: {
                         height: 0,
+                        left: 5,
                         top: 20,
                         type: 'category',
                         boundaryGap: false,
@@ -39,9 +40,15 @@
                         axisLine: {
                             lineStyle: {
                                  type: 'dashed',
-                                 color: 'yellow'
+                                 color: '#fff'
                             },
                         }
+                    },
+                    tooltip: {
+                        formatter: ({data}) => {
+                            return `2020年${data[0]}<br />新增确诊人数：${data[1]}`
+                        },
+                        backgroundColor: 'rgba(32, 57, 112, .7)'
                     },
                     series: {
                         singleAxisIndex: 0,
@@ -49,7 +56,12 @@
                         type: 'scatter',
                         data: useData,
                         symbolSize:  function(dataItem) {
-                            return scale(dataItem[1])
+                            return dataItem[1] ? scale(dataItem[1]) : 0
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: '#c23e32'
+                            }
                         }
                     }
                 };
@@ -58,7 +70,7 @@
             }
         },
         mounted() {
-            this.initMap();
+            setTimeout(this.initMap)
         }
     }
 </script>
@@ -66,6 +78,6 @@
 <style lang="less" scoped>
     .scatterChart{
         height: 40px;
-        width: 600px;
+        width: 100%;
     }
 </style>
