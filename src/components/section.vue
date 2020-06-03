@@ -7,7 +7,7 @@
         <div class="section-title">
             {{title}}
         </div>
-        <div class="section-body">
+        <div class="section-body" :style="{height: height ? `calc(${height} - 20px)` : 'auto'}">
             <slot></slot>
         </div>
     </div>
@@ -16,7 +16,7 @@
 <script>
     export default {
         name: 'Section',
-        props: ['title'],
+        props: ['title', 'height'],
     }
 </script>
 
@@ -28,6 +28,7 @@
         padding-top: 0px;
         position: relative;
         margin-bottom: 20px;
+        width: 100%;
         .section-radius{
             position: absolute;
             border: solid 2px #498bff;
@@ -68,6 +69,7 @@
         }
         .section-body{
             min-height: 100px;
+            overflow: auto;
         }
     }
 </style>
