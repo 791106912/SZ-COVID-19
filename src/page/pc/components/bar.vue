@@ -7,11 +7,28 @@
 <script>
     import echarts from 'echarts/lib/echarts';
     import 'echarts/lib/chart/bar'
+    import _ from 'lodash'
+
+    import WorldJSON from '@/data/worldTrend'
 
     export default {
         name: 'Bar',
         methods: {
+            initData() {
+                const data = _.chain(WorldJSON)
+                    .map(d => (
+                        [_.last(d.trend.list[0].data), d.name]
+                    ))
+                    .orderBy(d => d[0], 'desc')
+                    .slice(0, 10)
+                    .value()
+                    
+                const axisData = data.map(d => d[1])
+                return { data, axisData }
+            },
             initChart() {
+                const { data, axisData } = this.initData()
+                const maxValue = _.maxBy(data, d => d[0])
                 const option = {
                     grid: {
                         left: '5%',
@@ -31,7 +48,6 @@
                                 params[0].seriesName + ' : ' + Number((params[0].value.toFixed(4) / 10000).toFixed(2)).toLocaleString() + ' 万元<br/>'
                         }
                     },
-                    backgroundColor: 'rgb(20,28,52)',
                     xAxis: {
                         show: false,
                         type: 'value'
@@ -54,7 +70,7 @@
                         axisLine: {
                             show: false
                         },
-                        data: ['大米', '玉米', '蔬菜', '鸡蛋', '坚果']
+                        data: axisData
                     }, {
                         type: 'category',
                         inverse: true,
@@ -74,7 +90,7 @@
                                 }
                             },
                         },
-                        data: [50000000, 22000000, 10000000, 5000000, 2000000]
+                        data: data.map(d => d[0])
                     }],
                     series: [{
                             name: '金额',
@@ -92,15 +108,15 @@
                                     }]),
                                 },
                             },
-                            barWidth: 20,
-                            data: [50000000, 22000000, 10000000, 5000000, 2000000]
+                            barWidth: 10,
+                            data,
                         },
                         {
                             name: '背景',
                             type: 'bar',
-                            barWidth: 20,
+                            barWidth: 10,
                             barGap: '-100%',
-                            data: [50000000, 50000000, 50000000, 50000000, 50000000],
+                            data: new Array(10).fill(maxValue),
                             itemStyle: {
                                 normal: {
                                     color: 'rgba(24,31,68,1)',
