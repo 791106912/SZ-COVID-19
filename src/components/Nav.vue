@@ -1,13 +1,6 @@
 <template>
-    <div class="vis-nav">
-        <!-- <div class="vis-brand">
-            <div class="vis-brand-title">深圳市疫情可视分析系统</div>
-            <div class="vis-brand-time">{{date}}</div>
-        </div> -->
-        <!-- <div class="vis-triangle-small vis-triangle-indie-left vis-triangle-indie"></div> -->
-        <!-- <div class="vis-triangle-big vis-triangle-indie-left vis-triangle-indie"></div> -->
+    <div class="vis-nav" :style="styles">
         <div class="vis-menu">
-            <div class="vis-triangle-left"></div>
             <el-menu
                 :default-active="activeIndex"
                 mode="horizontal"
@@ -23,12 +16,64 @@
                     <span v-text="item.name"></span>
                 </el-menu-item>
             </el-menu>
-            <div class="vis-triangle-right"></div>
         </div>
-        <!-- <div class="vis-triangle-big vis-triangle-indie-right vis-triangle-indie"></div> -->
-        <!-- <div class="vis-triangle-small vis-triangle-indie-right vis-triangle-indie"></div> -->
+        <div class="vis-brand-time">{{date}}</div>
+        <div class="vis-brand-title">深圳市疫情可视分析系统</div>
     </div>
 </template>
+
+<script>
+    import menu from '@/config/menu'
+    import picture from '@/assets/top-bg.png'
+    import picture2 from '@/assets/menu-bg.png'
+
+    export default {
+        name: 'Nav',
+        data() {
+            return {
+                activeIndex: 'pc',
+                menu: menu,
+                date: '',
+                styles: {
+                    background: `url(${picture}) no-repeat`,
+                    backgroundSize: '100% 78%',
+                    backgroundPosition: '0px 10px',
+                },
+                activeStyle: {
+                    background: `url(${picture2}) no-repeat`,
+                    backgroundSize: 'cover',
+                },
+                
+            };
+        },
+        methods: {
+            handleSelect(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            formate() {
+                var a = new Date()
+                var [year, month, day] = a.toLocaleDateString().split('/')
+                var hour = a.getHours();
+                var minutes = a.getMinutes();
+                var seconds = a.getSeconds();
+                var weekArr = ['星期日','星期一','星期二','星期三','星期四','星期五', '星期六']
+                var week = a.getDay()
+                var fun = d => d < 10 ? `0${d}` : d
+                return `${fun(hour)}:${fun(minutes)}:${fun(seconds)}  |  ${year}年${fun(month)}月${fun(day)}日  ${weekArr[week]}`
+            }
+        },
+        mounted(){
+            this.timer = setInterval(() => {
+                this.date = this.formate();
+            });
+        },
+        beforeDestroy:function(){
+            if(this.timer){
+                clearInterval(this.timer);
+            }
+        },
+    };
+</script>
 
 <style lang="less" scoped>
     @green: #36ACAC;
@@ -39,27 +84,9 @@
         color: #4f94bf;
         .vis-menu{
             font-size: 14px;
-            width: 50%;
+            width: 40%;
             position: relative;
             display: flex;
-            .vis-triangle-left{
-                top: 20px;
-                float: left;
-                width: 30px;
-                height: 62px;
-                transform: skewX(20deg);
-                transform-origin: bottom left;
-                border-right: solid @borderWidth @green;
-            }
-            .vis-triangle-right{
-                top: 0;
-                float: left;
-                width: 30px;
-                height: 62px;
-                transform: skewX(-20deg);
-                transform-origin: bottom right;
-                border-left: solid @borderWidth @green;
-            }
              .el-menu{
                 padding: 0 20px;
                 background: rgba(0, 0, 0, 0);
@@ -71,75 +98,41 @@
                     display: block;
                     border: none !important;
                     color: #4f94bf !important;
+                    flex: 1;
+                    text-align: center;
                     &:hover,&:focus{
                         color: @green !important;
                         background: none;
                     }
                     &.is-active{
                         color: #fff !important;
-                        background: radial-gradient(100% 90% ellipse, #4e99ce 10%, #071227 48%, transparent 20%) !important;
+                        background: radial-gradient(100% 90% ellipse, #4e99ce 10%, #071227 38%, transparent 20%) !important;
                     }
                 }
-                &::after{
-                    
-                }
             }
         }
-        .vis-triangle-small{
-            width: 20px;
-            margin: 0 12px;
-        }
-        .vis-triangle-big{
-            width: 30px;
-        }
-        .vis-triangle-indie{
-            height: 60px;
-            border: solid @borderWidth @green;
-            border-top-width: 0;
-        }
-        .vis-triangle-indie-left{
-            transform: skewX(20deg);
-        }
-        .vis-triangle-indie-right{
-            transform: skewX(-20deg);
-        }
-        .vis-brand{
+        .vis-brand-title{
             position: absolute;
-            left: 20px;
-            .vis-brand-title{
-                font-size: 20px;
-                line-height: 40px;
-            }
+            width: 26%;
+            left: 0;
+            text-align: center;
+            font-size: 22px;
+            top: 24px;
+            letter-spacing: 3px;
+            background: linear-gradient(to bottom, #fff, #8dd3ff);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .vis-brand-time{
+            position: absolute;
+            width: 30%;
+            right: 0;
+            text-align: center;
+            font-size: 14px;
+            top: 30px;
+            background: linear-gradient(to bottom, #fff, #8dd3ff);
+            -webkit-background-clip: text;
+            color: transparent;
         }
     }
 </style>
-
-<script>
-    import menu from '@/config/menu'
-
-    export default {
-        name: 'Nav',
-        data() {
-            return {
-                activeIndex: 'pc',
-                menu: menu,
-                date: new Date().toLocaleString(),
-            };
-        },
-        methods: {
-            handleSelect(key, keyPath) {
-                console.log(key, keyPath);
-            }
-        },
-        mounted(){
-            this.timer = setInterval(() => {
-                this.date = new Date().toLocaleString();
-            });
-        },
-        beforeDestroy:function(){
-            if(this.timer){
-                clearInterval(this.timer);
-            }
-        },
-    };
-</script>
