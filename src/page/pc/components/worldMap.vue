@@ -88,6 +88,6 @@
 
 <style lang="less" scoped>
     #world-map{
-        height: 800px;
+        height: 100%;
     }
 </style>

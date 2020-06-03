@@ -1,24 +1,37 @@
 <template>
    <div id="pc">
-        <Section
-            title="深圳疫情"
-        >
-            <div class="part-sz">
-                <SzMap />
-                <SzStatic />
-            </div>
-       </Section>
-       <Section
-            title="各区分布"
-       >
-            <List />
-       </Section>
-       <Section
-            title="世界分布"
-       >
-            <WorldMap />
-            <Bar />
-       </Section>
+       <div class="pc-left">
+            <Section
+                class="left-map"
+                title="深圳疫情"
+                height="100%"
+            >
+                <div class="part-sz">
+                    <SzMap />
+                    <SzStatic />
+                </div>
+            </Section>
+            <Section
+                class="left-list"
+                title="各区分布"
+                height="100%"
+            >
+                <div class="part-list">
+                    <List />
+                </div>
+            </Section>
+       </div>
+        <div class="pc-right">
+            <Section
+                title="世界分布"
+                height="100%"
+            >
+                <div class="part-world">
+                    <WorldMap class="world-map" />
+                    <Bar class="world-bar" />
+                </div>
+            </Section>
+       </div>
        
    </div>
 </template>
@@ -59,9 +72,41 @@ export default {
 
 <style lang="less" scoped>
     #pc{
+        display: flex;
+        height: 100%;
+        .pc-left {
+            width: 66%;
+            margin-right: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            padding-bottom: 20px;
+            .left-map {
+                height: 50%;
+            }
+            .left-list {
+                height: calc(50% - 20px);
+            }
+        }
+        .pc-right {
+            display: flex;
+            flex: 1;
+        }
         .part-sz{
             display: flex;
-            height: 400px;
+            height: 100%;
+        }
+        .part-world {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+            .world-map {
+                height: 50%;
+            }
+            .world-bar {
+                flex: 1;
+            }
         }
     }
 </style>

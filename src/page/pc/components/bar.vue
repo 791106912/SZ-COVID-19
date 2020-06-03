@@ -123,6 +123,6 @@
 
 <style lang="less" scoped>
     #bar-chart{
-        height: 200px;
+        height: 100%;
     }
 </style>
