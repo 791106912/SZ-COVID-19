@@ -8,13 +8,21 @@
     import echarts from 'echarts/lib/echarts';
     import 'echarts/lib/component/geo'
     import 'echarts/map/js/world.js';
+    import { extent, scaleLog } from 'd3'
+    import _ from 'lodash'
     import WorldLayout from '@/data/worldLayout'
     import WorldTrend from '@/data/worldTrend'
+    import NationGeo from '@/data/nationGeo'
 
     export default {
         name: 'WorldMap',
         methods: {
             initMap() {
+                const data = this.initWorldData()
+                const dataExtent = extent(data, d => d[2])
+                const scaleSize = scaleLog()
+                    .domain(dataExtent)
+                    .range([5, 30])
                 const option = {
                     geo: {
                         map: 'world',
@@ -36,12 +44,41 @@
                             }
                         }
                     },
+                    visualMap: [{
+                        type: 'continuous',
+                        show: false,
+                        min: dataExtent[0],
+                        max: dataExtent[1],
+                        dimension: 2,
+                        seriesIndex: 1,
+                        inRange: {
+                            color: ['#bc6262', '#c63d3d', '#a50606'],
+                            colorAlpha: [.4, .8],
+                        }
+                    }],
                     series: [{
                         type: 'custom',
                         coordinateSystem: 'geo',
                         geoIndex: 0,
                         renderItem: this.renderItemHexBin,
                         data: WorldLayout
+                    },
+                    {
+                        type: 'scatter',
+                        coordinateSystem: 'geo',
+                        data,
+                        label: {
+                            show: true,
+                            formatter: ({data}) => {
+                                return data[2] > 50000 ? data[3] : ''
+                            },
+                            fontSize: 9,
+                            fontWeight: 'lighter',
+                        },
+                        symbolSize: data => {
+                            return scaleSize(data[2])
+                        }
+
                     }]
                 };
                 const myChart = echarts.init(document.getElementById('world-map'));
@@ -76,12 +113,16 @@
                 };
             },
             initWorldData() {
-               console.log(WorldTrend);
+                const data = WorldTrend.map(d => (
+                    NationGeo[d.name]
+                    ? NationGeo[d.name].concat([_.last(d.trend.list[0].data)], d.name)
+                    : false
+                ))
+                return data
             }
         },
         mounted() {
             this.initMap()
-            this.initWorldData()
         }
     }
 </script>
