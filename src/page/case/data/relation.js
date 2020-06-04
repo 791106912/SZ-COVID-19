@@ -4313,6 +4313,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露',
 },
@@ -4342,6 +4343,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '江西',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -4372,6 +4374,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '密切接触',
+    "origin": '江西',
     "detailReason": '密切接触'
 },
 {
@@ -4410,6 +4413,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '新加坡',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -4434,6 +4438,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -4463,6 +4468,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -4492,6 +4498,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -4526,6 +4533,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -4560,6 +4568,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -4599,6 +4608,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '新加坡',
     "reason": '境外返回',
     "detailReason": '境外返回'
 },
@@ -4633,6 +4643,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -4662,6 +4673,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '泰国',
     "reason": '境外返回',
     "detailReason": '境外返回'
 },
@@ -4691,6 +4703,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '泰国',
     "reason": '境外返回',
     "detailReason": '境外返回'
 },
@@ -4715,6 +4728,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '密切接触'
 },
@@ -4744,6 +4758,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -4773,6 +4788,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '广东',
     "reason": '',
     "detailReason": ''
 },
@@ -4817,6 +4833,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -4846,6 +4863,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '江西',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -4875,6 +4893,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '江西',
     "reason": '密切接触',
     "detailReason": '密切接触'
 },
@@ -4904,6 +4923,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -4933,6 +4953,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '密切接触'
 },
@@ -4962,6 +4983,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -4996,6 +5018,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -5025,6 +5048,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '河南',
     "reason": '密切接触',
     "detailReason": '密切接触'
 },
@@ -5049,6 +5073,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -5073,6 +5098,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '密切接触'
 },
@@ -5097,6 +5123,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '密切接触'
 },
@@ -5126,6 +5153,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -5165,6 +5193,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -5188,6 +5217,7 @@ const RelationJSON = [
         ""
     ],
     "track": [],
+    "origin": '深圳',
     "treatment_hospital": "",
     "reason": '',
     "detailReason": ''
@@ -5218,6 +5248,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '密切接触'
 },
@@ -5247,6 +5278,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -5276,6 +5308,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -5299,6 +5332,7 @@ const RelationJSON = [
         ""
     ],
     "track": [],
+    "origin": '湖北',
     "treatment_hospital": "",
     "reason": '密切接触',
     "detailReason": '家庭传播'
@@ -5324,6 +5358,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -5353,6 +5388,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -5382,6 +5418,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -5411,6 +5448,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '密切接触'
 },
@@ -5445,6 +5483,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -5470,6 +5509,7 @@ const RelationJSON = [
     "track": [],
     "treatment_hospital": "",
     "reason": '湖北居住',
+    "origin": '湖北',
     "detailReason": '武汉暴露'
 },
 {
@@ -5498,6 +5538,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -5527,6 +5568,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -5551,6 +5593,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -5580,6 +5623,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -5624,6 +5668,7 @@ const RelationJSON = [
         "tran": "的士",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -5653,6 +5698,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -5687,6 +5733,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '辽宁',
     "reason": '密切接触',
     "detailReason": '密切接触'
 },
@@ -5710,6 +5757,7 @@ const RelationJSON = [
         ""
     ],
     "track": [],
+    "origin": '深圳',
     "treatment_hospital": "",
     "reason": '',
     "detailReason": ''
@@ -5750,6 +5798,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -5775,6 +5824,7 @@ const RelationJSON = [
     "track": [],
     "treatment_hospital": "",
     "reason": '',
+    "origin": '深圳',
     "detailReason": ''
 },
 {
@@ -5798,6 +5848,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -5827,6 +5878,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -5866,6 +5918,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -5890,6 +5943,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -5914,6 +5968,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '广东',
     "reason": '密切接触',
     "detailReason": '密切接触'
 },
@@ -5943,6 +5998,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -5967,6 +6023,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -5991,6 +6048,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '',
     "detailReason": ''
 },
@@ -6030,6 +6088,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -6054,6 +6113,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -6088,6 +6148,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -6117,6 +6178,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -6141,6 +6203,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '密切接触'
 },
@@ -6175,6 +6238,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -6199,6 +6263,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -6228,6 +6293,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -6257,6 +6323,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '密切接触'
 },
@@ -6286,6 +6353,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '密切接触'
 },
@@ -6315,6 +6383,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -6349,6 +6418,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -6373,6 +6443,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -6402,6 +6473,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '密切接触'
 },
@@ -6431,6 +6503,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -6460,6 +6533,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖南',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -6494,6 +6568,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '密切接触'
 },
@@ -6523,6 +6598,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -6557,6 +6633,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '密切接触'
 },
@@ -6586,6 +6663,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -6615,6 +6693,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '密切接触'
 },
@@ -6644,6 +6723,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -6668,6 +6748,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -6691,6 +6772,7 @@ const RelationJSON = [
         ""
     ],
     "track": [],
+    "origin": '深圳',
     "treatment_hospital": "",
     "reason": '',
     "detailReason": ''
@@ -6716,6 +6798,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -6745,6 +6828,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '广东',
     "reason": '',
     "detailReason": ''
 },
@@ -6769,6 +6853,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -6793,6 +6878,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -6822,6 +6908,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -6856,6 +6943,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -6878,6 +6966,7 @@ const RelationJSON = [
         "",
         ""
     ],
+    "origin": '深圳',
     "track": [],
     "treatment_hospital": "",
     "reason": '',
@@ -6915,6 +7004,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '密切接触',
+    "origin": '湖北',
     "detailReason": '家庭传播'
 },
 {
@@ -6948,6 +7038,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -6982,6 +7073,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '密切接触'
 },
@@ -7011,6 +7103,7 @@ const RelationJSON = [
         "tran": "自驾车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -7040,6 +7133,7 @@ const RelationJSON = [
         "tran": "自驾车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -7069,6 +7163,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '黑龙江',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -7093,6 +7188,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -7122,6 +7218,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -7151,6 +7248,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '密切接触'
 },
@@ -7180,6 +7278,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -7204,6 +7303,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -7233,6 +7333,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '黑龙江',
     "reason": '密切接触',
     "detailReason": '密切接触'
 },
@@ -7257,6 +7358,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '密切接触'
 },
@@ -7286,6 +7388,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '密切接触'
 },
@@ -7311,6 +7414,7 @@ const RelationJSON = [
     "track": [],
     "treatment_hospital": "",
     "reason": '湖北居住',
+    "origin": '湖北',
     "detailReason": '密切接触'
 },
 {
@@ -7335,6 +7439,7 @@ const RelationJSON = [
     "track": [],
     "treatment_hospital": "",
     "reason": '湖北居住',
+    "origin": '湖北',
     "detailReason": '武汉暴露'
 },
 {
@@ -7358,6 +7463,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -7387,6 +7493,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖南',
     "reason": '密切接触',
     "detailReason": '密切接触'
 },
@@ -7416,6 +7523,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '澳门',
     "reason": '境外返回',
     "detailReason": '境外返回'
 },
@@ -7445,6 +7553,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '密切接触'
 },
@@ -7474,6 +7583,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -7503,6 +7613,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '密切接触'
 },
@@ -7537,6 +7648,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -7566,6 +7678,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -7595,6 +7708,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -7624,6 +7738,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -7653,6 +7768,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -7682,6 +7798,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -7711,6 +7828,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -7740,6 +7858,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '密切接触'
 },
@@ -7769,6 +7888,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -7803,6 +7923,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -7832,6 +7953,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖南',
     "reason": '密切接触',
     "detailReason": '密切接触'
 },
@@ -7861,6 +7983,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -7895,6 +8018,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '密切接触'
 },
@@ -7924,6 +8048,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '密切接触'
 },
@@ -7953,6 +8078,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -7987,6 +8113,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -8021,6 +8148,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -8055,6 +8183,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -8079,6 +8208,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -8113,6 +8243,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -8142,6 +8273,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -8171,6 +8303,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -8200,6 +8333,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -8235,6 +8369,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '湖北停留',
+    "origin": '湖北',
     "detailReason": '武汉暴露'
 },
 {
@@ -8263,6 +8398,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '密切接触'
 },
@@ -8287,6 +8423,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '',
     "detailReason": ''
 },
@@ -8316,6 +8453,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '密切接触'
 },
@@ -8346,6 +8484,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '湖北停留',
+    "origin": '湖北',
     "detailReason": '密切接触'
 },
 {
@@ -8374,6 +8513,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -8403,6 +8543,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -8433,6 +8574,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '湖北居住',
+    "origin": '湖北',
     "detailReason": '武汉暴露'
 },
 {
@@ -8462,6 +8604,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '湖北停留',
+    "origin": '湖北',
     "detailReason": '武汉暴露'
 },
 {
@@ -8496,6 +8639,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '密切接触',
+    "origin": '湖北',
     "detailReason": '家庭传播'
 },
 {
@@ -8525,6 +8669,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '密切接触',
+    "origin": '湖北',
     "detailReason": '家庭传播'
 },
 {
@@ -8554,6 +8699,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '湖北居住',
+    "origin": '湖北',
     "detailReason": '武汉暴露'
 },
 {
@@ -8578,6 +8724,7 @@ const RelationJSON = [
     "track": [],
     "treatment_hospital": "",
     "reason": '密切接触',
+    "origin": '深圳',
     "detailReason": '密切接触'
 },
 {
@@ -8611,6 +8758,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '探亲'
 },
@@ -8635,6 +8783,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -8669,6 +8818,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -8698,6 +8848,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '探亲'
 },
@@ -8732,6 +8883,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '探亲'
 },
@@ -8761,6 +8913,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -8790,6 +8943,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -8819,6 +8973,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -8848,6 +9003,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -8872,6 +9028,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '密切接触'
 },
@@ -8901,6 +9058,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -8930,6 +9088,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -8965,6 +9124,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '湖北居住',
+    "origin": '湖北',
     "detailReason": '武汉暴露'
 },
 {
@@ -8993,6 +9153,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '密切接触'
 },
@@ -9017,6 +9178,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -9046,6 +9208,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖南',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -9075,6 +9238,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖南',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -9099,6 +9263,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -9128,6 +9293,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -9157,6 +9323,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -9186,6 +9353,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '探亲'
 },
@@ -9220,6 +9388,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '探亲'
 },
@@ -9244,6 +9413,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -9273,6 +9443,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -9307,6 +9478,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -9336,6 +9508,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '探亲'
 },
@@ -9365,6 +9538,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -9394,6 +9568,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -9423,6 +9598,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -9452,6 +9628,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -9481,6 +9658,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -9510,6 +9688,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -9539,6 +9718,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -9568,6 +9748,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -9597,6 +9778,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -9626,6 +9808,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '探亲'
 },
@@ -9650,6 +9833,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -9674,6 +9858,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -9703,6 +9888,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '探亲'
 },
@@ -9737,6 +9923,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -9766,6 +9953,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -9791,6 +9979,7 @@ const RelationJSON = [
     "track": [],
     "treatment_hospital": "",
     "reason": '',
+    "origin": '深圳',
     "detailReason": ''
 },
 {
@@ -9819,6 +10008,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -9854,6 +10044,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '湖北停留',
+    "origin": '湖北',
     "detailReason": '武汉暴露'
 },
 {
@@ -9883,6 +10074,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '湖北居住',
+    "origin": '湖北',
     "detailReason": '武汉暴露'
 },
 {
@@ -9911,6 +10103,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -9940,6 +10133,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -9969,6 +10163,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -9998,6 +10193,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '密切接触'
 },
@@ -10022,6 +10218,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -10046,6 +10243,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -10075,6 +10273,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -10104,6 +10303,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -10133,6 +10333,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -10162,6 +10363,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -10191,6 +10393,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -10225,6 +10428,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖南',
     "reason": '密切接触',
     "detailReason": '探亲'
 },
@@ -10259,6 +10463,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -10288,6 +10493,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -10317,6 +10523,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -10346,6 +10553,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -10375,6 +10583,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -10399,6 +10608,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -10433,6 +10643,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -10467,6 +10678,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -10501,6 +10713,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -10530,6 +10743,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -10559,6 +10773,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -10583,6 +10798,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -10607,6 +10823,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -10631,6 +10848,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -10660,6 +10878,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -10684,6 +10903,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -10713,6 +10933,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -10742,6 +10963,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -10772,6 +10994,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '密切接触',
+    "origin": '湖北',
     "detailReason": '家庭传播'
 },
 {
@@ -10801,6 +11024,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '密切接触',
+    "origin": '深圳',
     "detailReason": '家庭传播'
 },
 {
@@ -10830,6 +11054,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '湖北居住',
+    "origin": '湖北',
     "detailReason": '武汉暴露'
 },
 {
@@ -10853,6 +11078,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
 },
 {
@@ -10876,6 +11102,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '',
     "detailReason": ''
 },
@@ -10900,6 +11127,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '泰国',
     "reason": '密切接触',
 },
 {
@@ -10928,6 +11156,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -10962,6 +11191,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '新疆',
     "reason": '密切接触',
 },
 {
@@ -10990,6 +11220,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -11019,6 +11250,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -11048,6 +11280,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -11082,6 +11315,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -11116,6 +11350,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -11140,6 +11375,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -11174,6 +11410,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -11198,6 +11435,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -11228,6 +11466,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '湖北停留',
+    "origin": '湖北',
     "detailReason": '武汉暴露'
 },
 {
@@ -11256,6 +11495,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -11285,6 +11525,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -11314,6 +11555,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -11343,6 +11585,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北停留',
     "detailReason": '武汉暴露'
 },
@@ -11372,6 +11615,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -11401,6 +11645,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -11440,6 +11685,7 @@ const RelationJSON = [
         "tran": "私家车",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -11470,6 +11716,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '湖北停留',
+    "origin": '湖北',
     "detailReason": '武汉暴露'
 },
 {
@@ -11498,6 +11745,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '湖北居住',
     "detailReason": '武汉暴露'
 },
@@ -11522,6 +11770,7 @@ const RelationJSON = [
     ],
     "track": [],
     "treatment_hospital": "",
+    "origin": '深圳',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -11547,6 +11796,7 @@ const RelationJSON = [
     "track": [],
     "treatment_hospital": "",
     "reason": '密切接触',
+    "origin": '深圳',
     "detailReason": '家庭传播'
 },
 {
@@ -11575,6 +11825,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -11604,6 +11855,7 @@ const RelationJSON = [
         "tran": "",
     }],
     "treatment_hospital": "",
+    "origin": '湖北',
     "reason": '密切接触',
     "detailReason": '家庭传播'
 },
@@ -11634,6 +11886,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '湖北停留',
+    "origin": '湖北',
     "detailReason": '武汉暴露'
 },
 {
@@ -11663,6 +11916,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '湖北居住',
+    "origin": '湖北',
     "detailReason": '武汉暴露'
 },
 {
@@ -11692,6 +11946,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '密切接触',
+    "origin": '湖北',
     "detailReason": '家庭传播'
 },
 {
@@ -11721,6 +11976,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '密切接触',
+    "origin": '湖北',
     "detailReason": '家庭传播'
 },
 {
@@ -11750,6 +12006,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '湖北居住',
+    "origin": '湖北',
     "detailReason": '武汉暴露'
 },
 {
@@ -11779,6 +12036,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '湖北居住',
+    "origin": '湖北',
     "detailReason": '武汉暴露'
 },
 {
@@ -11808,6 +12066,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '湖北居住',
+    "origin": '湖北',
     "detailReason": '武汉暴露'
 },
 {
@@ -11837,6 +12096,7 @@ const RelationJSON = [
     }],
     "treatment_hospital": "",
     "reason": '湖北停留',
+    "origin": '湖北',
     "detailReason": '武汉暴露'
 },
 {

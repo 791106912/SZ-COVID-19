@@ -49,6 +49,7 @@
                 selectGraph: null,
                 selectData: RelationJSON,
                 colorObj: {},
+                selectMeth: 'mul',
             }
         },
         methods: {
@@ -83,7 +84,7 @@
                 initData();
                 this.initTimeCircle();
                 this.initDemiCircle();
-                this.initLegend('nlRange')
+                this.initLegend(this.selectKey)
             },
             initTimeCircle() {
                 const timeArr = _.chain(RelationJSON)
@@ -153,6 +154,8 @@
                     .value(() => 1)
 
                 const arc = d3.arc()
+                    .cornerRadius(10)
+                    .padAngle(.1)
                     .innerRadius(this.deminRadius[0])
                     .outerRadius(this.deminRadius[1]);
 
@@ -175,6 +178,12 @@
                     .append("path")
                     .attr("fill", d => color(d.data.name))
                     .attr("d", arc)
+                    .attr('stroke', d => {
+                        if(this.selectKey === d.data.sortkey) {
+                            return '#fff'
+                        }
+                        return 'none'
+                    })
                     .on('click', function(d) {
                         pathContainer
                             .selectAll('path')
@@ -353,13 +362,16 @@
                 this.svg.select('g.aggre').remove();
 
                 const simulation = d3.forceSimulation(nodes)
+                    // .force('r', 
+                    //     d3.forceRadial(10,0,0)
+                    //     .strength(.1)
+                    // )
                     .force("link", 
                         d3.forceLink(links).id(d => d.blh)
-                        .distance(20)
                     )
                     .force("charge", 
                         d3.forceManyBody()
-                            .strength(-30)
+                        // .strength(-40)
                     )
                     .force("x", d3.forceX())
                     .force("y", d3.forceY());
@@ -377,7 +389,7 @@
                 const node = forceContainer.append("g")
                     .classed('node', true)
                     .selectAll(".circleG")
-                    .data(nodes)
+                    .data(nodes, d => d.blh)
                     .enter()
                     .append('g')
                     .classed('circleG', true)
@@ -404,7 +416,7 @@
                         .attr("x2", d => d.target.x)
                         .attr("y2", d => d.target.y);
 
-                    node.attr('transform', d => `translate(${d.x}, ${d.y})`)
+                     node.attr('transform', d => `translate(${d.x}, ${d.y})`)
                 });
 
                 const fisheye = d3Fisheye.radial()
@@ -443,15 +455,25 @@
 
                 if (this.selectKey === 'relation') {
                     this.selectGraph = this.initForce
+                    this.selectData = RelationJSON.filter(d => d.relation === '聚集传播')
+                    this.disbaled = ['其他']
+                    this.selectMeth = 'only';
                 } else {
                     this.selectGraph = this.initAggreGraph
+                    this.selectMeth = 'mul';
                 }
                 this.selectGraph();
             },
             selectType(name) {
-                this.disbaled.includes(name)
-                    ? this.disbaled = this.disbaled.filter(d => !(d === name))
-                    : this.disbaled.push(name)
+                if (this.selectMeth === 'only') {
+                    this.disbaled= this.legendArr
+                        .filter(d => !(d.name === name))
+                        .map(d => d.name);
+                } else {
+                    this.disbaled.includes(name)
+                        ? this.disbaled = this.disbaled.filter(d => !(d === name))
+                        : this.disbaled.push(name)
+                }
 
                 this.selectData = RelationJSON.filter(d => !this.disbaled.includes(d[this.selectKey]));
                 this.selectGraph();

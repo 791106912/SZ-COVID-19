@@ -31,9 +31,12 @@ export function initData() {
         } else {
             nlRange = '60岁以上'
         }
+        if(d.reason === ""){
+            d.reason = '未知'
+        }
         d.nlRange = nlRange;
-        d.relation = linkIds.includes(d.blh) ? '链式传染' : '未知传染';
-        d.origin = d.track && d.track.length > 0 ? d.track[0].from : '深圳';
+        d.relation = linkIds.includes(d.blh) ? '聚集传播' : '其他';
+        // d.origin = d.track && d.track.length > 0 ? d.track[0].from : '深圳';
     })
 }
 
