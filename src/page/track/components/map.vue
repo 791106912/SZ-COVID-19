@@ -12,6 +12,8 @@
     import StationGeo from '@/data/station'
     import TrackJSON from '@/data/track'
 
+    const PERIOD = 2;
+
     export default {
         name: 'Map',
         methods: {
@@ -69,7 +71,7 @@
                             },
                             loop: true,
                             autoPlay: true,
-                            playInterval: 1000,
+                            playInterval: PERIOD * 1000,
                             data: timelineData
                         },
                         tooltip: {
@@ -219,7 +221,7 @@
                         zlevel: 2,
                         effect: {
                             show: true,
-                            period: 2, //箭头指向速度，值越小速度越快
+                            period: PERIOD, //箭头指向速度，值越小速度越快
                             trailLength: 0.02, //特效尾迹长度[0,1]值越大，尾迹越长重
                             symbol: "arrow", //箭头图标
                             symbolSize: 5, //图标大小
@@ -272,7 +274,7 @@
                         type: "lines",
                         zlevel: 2,
                         effect: {
-                            show: true,
+                            show: false,
                             color: '#37A2DA',
                             period: 0, //箭头指向速度，值越小速度越快
                             trailLength: 0.02, //特效尾迹长度[0,1]值越大，尾迹越长重
@@ -284,10 +286,11 @@
                             normal: {
                                 color: '#37A2DA',
                                 width: 1, //尾迹线条宽度
-                                opacity: 0.05, //尾迹线条透明度
+                                opacity: 0.8, //尾迹线条透明度
                                 curveness: 0.3 //尾迹线条曲直度
                             }
                         },
+                        animation: false,
                     },
                     {
                         type: 'scatter',
@@ -315,9 +318,10 @@
                             normal: {
                                 show: false,
                                 color: '#f00',
-                                opacity: .8,
+                                opacity: .4,
                             }
                         },
+                        animation: false,
                     },
                     {
                         type: 'scatter',
