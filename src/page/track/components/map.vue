@@ -95,7 +95,7 @@
                         },
                         geo: {
                             map: 'world',
-                            zoom: 1.2,
+                            zoom: 1,
                             label: {
                                 emphasis: {
                                     show: false
@@ -296,6 +296,7 @@
 
 <style lang="less" scoped>
     #trackMap{
-        height: 500px;
+        width: 70%;
+        height: 100%;
     }
 </style>
