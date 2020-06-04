@@ -37,7 +37,7 @@
                 menu: menu,
                 date: '',
                 styles: {
-                    background: `url(${picture}) no-repeat`,
+                    background: `#071225 url(${picture}) no-repeat`,
                     backgroundSize: '100% 78%',
                     backgroundPosition: '0px 10px',
                 },

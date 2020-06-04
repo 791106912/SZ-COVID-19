@@ -27,10 +27,11 @@ export default {
         top: 0;
         width: 100%;
         padding: 0;
+        z-index: 1;
     }
     .el-main{
         height: calc(100vh) ;
-        padding-top: 60px;
+        padding-top: 80px;
         background: #071226;
     }
 </style>
