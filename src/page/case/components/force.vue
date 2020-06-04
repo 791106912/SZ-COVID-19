@@ -28,13 +28,13 @@
     export default {
         name: 'Force',
         data() {
-            const height = 680;
-            const width = 680;
+            const height = 800;
+            const width = 800;
 
             const radius = Math.min(height, width) / 2;
             const forceRadius = [0, radius - 80];
             const fisheyeRadius = 100;
-            const timeRadius = [radius - 60, radius - 40] ;
+            const timeRadius = [radius - 80, radius - 60] ;
             const deminRadius = [radius - 30, radius];
             
             return {
@@ -100,21 +100,21 @@
                     .orderBy(d => new Date(d).getTime(), 'desc')
                     .value();
 
-                const valueArr = timeArr.map(d => d.value);
-                valueArr.forEach((d, i) => {
-                    const addition = valueArr[i - 1] ? valueArr[i - 1] : 0;
-                    valueArr[i] = valueArr[i] + addition
-                })
-                timeArr.forEach((d, i) => {
-                    d.value = valueArr[i]
-                })
+                // const valueArr = timeArr.map(d => d.value);
+                // valueArr.forEach((d, i) => {
+                //     const addition = valueArr[i - 1] ? valueArr[i - 1] : 0;
+                //     valueArr[i] = valueArr[i] + addition
+                // })
+                // timeArr.forEach((d, i) => {
+                //     d.value = valueArr[i]
+                // })
                 const [min, max] = d3.extent(timeArr, d => d.value);
                 const color = d3.scaleLinear()
                     .domain([min, max / 2, max])
                     .range(['#009688', '#ffc107', '#ff0000'])
 
                 const pie = d3.pie()
-                    .padAngle(0)
+                    .padAngle(.01)
                     .sort(null)
                     .value(() => 1)
 
@@ -124,14 +124,91 @@
 
                 const arcs = pie(timeArr);
 
-                this.svg
+                const container = this.svg.append('g')
+                    .classed('timeLine', true);
+                
+                container
                     .append('g')
-                    .classed('timeLine', true)
+                    .classed('path', true)
                     .selectAll("path")
-                        .data(arcs)
-                        .join("path")
-                        .attr("fill", d => color(d.data.value))
-                        .attr("d", arc)
+                    .data(arcs)
+                    .join("path")
+                    .attr("fill", d => color(d.data.value))
+                    .attr("d", arc)
+
+                const text = container.append("g")
+                    .classed('text', true)
+                    .selectAll("text")
+                    .data(arcs)
+                    .join("text")
+                    .attr("dy", "0.35em")
+
+                text.append('path')
+                    .attr('fill', 'none')
+                    .attr('id', d => `hiddenArc${d.data.name}`)
+                    .attr('d', d => {
+                        const {startAngle, endAngle} = d;
+                        const [innerRadius, outerRadius] = this.timeRadius;
+                        const angles = [startAngle, endAngle].map(d1 => d1 - Math.PI / 2)
+                        const r = (innerRadius + outerRadius) / 2;
+                        const middleAngle = (angles[1] + angles[0]) / 2
+                        const invertDirection = middleAngle > 0 && middleAngle < Math.PI
+                        if (invertDirection) angles.reverse()
+                        const path = d3.path()
+                        path.arc(0, 0, r, angles[0], angles[1], invertDirection)
+                        return path.toString()
+                    })
+                    
+                text.append('textPath')
+                    .attr('text-anchor', 'middle')
+                    .attr('startOffset', '50%')
+                    .attr('font-size', '9px')
+                    .attr('fill', '#fff')
+                    .attr('href', d => `#hiddenArc${d.data.name}`)
+                    .text(d => d.data.name);
+
+                // const radius = (this.timeRadius[0] + this.timeRadius[1]) / 2;
+                const radius = (this.timeRadius[1]) + 4;
+
+                const endDot = container.append('circle')
+                    .attr('r', 8)
+                    .attr('fill', 'red')
+                    .attr('cx',  () => {
+                        const x = radius * Math.cos(0 * 2 * Math.PI - Math.PI / 2)
+                        return x;
+                    })
+                    .attr('cy', () => {
+                        const y = radius * Math.sin(0 * 2 * Math.PI - Math.PI / 2);
+                        return y;
+                    })
+                    .call(d3.drag()
+                        .on("drag", function() {
+                            var rad = Math.atan2(d3.event.y, d3.event.x);
+                            d3.select(this)
+                                .attr('cx', radius * Math.cos(rad))
+                                .attr('cy', radius * Math.sin(rad))
+                        })
+                    );
+
+                const startDot = container.append('circle')
+                    .attr('r', 8)
+                    .attr('fill', 'yellow')
+                    .attr('cx',  () => {
+                        const x = radius * Math.cos(0 * 2 * Math.PI - Math.PI / 2)
+                        return x;
+                    })
+                    .attr('cy', () => {
+                        const y = radius * Math.sin(0 * 2 * Math.PI - Math.PI / 2);
+                        return y;
+                    })
+                    .call(d3.drag()
+                        .on("drag", function() {
+                            var rad = Math.atan2(d3.event.y, d3.event.x);
+                            d3.select(this)
+                                .attr('cx', radius * Math.cos(rad))
+                                .attr('cy', radius * Math.sin(rad))
+                        })
+                    );
                 
             },
             initDemiCircle() {
@@ -380,8 +457,51 @@
                     .force("x", d3.forceX())
                     .force("y", d3.forceY());
 
+                const fisheye = d3Fisheye.radial()
+                    .radius(this.fisheyeRadius)
+                    .distortion(2)
+                    .smoothing(0.5);
+
                 const forceContainer = this.svg.append('g')
                     .classed('force', true)
+                this.svg.on('mousemove', function() {
+                        const mouse = d3.mouse(this);
+                        fisheye.focus(mouse);
+                        node.each(d => {
+                                d.fisheye = fisheye([d.x, d.y]);
+                            })
+                            .attr('transform', d => `translate(${d.fisheye[0]}, ${d.fisheye[1]})`)
+                        node.select('circle')
+                            .attr('r', d => {
+                                return d.fisheye[2] * d.r
+                            })
+
+                        node.select('text')
+                            .attr('font-size', d => {
+                                return d.fisheye[2] * 5
+                            })
+
+                        link.attr("x1", d => d.source.fisheye[0])
+                            .attr("y1", d => d.source.fisheye[1])
+                            .attr("x2", d => d.target.fisheye[0])
+                            .attr("y2", d => d.target.fisheye[1]);
+                    })
+                    // .on('mouseleave', () => {
+                    //     console.log(123);
+                    //     node.attr('transform', d => `translate(${d.x}, ${d.y})`)
+                            
+                    //     node.select('circle')
+                    //         .attr('r', d => d.r);
+
+                    //     node.select('text')
+                    //         .attr('font-size', 5)
+
+                    //     link.attr("x1", d => d.source.x)
+                    //         .attr("y1", d => d.source.y)
+                    //         .attr("x2", d => d.target.x)
+                    //         .attr("y2", d => d.target.y);
+                    // })
+                    
 
                 const link = forceContainer
                     .append("g")
@@ -422,34 +542,6 @@
 
                      node.attr('transform', d => `translate(${d.x}, ${d.y})`)
                 });
-
-                const fisheye = d3Fisheye.radial()
-                    .radius(this.fisheyeRadius)
-                    .distortion(2)
-                    .smoothing(0.5);
-                    
-                this.svg.on('mousemove', function() {
-                    const mouse = d3.mouse(this);
-                    fisheye.focus(mouse);
-                    node.each(d => {
-                            d.fisheye = fisheye([d.x, d.y]);
-                        })
-                        .attr('transform', d => `translate(${d.fisheye[0]}, ${d.fisheye[1]})`)
-                    node.select('circle')
-                        .attr('r', d => {
-                            return d.fisheye[2] * d.r
-                        })
-
-                    node.select('text')
-                        .attr('font-size', d => {
-                            return d.fisheye[2] * 5
-                        })
-
-                    link.attr("x1", d => d.source.fisheye[0])
-                        .attr("y1", d => d.source.fisheye[1])
-                        .attr("x2", d => d.target.fisheye[0])
-                        .attr("y2", d => d.target.fisheye[1]);
-                })
             },
             initLegend(key) {
                 this.selectKey = key;
