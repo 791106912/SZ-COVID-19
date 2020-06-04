@@ -9,7 +9,8 @@
                 v-on:click="()=> selectType(item.name)"
             >
                 <span class="legend-color" :style="{background: colorObj[item.name]}"></span>
-                <span class="legend-name">{{item.name}} ({{item.value}})</span>
+                <span class="legend-name">{{item.name}}</span>
+                <span class="legend-count">{{item.value}}</span>
                 <span class="legend-percent">{{item.percent}}</span>
             </div>
         </div>
@@ -503,22 +504,36 @@
         max-height: 80%;
         overflow-y: scroll;
         margin-left: 40px;
+        min-width: 200px;
         .legend-item{
+            display: flex;
+            justify-content: space-between;
             cursor: pointer;
+            align-items: center;
+            width: 100%;
             &.disabled{
                 opacity: .3;
             }
-            >span{
-                display: inline-block;
+            &>span{
+                text-overflow: hi;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
             }
             .legend-color{
                 height: 10px;
                 width: 10px;
-                margin-right: 20px;
                 border-radius: 100px;
             }
+            .legend-name{
+                width: 80px;
+            }
             .legend-percent{
-                margin-left: 20px;
+                width: 50px;
+            }
+            .legend-count{
+                text-align: right;
+                margin-right: 10px;
             }
         }
     }
@@ -526,7 +541,8 @@
         circle {
             stroke: #fff;
             stroke-width: 1.5;
-            fill: red
+            fill: red;
+            cursor: pointer;
         }
         text{
             fill: #fff;
