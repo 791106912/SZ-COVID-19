@@ -22,7 +22,7 @@
                 const dataExtent = extent(data, d => d[2])
                 const scaleSize = scaleLog()
                     .domain(dataExtent)
-                    .range([5, 30])
+                    .range([8, 30])
                 const option = {
                     geo: {
                         map: 'world',
