@@ -12,6 +12,7 @@
                     v-for="item in menu"
                     :index="item.comName"
                     :key="item.comName"
+                    :style="nowIndex === item.path ? activeStyle : defaultStyle"
                 >
                     <span v-text="item.name"></span>
                 </el-menu-item>
@@ -25,13 +26,14 @@
 <script>
     import menu from '@/config/menu'
     import picture from '@/assets/top-bg.png'
-    import picture2 from '@/assets/menu-bg.png'
+    // import picture2 from '@/assets/menu-bg.png'
 
     export default {
         name: 'Nav',
         data() {
             return {
                 activeIndex: 'pc',
+                nowIndex: window.location.hash.replace('#/', '').toLowerCase(),
                 menu: menu,
                 date: '',
                 styles: {
@@ -40,15 +42,18 @@
                     backgroundPosition: '0px 10px',
                 },
                 activeStyle: {
-                    background: `url(${picture2}) no-repeat`,
-                    backgroundSize: 'cover',
+                    color: '#fff !important',
+                    background: 'radial-gradient(100% 90% ellipse, #4e99ce 10%, #071227 38%, transparent 20%) !important',
                 },
-                
+                defaultStyle: {
+                    color: '#36ACAC !important',
+                    background: 'none !important',
+                }
             };
         },
         methods: {
-            handleSelect(key, keyPath) {
-                console.log(key, keyPath);
+            handleSelect(key) {
+                this.nowIndex = key.toLowerCase();
             },
             formate() {
                 var a = new Date()
