@@ -1,23 +1,56 @@
 <template>
-    <div>
-        <Map />
-        <SanKey />
+    <div class="analysis">
+        <Section
+            title="输入轨迹"
+            class="map"
+            height="100%"
+        >
+            <div class="map-container">
+                <Map />
+                <search-list />
+            </div>
+        </Section>
+        <Section
+            title="病例关系"
+            class="relation"
+            height="100%"
+        >
+            <SanKey />
+        </Section>
     </div>
 </template>
 
 <script>
+    import Section from '@/components/section'
     import SanKey from './components/sankey'
     import Map from './components/map'
+    import SearchList from './components/searchList'
 
     export default {
         name: 'Track',
         components:  {
+            Section,
             SanKey,
-            Map
+            Map,
+            'search-list': SearchList
         }
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
+    .analysis {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        .map {
+            height: 500px;
+            .map-container {
+                height: 100%;
+                display: flex;
+            }
+        }
+        .relation {
 
+        }
+    }
 </style>
