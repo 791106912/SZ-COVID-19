@@ -4712,6 +4712,11 @@ d3-fetch@1:
   dependencies:
     d3-dsv "1"
 
+d3-fisheye@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npm.taobao.org/d3-fisheye/download/d3-fisheye-2.0.1.tgz#9302ac72799b6a9d48cce6dd28df8984c9205285"
+  integrity sha1-kwKscnmbap1IzObdKN+JhMkgUoU=
+
 d3-force@1:
   version "1.2.1"
   resolved "https://registry.npm.taobao.org/d3-force/download/d3-force-1.2.1.tgz#fd29a5d1ff181c9e7f0669e4bd72bdb0e914ec0b"

@@ -14,4 +14,6 @@ menus.forEach(item => {
     })
 })
 
+routes.push({ path: '/', redirect: '/pc' })
+
 export default new Router({ routes })
