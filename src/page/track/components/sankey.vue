@@ -5,184 +5,71 @@
 </template>
 
 <script>
+    import _ from 'lodash'
     import echarts from 'echarts/lib/echarts';
     import 'echarts/lib/chart/sankey'
+    import TrackJSON from '@/data/track'
+
+    const DIM = ['xb', 'tran', 'fbrq']
 
     export default {
         name: 'SanKey',
         methods: {
+            getNodes(data, itemStyle) {
+                return DIM.reduce((arr, key) => {
+                    const count = _.countBy(data, key)
+                    const tempArr =  _.chain(data)
+                        .map(d => {
+                            const value = count[d[key]]
+                            return {
+                                name: d[key],
+                                itemStyle,
+                                value,
+                            }
+                        })
+                        .uniqBy('name')
+                        .value()
+                    return arr.concat(tempArr)
+                }, [])
+            },
+            getLinks(data) {
+                const links = [];
+                DIM.forEach((d, i, arr) => {
+                    if (i === arr.length - 1) return
+                    const count = _.countBy(data, arr[i + 1])
+                    data.forEach(d1 => {
+                const value = count[d1[arr[i + 1]]]
+                        links.push({
+                            source: d1[d],
+                            target: d1[arr[i + 1]],
+                            value,
+                        })
+                    })
+                })
+                return links
+            },
+            initData() {
+                const data = _.chain(TrackJSON)
+                    // .slice(0, 100)
+                    .map(d => {
+                        const {track} = d
+                        const tran = track.length ? track[track.length - 1].tran : ''
+                        return _.pick({
+                            ...d,
+                            tran: tran || '不明'
+                        },
+                        DIM
+                        )
+                    })
+                    .value()
+                
+                const nodes = this.getNodes(data)
+                const links = this.getLinks(data)
+                return {nodes, links}
+            },
             initChart() {
-                const nodes = [{
-                        name: "一层节点1",
-                        itemStyle:{
-                            color:"#6FA8F7"
-                        }
-                    },
-                    {
-                        name: "二层节点1",
-                        itemStyle:{
-                            color:"#5ECC8F"
-                        }
-                    },
-                    {
-                        name: "二层节点2",
-                        itemStyle:{
-                            color:"#FCC600"
-                        }
-                    },
-                    {
-                        name: "三层节点1",
-                        itemStyle:{
-                            color:"#00BCD4"
-                        }
-                    },
-                    {
-                        name: "三层节点2",
-                        itemStyle:{
-                            color:"#5B6DD1"
-                        }
-                    },
-                    {
-                        name: "四层节点1",
-                        itemStyle:{
-                            color:"#F27E7E"
-                        }
-                    },
-                    {
-                        name: "四层节点2",
-                        itemStyle:{
-                            color:"#93E1ED"
-                        }
-                    },
-                    {
-                        name: "四层节点3",
-                        itemStyle:{
-                            color:"#FFE056"
-                        }
-                    },
-                    {
-                        name: "四层节点4",
-                        itemStyle:{
-                            color:"#CB8762"
-                        }
-                    },
-                    {
-                        name: "四层节点5",
-                        itemStyle:{
-                            color:"#ADD76F"
-                        }
-                    },
-                    {
-                        name: "四层节点6",
-                        itemStyle:{
-                            color:"#6992C3"
-                        }
-                    },
-                    {
-                        name: "四层节点7",
-                        itemStyle:{
-                            color:"#897CBD"
-                        }
-                    },
-                    {
-                        name: "四层节点8",
-                        itemStyle:{
-                            color:"#F27EB2"
-                        }
-                    },
-                    {
-                        name: "四层节点9",
-                        itemStyle:{
-                            color:"#84D6B9"
-                        }
-                    },
-                    {
-                        name: "四层节点10",
-                        itemStyle:{
-                            color:"#AC78CD"
-                        }
-                    },
-                ];
-                const links = [{
-                        source: "一层节点1",
-                        target: "二层节点1",
-                        value: 10
-                    }, {
-                        source: "一层节点1",
-                        target: "二层节点2",
-                        value: 10
-                    },
-                    {
-                        source: "二层节点1",
-                        target: "三层节点1",
-                        value: 5
-                    },
-                    {
-                        source: "二层节点1",
-                        target: "三层节点2",
-                        value: 5
-                    },
-                    {
-                        source: "二层节点2",
-                        target: "三层节点1",
-                        value: 5
-                    },
-                    {
-                        source: "二层节点2",
-                        target: "三层节点2",
-                        value: 5
-                    },
-                    {
-                        source: "三层节点1",
-                        target: "四层节点1",
-                        value: 2
-                    },
-                    {
-                        source: "三层节点1",
-                        target: "四层节点2",
-                        value: 2
-                    },
-                    {
-                        source: "三层节点1",
-                        target: "四层节点3",
-                        value: 2
-                    },
-                    {
-                        source: "三层节点1",
-                        target: "四层节点4",
-                        value: 2
-                    },
-                    {
-                        source: "三层节点1",
-                        target: "四层节点5",
-                        value: 2
-                    },
-                    {
-                        source: "三层节点2",
-                        target: "四层节点6",
-                        value: 2
-                    },
-                    {
-                        source: "三层节点2",
-                        target: "四层节点7",
-                        value: 2
-                    },
-                    {
-                        source: "三层节点2",
-                        target: "四层节点8",
-                        value: 2
-                    },
-                    {
-                        source: "三层节点2",
-                        target: "四层节点9",
-                        value: 2
-                    },
-                    {
-                        source: "三层节点2",
-                        target: "四层节点10",
-                        value: 2
-                    },
-                ];
+                const { nodes, links } = this.initData()
+                
                 const option = {
                     tooltip: {
                         trigger: "item",
@@ -195,10 +82,10 @@
                         left: "3%",
                         right: "12%",
                         nodeGap: 14,
-                        layoutIterations: 0, // 自动优化列表，尽量减少线的交叉，为0就是按照数据排列
+                        // layoutIterations: 0, // 自动优化列表，尽量减少线的交叉，为0就是按照数据排列
                         data: nodes, // 节点
                         links: links, // 节点之间的连线
-                        draggable: false,
+                        draggable: true,
                         focusNodeAdjacency: "allEdges", // 鼠标划上时高亮的节点和连线，allEdges表示鼠标划到节点上点亮节点上的连线及连线对应的节点
                         // tooltip: {
                         //   formatter: function(params) {
@@ -209,37 +96,37 @@
                         //     }
                         //   }
                         // },
-                        levels: [{
-                                depth: 0,
-                                itemStyle: {
-                                    color: "#F27E7E"
-                                },
-                                lineStyle: {
-                                    color: "source",
-                                    opacity: 0.2
-                                }
-                            },
-                            {
-                                depth: 1,
-                                lineStyle: {
-                                    color: "source",
-                                    opacity: 0.2
-                                }
-                            },
-                            {
-                                depth: 2,
-                                lineStyle: {
-                                    color: "source",
-                                    opacity: 0.2
-                                }
-                            },
-                            {
-                                depth: 3,
-                                label: {
-                                    fontSize: 12
-                                }
-                            }
-                        ],
+                        // levels: [{
+                        //         depth: 0,
+                        //         itemStyle: {
+                        //             color: "#F27E7E"
+                        //         },
+                        //         lineStyle: {
+                        //             color: "source",
+                        //             opacity: 0.2
+                        //         }
+                        //     },
+                        //     {
+                        //         depth: 1,
+                        //         lineStyle: {
+                        //             color: "source",
+                        //             opacity: 0.2
+                        //         }
+                        //     },
+                        //     {
+                        //         depth: 2,
+                        //         lineStyle: {
+                        //             color: "source",
+                        //             opacity: 0.2
+                        //         }
+                        //     },
+                        //     {
+                        //         depth: 3,
+                        //         label: {
+                        //             fontSize: 12
+                        //         }
+                        //     }
+                        // ],
                         label: {
                             fontSize: 14,
                             color: "#666"
@@ -253,18 +140,17 @@
                 };
 
                 const myChart = echarts.init(document.getElementById('sankey'));
-
                 myChart.setOption(option)
             }
         },
         mounted() {
-            this.initChart();
+            setTimeout(this.initChart);
         }
     }
 </script>
 
 <style lang="less" scoped>
     #sankey{
-        height: 200px;
+        height: 500px;
     }
 </style>
