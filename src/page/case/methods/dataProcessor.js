@@ -20,15 +20,20 @@ export function initData() {
             nlRange = '0~10岁'
         } else if (nl > 10 && nl <= 20) {
             nlRange = '10~20岁'
-        } else if (nl > 20 && nl <= 40) {
-            nlRange = '20~40岁'
-        } else if (nl > 40 && nl <= 60) {
-            nlRange = '40~60岁'
+        } else if (nl > 20 && nl <= 30) {
+            nlRange = '20~30岁'
+        } else if (nl > 30 && nl <= 40) {
+            nlRange = '30~40岁'
+        } else if (nl > 40 && nl <= 50) {
+            nlRange = '40~50岁'
+        } else if (nl > 50 && nl <= 60) {
+            nlRange = '50~60岁'
         } else {
             nlRange = '60岁以上'
         }
         d.nlRange = nlRange;
         d.relation = linkIds.includes(d.blh) ? '链式传染' : '未知传染';
+        d.origin = d.track && d.track.length > 0 ? d.track[0].from : '深圳';
     })
 }
 
@@ -46,7 +51,7 @@ export function aggre(sortkey) {
             return obj;
         }, {})
         .values()
-        .sortBy('value')
+        .orderBy('value', 'desc')
         .value()
 }
 

@@ -21,6 +21,12 @@ const RelationJSON = [
     "detailReason": '境外返回',
     "origin": '柬埔寨',
     "detailOrigin":'柬埔寨',
+    "track": [{
+        "from": "金边",
+        "to": "深圳",
+        "time": "2020/4/11",
+        "tran": "专车",
+    }],
   },
   {
     "yqtblgx": "",

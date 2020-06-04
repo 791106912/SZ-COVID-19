@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="forceCom">
         <div id="chart"></div>
         <div class="legend">
             <div
@@ -8,6 +8,7 @@
                 :key="item.name"
                 v-on:click="()=> selectType(item.name)"
             >
+                <span class="legend-color" :style="{background: colorObj[item.name]}"></span>
                 <span class="legend-name">{{item.name}} ({{item.value}})</span>
                 <span class="legend-percent">{{item.percent}}</span>
             </div>
@@ -38,9 +39,6 @@
             return {
                 width,
                 height,
-                padding: 5,
-                maxRadius: 10,
-                clusterPadding: 20,
                 forceRadius,
                 timeRadius,
                 deminRadius,
@@ -50,31 +48,32 @@
                 selectKey: 'relation',
                 selectGraph: null,
                 selectData: RelationJSON,
+                colorObj: {},
             }
         },
         methods: {
             drag: simulation => {
-                    function dragstarted(d) {
-                        if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-                        d.fx = d.x;
-                        d.fy = d.y;
-                    }
-                    
-                    function dragged(d) {
-                        d.fx = d3.event.x;
-                        d.fy = d3.event.y;
-                    }
-                    
-                    function dragended(d) {
-                        if (!d3.event.active) simulation.alphaTarget(0);
-                        d.fx = null;
-                        d.fy = null;
-                    }
-                    
-                    return d3.drag()
-                        .on("start", dragstarted)
-                        .on("drag", dragged)
-                        .on("end", dragended);
+                function dragstarted(d) {
+                    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+                    d.fx = d.x;
+                    d.fy = d.y;
+                }
+                
+                function dragged(d) {
+                    d.fx = d3.event.x;
+                    d.fy = d3.event.y;
+                }
+                
+                function dragended(d) {
+                    if (!d3.event.active) simulation.alphaTarget(0);
+                    d.fx = null;
+                    d.fy = null;
+                }
+                
+                return d3.drag()
+                    .on("start", dragstarted)
+                    .on("drag", dragged)
+                    .on("end", dragended);
             },
             initChart() {
                 this.svg = d3.select('#chart')
@@ -84,7 +83,7 @@
                 initData();
                 this.initTimeCircle();
                 this.initDemiCircle();
-                this.initLegend('relation')
+                this.initLegend('nlRange')
             },
             initTimeCircle() {
                 const timeArr = _.chain(RelationJSON)
@@ -144,8 +143,8 @@
                     name: '年龄',
                     sortkey: 'nlRange',
                 }, {
-                    name: '性别',
-                    sortkey: 'xb',
+                    name: '来源地',
+                    sortkey: 'origin',
                 }]
 
                 const pie = d3.pie()
@@ -213,112 +212,52 @@
                     .attr('href', d => `#hiddenArc${d.data.name}`)
                     .text(d => d.data.name);
             },
-            initAggreGraph(key) {
+            initAggreGraph() {
+                this.svg.select('g.force').remove();
+                this.svg.select('g.aggre').remove();
+                
+                const useKey = this.selectKey
+                const clusterPadding = 20
                 const maxRadius = 10;
-
-                this.svg.select('.aggre').remove();
-                this.svg.select('.force').remove();
-
-                const container = this.svg.append('g')
-                    .classed('aggre', true);
+                const padding = 5;
 
                 const nodes = this.selectData.map(d => ({
                     ...d,
-                    radius: 5,
-                    x: Math.random() * this.width,
-                    y: Math.random() * this.height
-                }));
-
-                const objMap = {};
-                nodes.forEach(d => {
-                    if (!objMap[d[key]]) objMap[d[key]] = d;
-                });
+                    radius: 5
+                }))
                 
-                const cluster = alpha => {
-                    return  (d) => {
-                        const clusterItem = objMap[d[key]];
-                        if (clusterItem === d) return;
-                        let x = d.x - clusterItem.x,
-                            y = d.y - clusterItem.y,
-                            l = Math.sqrt(x * x + y * y),
-                            r = d.radius + clusterItem.radius + 3;
-                        if (l != r) {
-                        l = (l - r) / l * alpha;
-                        d.x -= x *= l;
-                        d.y -= y *= l;
-                        clusterItem.x += x;
-                        clusterItem.y += y;
-                        }
-                    };
-                }
-
-                const collide = alpha => {
-                    const quadtree = d3.quadtree()
-                        .x(d => d.x)
-                        .y(d => d.y)
-                        .extent([[0, 0], [this.width, this.height]])
-                        .addAll(this.selectData);
-
-                    return d => {
-                        let r = d.radius + (maxRadius * 8) + Math.max(this.padding, this.clusterPadding),
-                            nx1 = d.x - r,
-                            nx2 = d.x + r,
-                            ny1 = d.y - r,
-                            ny2 = d.y + r;
-                        quadtree.visit((quad, x1, y1, x2, y2) => {
-                            let data = quad.data;
-                            if (data && data !== d) {
-                                let x = d.x - data.x,
-                                    y = d.y - data.y,
-                                    l = Math.sqrt(x * x + y * y),
-                                    r = d.radius + data.radius + (d[key] == data[key] ? this.padding : this.clusterPadding);
-                                if (l < r) {
-                                l = (l - r) / l * alpha;
-                                d.x -= x *= l;
-                                d.y -= y *= l;
-                                data.x += x;
-                                data.y += y;
-                                }
-                            }
-                            return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
-                        });
-                    };
-                }
-
                 const line = d3.line().curve(d3.curveBasisClosed)
-                const ticked = () => {
-                    node
-                        .each(cluster(0.2))
-                        .each(collide(0.1))
-                        .attr('cx', d => d.x)
-                        .attr('cy', d => d.y);
-                    
-                    hulls.attr('d', d => line(d3.polygonHull(hullPoints(d.nodes))));
-                }
-                const simulation = d3.forceSimulation(this.selectData)
-                    .alpha(0.3)
-                    .force('center', d3.forceCenter().x(this.width / 6).y(this.height / 6))
-                    .force('collide', d3.forceCollide(d => d.radius + this.padding))
-                    .nodes(nodes, d => d.id)
-                    .on("tick", ticked)
-                    .force("charge", d3.forceManyBody())
-                    .force("x", d3.forceX())
-                    .force("y", d3.forceY())
+                const simulation = d3.forceSimulation()
+                    .force('collide', d3.forceCollide(d => d.radius + padding))
+                    .nodes(nodes, d => d.blh)
                     .restart();
-                
-                const color = d3.scaleOrdinal(d3.schemeCategory10);
+                const aggreContainer = this.svg.append('g')
+                    .classed('aggre', true);
+                    
+                const hullG = aggreContainer.append('g')
+                    .attr('class', 'hulls');
 
-                const node = container.append('g')
-                    .attr('class', 'aggreNode')
+                const color = d3.scaleOrdinal(d3.schemeCategory10)
+                
+                const node = aggreContainer.append('g')
+                    .attr('class', 'nodes')
                     .selectAll('circle')
-                    .data(nodes)
+                    .data(nodes, d => d.blh)
                     .enter()
                     .append('circle')
                     .attr('r', d => d.radius)
-                    .attr('fill', d => color(d[key]))
+                    .attr('fill', d => {
+                        this.colorObj[d[useKey]] = color(d[useKey]);
+                        return color(d[useKey])
+                    })
                     .call(this.drag(simulation));
 
-                 const hullPoints = data => {
+                const clusters = {};
+                nodes.forEach(n => {
+                    if (!clusters[n[useKey]] || (n.radius > clusters[n[useKey]].radius)) clusters[n[useKey]] = n;
+                });
+
+                const hullPoints = function (data) {
                     let pointArr = [];
                     const padding = 2.5;
                     data.each(d => {
@@ -332,23 +271,80 @@
                     });
                     return pointArr;
                 }
-
-                const hulls = container
-                    .append('g')
-                    .attr('class', 'hulls')
-                    .selectAll('path')
-                    .data(
-                        Object.keys(objMap).map(c => ({
-                            key: c,
-                            nodes: node.filter(d => d[key] == c)
-                        })
-                    )
-                    .filter(d => d[key] != 0), d => d[key])
-                    .enter().append('path')
-                    .attr('d', d =>  line(d3.polygonHull(hullPoints(d.nodes))))
-                    .attr('fill', d => color(d[key]))
-                    .attr('opacity', 0.4);
                 
+                const hulls = hullG
+                    .selectAll('path')
+                    .data(Object.keys(clusters).map(c => {
+                    return {
+                        [useKey]: c,
+                        nodes: node.filter(d => d[useKey] == c)
+                    };
+                    }).filter(d => d[useKey] != 0), d => d[useKey])
+                    .enter().append('path')
+                    .attr('d', d => line(d3.polygonHull(hullPoints(d.nodes))))
+                    .attr('fill', d => color(d[useKey]))
+                    .attr('opacity', 0.4);
+
+                const cluster = function(alpha) {
+                    return function (d) {
+                        const cluster = clusters[d[useKey]];
+                        if (cluster === d || d[useKey] == 0) return;
+                        let x = d.x - cluster.x,
+                            y = d.y - cluster.y,
+                            l = Math.sqrt(x * x + y * y),
+                            r = d.radius + cluster.radius + 3;
+                        if (l != r) {
+                        l = (l - r) / l * alpha;
+                        d.x -= x *= l;
+                        d.y -= y *= l;
+                        cluster.x += x;
+                        cluster.y += y;
+                        }
+                    };
+                }
+
+                const collide = (alpha) => {
+                    const quadtree = d3.quadtree()
+                        .x(d => d.x)
+                        .y(d => d.y)
+                        .extent([[0, 0], [this.width, this.height]])
+                        .addAll(nodes);
+                    return function (d) {
+                        let r = d.radius + (maxRadius * 8) + Math.max(padding, clusterPadding),
+                            nx1 = d.x - r,
+                            nx2 = d.x + r,
+                            ny1 = d.y - r,
+                            ny2 = d.y + r;
+                        quadtree.visit(function (quad, x1, y1, x2, y2) {
+                        let data = quad.data;
+                        if (data && data !== d) {
+                            let x = d.x - data.x,
+                                y = d.y - data.y,
+                                l = Math.sqrt(x * x + y * y),
+                                r = d.radius + data.radius + (d[useKey] == data[useKey] ? padding : clusterPadding);
+                            if (l < r) {
+                            l = (l - r) / l * alpha;
+                            d.x -= x *= l;
+                            d.y -= y *= l;
+                            data.x += x;
+                            data.y += y;
+                            }
+                        }
+                        return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+                        });
+                    };
+                }
+
+                simulation.on("tick", () => {
+                    node
+                    .each(cluster(0.2))
+                    .each(collide(0.1))
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y);
+                    
+                    hulls
+                    .attr('d', d => line(d3.polygonHull(hullPoints(d.nodes))));
+                })
             },
             initForce() {
                 const [nodes, links] = calculateNodeAndLink(this.selectData);
@@ -468,7 +464,20 @@
 </script>
 
 <style lang="less">
+    .forceCom{
+        display: flex;
+        height: 600px;
+        margin-top: 20px;
+        align-items: center;
+    }
+    #chart{
+        width: 600px;
+        height: 100%;
+    }
     .legend{
+        max-height: 80%;
+        overflow-y: scroll;
+        margin-left: 40px;
         .legend-item{
             cursor: pointer;
             &.disabled{
@@ -477,17 +486,16 @@
             >span{
                 display: inline-block;
             }
-            .legend-name{
-
+            .legend-color{
+                height: 10px;
+                width: 10px;
+                margin-right: 20px;
+                border-radius: 100px;
             }
             .legend-percent{
                 margin-left: 20px;
             }
         }
-    }
-    #chart{
-        height: 600px;
-        width: 600px;
     }
     .force{
         circle {
