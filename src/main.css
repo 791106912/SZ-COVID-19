@@ -22,3 +22,44 @@ body{
     box-shadow:inset 0 0 6px rgba(0,0,0,.3);
     background: linear-gradient(to right, #1f468b, 30%, #0f1f3c);
 }
+
+/* element form */
+.el-form .el-input__inner, input[disabled=disabled], input:hover {
+    background-color: rgba(26, 49, 107, .6);
+    border-color: #102B75 !important;
+    color: #c0c4cc;
+}
+
+.el-form .el-range-input {
+    background: transparent;
+}
+
+.el-picker-panel, .el-select-dropdown {
+    background-color: #1A316B;
+    border-color: #102B75 !important;
+    color: #c0c4cc;
+}
+
+.el-picker-panel .el-date-range-picker__time-header, .el-picker-panel__content {
+    border-color: #1f468b;
+    border-right-color: #1f468b !important;
+
+}
+
+.el-picker-panel .el-date-table .in-range div {
+    background-color: #2a4a93;
+}
+
+.el-picker-panel .el-date-table th {
+    border-color: #1f468b !important;
+}
+
+.el-picker-panel input, input[disabled], .el-picker-panel__footer {
+    background-color: #1A316B !important;
+    border-color: #102B75 !important;
+}
+
+.el-select-dropdown .el-select-dropdown__item.hover {
+    background-color: #2a4a93;
+    border-color: #102B75 !important;
+}
