@@ -146,6 +146,9 @@
                 }, {
                     name: '来源地',
                     sortkey: 'origin',
+                }, {
+                    name: '居住地',
+                    sortkey: 'livelocation',
                 }]
 
                 const pie = d3.pie()

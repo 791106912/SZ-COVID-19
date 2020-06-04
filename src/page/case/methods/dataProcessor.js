@@ -36,6 +36,18 @@ export function initData() {
         }
         d.nlRange = nlRange;
         d.relation = linkIds.includes(d.blh) ? '聚集传播' : '其他';
+        
+        let livelocation = '未知' 
+        if(d.jzd) {
+            if (d.jzd.includes('深圳')) {
+                livelocation = '深圳'
+            } else if (d.jzd.includes('省')) {
+                livelocation = d.jzd.split('省')[0]
+            } else {
+                livelocation = d.jzd;
+            }
+        }
+        d.livelocation = livelocation;
         // d.origin = d.track && d.track.length > 0 ? d.track[0].from : '深圳';
     })
 }
