@@ -12,6 +12,8 @@
     import StationGeo from '@/data/station'
     import TrackJSON from '@/data/track'
 
+    const PERIOD = 2;
+
     export default {
         name: 'Map',
         methods: {
@@ -69,7 +71,7 @@
                             },
                             loop: true,
                             autoPlay: true,
-                            playInterval: 4000,
+                            playInterval: PERIOD * 1000,
                             data: timelineData
                         },
                         tooltip: {
@@ -119,6 +121,7 @@
                 };
                 const myChart = echarts.init(document.getElementById('trackMap'), 'light');
                 myChart.setOption(option);
+                this.myChart = myChart
             },
             initData() {
                 const trackObj = _.chain(TrackJSON)
@@ -156,34 +159,49 @@
                     .value()
                 return trackObj;
             },
+            getScatterData(data) {
+                return _.chain(data)
+                    .flattenDeep()
+                    .reduce((obj, d) => {
+                        if(d.name === '深圳') return obj;
+                        let value = d.coord.concat(d.value);
+                        if(obj[d.name]) {
+                            value[2] += 1;
+                        }
+                        obj[d.name] = {
+                            name: d.name,
+                            value,
+                        }
+                        return obj;
+                    }, {})
+                    .values()
+                    .value();
+            },
             initOptions() {
                 const timeTrack = this.initData()
                 const options = _.chain(timeTrack)
                     .orderBy(d => new Date(d[0].track[0].time).getTime())
-                    .map(d => {
+                    .map((d, i, arr) => {
                         const trackData = d.map(d1 => d1.track)
-                        const scatterData = _.chain(trackData)
-                            .flattenDeep()
-                            .reduce((obj, d) => {
-                                if(d.name === '深圳') return obj;
-                                let value = d.coord.concat(d.value);
-                                if(obj[d.name]) {
-                                    value[2] += 1;
-                                }
-                                obj[d.name] = {
-                                    name: d.name,
-                                    value,
-                                }
-                                return obj;
-                            }, {})
-                            .values()
-                            .value();
+                        const addTrackData = _.chain(arr)
+                            .slice(0, i)
+                            .flatten()
+                            .map(d1 => d1.track)
+                            .value()
+                        const scatterData = this.getScatterData(trackData)
+                        const addScatterData = this.getScatterData(addTrackData)
                         return {
                             series: [{
                                 data: trackData,
                             },
                             {
                                 data: scatterData,
+                            },
+                            {
+                                data: addTrackData,
+                            },
+                            {
+                                data: addScatterData
                             }]
                         }
                     })
@@ -203,7 +221,7 @@
                         zlevel: 2,
                         effect: {
                             show: true,
-                            period: 2, //箭头指向速度，值越小速度越快
+                            period: PERIOD, //箭头指向速度，值越小速度越快
                             trailLength: 0.02, //特效尾迹长度[0,1]值越大，尾迹越长重
                             symbol: "arrow", //箭头图标
                             symbolSize: 5, //图标大小
@@ -252,6 +270,60 @@
                         },
                     },
                     {
+                        id: 'allLines',
+                        type: "lines",
+                        zlevel: 2,
+                        effect: {
+                            show: false,
+                            color: '#37A2DA',
+                            period: 0, //箭头指向速度，值越小速度越快
+                            trailLength: 0.02, //特效尾迹长度[0,1]值越大，尾迹越长重
+                            symbol: "arrow", //箭头图标
+                            symbolSize: 5, //图标大小
+                            loop: false,
+                        },
+                        lineStyle: {
+                            normal: {
+                                color: '#37A2DA',
+                                width: 1, //尾迹线条宽度
+                                opacity: 0.8, //尾迹线条透明度
+                                curveness: 0.3 //尾迹线条曲直度
+                            }
+                        },
+                        animation: false,
+                    },
+                    {
+                        type: 'scatter',
+                        coordinateSystem: 'geo',
+                        zlevel: 1,
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'right', //显示位置
+                                offset: [5, 0], //偏移设置
+                                formatter: function(params){//圆环显示文字
+                                    return params.data.name;
+                                },
+                                fontSize: 10
+                            },
+                            emphasis: {
+                                show: true
+                            }
+                        },
+                        symbol: 'circle',
+                        symbolSize: function(val) {
+                            return val[2] * 3 >= 6 ? 5 : val[2] * 3; //圆环大小
+                        },
+                        itemStyle: {
+                            normal: {
+                                show: false,
+                                color: '#f00',
+                                opacity: .4,
+                            }
+                        },
+                        animation: false,
+                    },
+                    {
                         type: 'scatter',
                         coordinateSystem: 'geo',
                         zlevel: 2,
@@ -283,7 +355,7 @@
                             name: '深圳',
                             value: StationGeo['深圳'].concat([10]),
                         }],
-                    }
+                    },
                 );
                 return series;
             },
