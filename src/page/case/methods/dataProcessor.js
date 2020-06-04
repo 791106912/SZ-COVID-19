@@ -1,9 +1,9 @@
 import _ from 'lodash'
-import RelationJSON from '../data/relation'
+import TrackJSON from '@/data/track'
 
 export function initData() {
     const linkIds = [];
-    _.forIn(RelationJSON, d => {
+    _.forIn(TrackJSON, d => {
         const relation = d.yqtblgx;
         const targetId = d.blh;
         if (relation) {
@@ -13,7 +13,7 @@ export function initData() {
             })
         }
     })
-    RelationJSON.forEach(d => {
+    TrackJSON.forEach(d => {
         let nlRange = ''
         const nl = Number(d.nl);
         if (nl <= 10) {
@@ -53,8 +53,8 @@ export function initData() {
 }
 
 export function aggre(sortkey) {
-    const total = RelationJSON.length;
-    return _.chain(RelationJSON)
+    const total = TrackJSON.length;
+    return _.chain(TrackJSON)
         .reduce((obj, d) => {
             const key = d[sortkey] === '' ? '未知' : d[sortkey];
             const value = obj[key] ? obj[key].value + 1 : 1;

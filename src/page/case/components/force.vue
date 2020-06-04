@@ -22,7 +22,7 @@
     import * as d3 from 'd3'
     import * as d3Fisheye from 'd3-fisheye'
     import _ from 'lodash'
-    import RelationJSON from '../data/relation'
+    import TrackJSON from '@/data/track'
     import { initData, calculateNodeAndLink, aggre } from '../methods/dataProcessor'
     
     export default {
@@ -48,7 +48,7 @@
                 disbaled: [],
                 selectKey: 'relation',
                 selectGraph: null,
-                selectData: RelationJSON,
+                selectData: TrackJSON,
                 colorObj: {},
                 selectMeth: 'mul',
             }
@@ -88,7 +88,7 @@
                 this.initLegend(this.selectKey)
             },
             initTimeCircle() {
-                const timeArr = _.chain(RelationJSON)
+                const timeArr = _.chain(TrackJSON)
                     .reduce((obj, d) => {
                         obj[d.fbrq] = {
                             name: d.fbrq,
@@ -454,12 +454,12 @@
             initLegend(key) {
                 this.selectKey = key;
                 this.disbaled = [];
-                this.selectData = RelationJSON
+                this.selectData = TrackJSON
                 this.legendArr = aggre(key);
 
                 if (this.selectKey === 'relation') {
                     this.selectGraph = this.initForce
-                    this.selectData = RelationJSON.filter(d => d.relation === '聚集传播')
+                    this.selectData = TrackJSON.filter(d => d.relation === '聚集传播')
                     this.disbaled = ['其他']
                     this.selectMeth = 'only';
                 } else {
@@ -479,7 +479,7 @@
                         : this.disbaled.push(name)
                 }
 
-                this.selectData = RelationJSON.filter(d => !this.disbaled.includes(d[this.selectKey]));
+                this.selectData = TrackJSON.filter(d => !this.disbaled.includes(d[this.selectKey]));
                 this.selectGraph();
             }
         },
