@@ -35,7 +35,7 @@
             const timeRadius = [radius - 80, radius - 60] ;
             const deminRadius = [radius - 30, radius];
             const timeRange = d3.extent(TrackJSON, d => {
-                return new Date(`2020/${d.realDate}`).getTime()
+                return new Date(d.realDate).getTime()
             });
             
             return {
@@ -54,18 +54,18 @@
         },
         methods: {
             drag: () => {
-                function dragstarted(d) {
+                const dragstarted = d => {
                     if (!d3.event.active) this.simulation.alphaTarget(0.3).restart();
                     d.fx = d.x;
                     d.fy = d.y;
                 }
                 
-                function dragged(d) {
+                const dragged = d => {
                     d.fx = d3.event.x;
                     d.fy = d3.event.y;
                 }
                 
-                function dragended(d) {
+                const dragended = d => {
                     if (!d3.event.active) this.simulation.alphaTarget(0);
                     d.fx = null;
                     d.fy = null;
@@ -87,11 +87,11 @@
                 this.createForce();
             },
             initTimeCircle() {
-                const timeArr = _.chain(TrackJSON)
+                const gapTimeArr = _.chain(TrackJSON)
                     .reduce((obj, d) => {
-                        obj[d.fbrq] = {
-                            name: d.fbrq,
-                            value: obj[d.fbrq] ? obj[d.fbrq].value + 1 : 1,
+                        obj[d.realDate] = {
+                            name: d.realDate,
+                            value: obj[d.realDate] ? obj[d.realDate].value + 1 : 1,
                         }
                         return obj;
                     }, {})
@@ -99,7 +99,22 @@
                     .orderBy(d => new Date(d).getTime(), 'desc')
                     .value();
 
-                this.timeIndex = [timeArr[0].name, timeArr[timeArr.length - 1].name]
+                const oneDay = 24 * 3600 * 1000;
+                const timeArr = [];
+                gapTimeArr.forEach((d, i) => {
+                    timeArr.push(d);
+                    if(gapTimeArr[i+1]) {
+                        const timeItemArr = [d.name, gapTimeArr[i+1].name].map(d1 => new Date(d1).getTime())
+                        const timeSpace = timeItemArr[1] - timeItemArr[0] - oneDay;
+                        const dayCount = timeSpace/oneDay;
+                        for(let i = 1; i <= dayCount; i++){
+                            timeArr.push({
+                                name: new Date(timeItemArr[0] + i * oneDay).toLocaleDateString(),
+                                value: d.value
+                            })
+                        }
+                    }
+                })
 
                 const [min, max] = d3.extent(timeArr, d => d.value);
                 const color = d3.scaleLinear()
@@ -158,14 +173,13 @@
                     .attr('font-size', '9px')
                     .attr('fill', '#fff')
                     .attr('href', d => `#hiddenArc${d.data.name}`)
-                    .text(d => d.data.name);
-
-                // const radius = (this.timeRadius[0] + this.timeRadius[1]) / 2;
-                const radius = (this.timeRadius[1]) + 4;
+                    .text(d => d.data.name.replace('2020/', ''));
+                    
+                const radius = this.timeRadius[1] + (this.deminRadius[0] - this.timeRadius[1]) / 2;
 
                 const indexScale = d3.scaleLinear()
                         .domain([0, 1])
-                        .range([0, timeArr.length]);
+                        .range([0, timeArr.length - 1]);
 
                 function dragStart(){
                     const rad = Math.atan2(d3.event.y, d3.event.x);
@@ -174,12 +188,21 @@
                         .attr('cy', radius * Math.sin(rad))
                 }
 
-                const dragEnd = index => {
+                const dragEnd = (index) => {
                     let rad = Math.atan2(d3.event.y, d3.event.x);
                     rad += Math.PI / 2;
                     if(rad < 0)  rad = Math.PI * 2 + rad
                     const scale = rad / (Math.PI * 2);
-                    this.timeIndex[index] = Math.ceil(indexScale(scale))
+                    // const timeIndex = Math.ceil(indexScale(scale));
+                    const timeIndex = parseInt(indexScale(scale));
+                    const timeItem = new Date(timeArr[timeIndex].name).getTime();
+                    // if(timeItem <= this.timeRange[0]) {
+                        // index = 0
+                    // } else if(timeItem >= this.timeRange[1]) {
+                        // index = 1;
+                    // }
+                    this.timeRange[index] = timeItem;
+                    this.selectType();
                 }
 
                 container.append('circle')
@@ -195,7 +218,7 @@
                     })
                     .call(d3.drag()
                         .on("drag",dragStart)
-                        .on("end", () => dragEnd(0))
+                        // .on("end", () => dragEnd(1))
                     );
 
                 container.append('circle')
@@ -428,6 +451,7 @@
                     .restart();
             },
             selectType() {
+                console.log(this.timeRange.map(d => new Date(d).toLocaleDateString()));
                 this.selectData = TrackJSON.filter(d => {
                     let isKeep = true;
                     Object.keys(this.filterObj)
@@ -437,8 +461,8 @@
                         })
                     return isKeep;
                 }).filter(d => {
-                    const timeSort = this.timeRange.concat(d.fbrq).map(d1 => new Date(d1).getTime());
-                    return timeSort[2] >= timeSort[0] && timeSort[2] <= timeSort[1];
+                    const timeStap = new Date(d.realDate).getTime();
+                    return timeStap >= this.timeRange[0] && timeStap <= this.timeRange[1];
                 });
                 this.draw();
             }

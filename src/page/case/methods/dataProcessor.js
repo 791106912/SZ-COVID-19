@@ -48,6 +48,8 @@ export function initData() {
             }
         }
         d.livelocation = livelocation;
+
+        d.realDate = `2020/${d.fbrq.replace(/月/, '/').replace(/日/, '')}`;
         // d.origin = d.track && d.track.length > 0 ? d.track[0].from : '深圳';
     })
 }
@@ -73,25 +75,28 @@ export function aggre(sortkey) {
 export function calculateNodeAndLink(data) {
     const links = [];
     const linkIds = [];
-    const nodes = data
+    const nodes = data;
+    const nodeIds = data.map(d => d.blh);
     _.forIn(nodes, d => {
         const relation = d.yqtblgx;
         const targetId = d.blh;
         if (relation) {
             const relationArr = relation.match(/\d+/g);
             relationArr.forEach(sourceid => {
-                linkIds.push(sourceid, targetId)
-                links.push({
-                    source: sourceid,
-                    target: targetId,
-                })
+                if(nodeIds.includes(sourceid) && nodeIds.includes(targetId)) {
+                    linkIds.push(sourceid, targetId)
+                    links.push({
+                        source: sourceid,
+                        target: targetId,
+                    })
+                }
             })
         }
     })
 
     nodes.forEach(d => {
         const count = linkIds.filter(d1 => d1 === d.blh).length;
-        const r = 3;
+        const r = 5;
         d.r = r + count * 2;
     })
 
