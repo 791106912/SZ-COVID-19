@@ -182,10 +182,16 @@
                         .range([0, timeArr.length - 1]);
 
                 function dragStart(){
-                    const rad = Math.atan2(d3.event.y, d3.event.x);
+                    let rad = Math.atan2(d3.event.y, d3.event.x);
                     d3.select(this)
-                        .attr('cx', radius * Math.cos(rad))
-                        .attr('cy', radius * Math.sin(rad))
+                        .style('transform', () => {
+                            const x = radius * Math.cos(rad);
+                            const y = radius * Math.sin(rad);
+                            rad += Math.PI / 2;
+                            if(rad < 0)  rad = Math.PI * 2 + rad
+                            const scale = rad / (Math.PI * 2) * 360;
+                            return `translate(${x}px, ${y}px) rotate(${scale}deg)`
+                        })
                 }
 
                 const dragEnd = (index) => {
@@ -205,38 +211,30 @@
                     this.selectType();
                 }
 
-                container.append('circle')
-                    .attr('r', 8)
-                    .attr('fill', 'red')
-                    .attr('cx',  () => {
-                        const x = radius * Math.cos( - Math.PI / 2)
-                        return x;
+                container.append('polygon')
+                    .attr('fill', 'yellow')
+                    .attr('cursor', 'pointer')
+                    .attr('points', '0,-10 -8,10 8,10')
+                    .attr('transform', () => {
+                        return `translate(${0}, ${radius * Math.sin( - Math.PI / 2)})`
                     })
-                    .attr('cy', () => {
-                        const y = radius * Math.sin( - Math.PI / 2);
-                        return y;
-                    })
-                    .call(d3.drag()
-                        .on("drag",dragStart)
-                        // .on("end", () => dragEnd(1))
+                    .call(
+                        d3.drag()
+                        .on("drag", dragStart)
                     );
 
-                container.append('circle')
-                    .attr('r', 8)
-                    .attr('fill', 'yellow')
-                    .attr('cx',  () => {
-                        const x = radius * Math.cos(0 * 2 * Math.PI - Math.PI / 2)
-                        return x;
+                container.append('polygon')
+                    .attr('fill', 'red')
+                    .attr('cursor', 'pointer')
+                    .attr('points', '0,-10 -8,10 8,10')
+                    .attr('transform', () => {
+                        return `translate(${0}, ${radius * Math.sin( - Math.PI / 2)})`
                     })
-                    .attr('cy', () => {
-                        const y = radius * Math.sin(0 * 2 * Math.PI - Math.PI / 2);
-                        return y;
-                    })
-                    .call(d3.drag()
+                    .call(
+                        d3.drag()
                         .on("drag", dragStart)
                         .on("end",  () =>  dragEnd(1))
                     );
-                
             },
             initDemiCircle() {
                 const deminArr = [{
@@ -451,6 +449,7 @@
                     .restart();
             },
             selectType() {
+                console.log(this.timeRange.map(d => new Date(d).toLocaleDateString()));
                 this.selectData = TrackJSON.filter(d => {
                     let isKeep = true;
                     Object.keys(this.filterObj)
