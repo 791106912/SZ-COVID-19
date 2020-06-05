@@ -25,6 +25,7 @@
     export default {
         name: 'Force',
         data() {
+            initData();
             const height = 800;
             const width = 800;
 
@@ -33,6 +34,9 @@
             const fisheyeRadius = 100;
             const timeRadius = [radius - 80, radius - 60] ;
             const deminRadius = [radius - 30, radius];
+            const timeRange = d3.extent(TrackJSON, d => {
+                return new Date(`2020/${d.realDate}`).getTime()
+            });
             
             return {
                 width,
@@ -44,14 +48,14 @@
                 deminArr: [],
                 colorObj: {},
                 disbaled: [],
-                selectData: TrackJSON,
-                timeIndex: [0, 0]
+                timeRange: timeRange,
+                filterObj: {},
             }
         },
         methods: {
-            drag: simulation => {
+            drag: () => {
                 function dragstarted(d) {
-                    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+                    if (!d3.event.active) this.simulation.alphaTarget(0.3).restart();
                     d.fx = d.x;
                     d.fy = d.y;
                 }
@@ -62,7 +66,7 @@
                 }
                 
                 function dragended(d) {
-                    if (!d3.event.active) simulation.alphaTarget(0);
+                    if (!d3.event.active) this.simulation.alphaTarget(0);
                     d.fx = null;
                     d.fy = null;
                 }
@@ -77,9 +81,10 @@
                     .append("svg")
                     .attr("viewBox", [-this.width / 2, -this.height / 2, this.width, this.height])
 
-                initData();
+                this.selectData = TrackJSON;
                 this.initTimeCircle();
                 this.initDemiCircle();
+                this.createForce();
             },
             initTimeCircle() {
                 const timeArr = _.chain(TrackJSON)
@@ -225,6 +230,10 @@
                     sortkey: 'livelocation',
                 }]
 
+                deminArr.forEach(d => {
+                    this.filterObj[d.sortkey] = [];
+                })
+
                 this.deminArr = deminArr
 
                 const deminData = _.chain(deminArr)
@@ -266,6 +275,8 @@
                 const pathContainer = container
                     .append('g')
                     .classed('path', true)
+                
+                const _this = this;
 
                 pathContainer
                     .selectAll("path")
@@ -278,12 +289,16 @@
                     })
                     .attr("d", arc)
                     .attr('stroke','none')
-                    .on('click', function() {
-                        pathContainer
-                            .selectAll('path')
-                            .attr("stroke", 'none')
-                        d3.select(this)
-                            .attr("stroke", '#fff')
+                    .on('click', function(d) {
+                        const {sortkey, name} = d.data;
+                        if(_this.filterObj[sortkey].includes(name)) {
+                            d3.select(this).attr('stroke', 'none');
+                            _this.filterObj[sortkey] = _this.filterObj[sortkey].filter(d => d !== name);
+                        } else {
+                            d3.select(this).attr('stroke', '#fff');
+                            _this.filterObj[sortkey].push(name);
+                        }
+                        _this.selectType();
                     })
 
                 const text = container.append("g")
@@ -314,67 +329,88 @@
                     .attr('href', d => `#hiddenArc${d.data.name}_${d.data.type}`)
                     .text(d => d.data.name);
             },
-            draw() {
-                const [nodes, links] = calculateNodeAndLink(this.selectData);
-                const simulation = d3.forceSimulation(nodes)
-                    .force("link", 
-                        d3.forceLink(links).id(d => d.blh)
-                    )
+            createForce() {
+                 this.simulation = d3.forceSimulation()
+                    .force("link", d3.forceLink().id(d => d.blh))
                     .force("charge", d3.forceManyBody())
                     .force("x", d3.forceX())
-                    .force("y", d3.forceY());
+                    .force("y", d3.forceY())
+                    .on("tick", () => {
+                        d3.selectAll('.linkItem')
+                            .attr("x1", d => d.source.x)
+                            .attr("y1", d => d.source.y)
+                            .attr("x2", d => d.target.x)
+                            .attr("y2", d => d.target.y);
+
+                        d3.selectAll('.circleG')
+                            .attr('transform', d => `translate(${d.x}, ${d.y})`)
+                    });
 
                 const fisheye = d3Fisheye.radial()
                     .radius(this.fisheyeRadius)
                     .distortion(2)
                     .smoothing(0.5);
 
+                this.svg.on('mousemove', function() {
+                    const mouse = d3.mouse(this);
+                    fisheye.focus(mouse);
+                    d3.selectAll('.circleG').each(d => {
+                            d.fisheye = fisheye([d.x, d.y]);
+                        })
+                        .attr('transform', d => `translate(${d.fisheye[0]}, ${d.fisheye[1]})`)
+                    d3.selectAll('.circleG')
+                        .select('circle')
+                        .attr('r', d => d.fisheye[2] * d.r);
+
+                    d3.selectAll('.circleG')
+                        .select('text')
+                        .attr('font-size', d => d.fisheye[2] * 5);
+
+                    d3.selectAll('.linkItem')
+                        .attr("x1", d => d.source.fisheye[0])
+                        .attr("y1", d => d.source.fisheye[1])
+                        .attr("x2", d => d.target.fisheye[0])
+                        .attr("y2", d => d.target.fisheye[1]);
+                })
+
                 const forceContainer = this.svg.append('g')
                     .classed('force', true)
-                this.svg.on('mousemove', function() {
-                        const mouse = d3.mouse(this);
-                        fisheye.focus(mouse);
-                        node.each(d => {
-                                d.fisheye = fisheye([d.x, d.y]);
-                            })
-                            .attr('transform', d => `translate(${d.fisheye[0]}, ${d.fisheye[1]})`)
-                        node.select('circle')
-                            .attr('r', d => {
-                                return d.fisheye[2] * d.r
-                            })
 
-                        node.select('text')
-                            .attr('font-size', d => {
-                                return d.fisheye[2] * 5
-                            })
+                this.linkContainer = forceContainer.append('g').classed('links', true);
+                this.nodeContainer = forceContainer.append('g').classed('nodes', true);
+            },
+            draw() {
+                const [nodes, links] = calculateNodeAndLink(this.selectData);
 
-                        link.attr("x1", d => d.source.fisheye[0])
-                            .attr("y1", d => d.source.fisheye[1])
-                            .attr("x2", d => d.target.fisheye[0])
-                            .attr("y2", d => d.target.fisheye[1]);
-                    })
+                this.simulation.nodes(nodes);
+                this.simulation.force("link").links(links);
+
+                const linkUpdate = this.linkContainer
+                    .selectAll(".linkItem")
+                    .data(links, d => `${d.source.blh}_${d.target.blh}`);
                     
+                linkUpdate.enter()
+                    .append("line")
+                    .classed('linkItem', true);
 
-                const link = forceContainer
-                    .append("g")
-                    .classed('link', true)
-                    .selectAll("line")
-                    .data(links)
-                    .join("line")
+                linkUpdate.exit().remove();
 
-                const node = forceContainer.append("g")
-                    .classed('node', true)
+                const nodeUpdate = this.nodeContainer
                     .selectAll(".circleG")
                     .data(nodes, d => d.blh)
-                    .enter()
+
+                nodeUpdate.select('circle')
+                        .attr('r', d => d.r)
+
+                const newAddNode = nodeUpdate.enter()
                     .append('g')
                     .classed('circleG', true)
-                    .attr('transform', d => `translate(${d.x}, ${d.y})`)
-                    .call(this.drag(simulation));
+                    .call(this.drag())
 
-                node.append("circle").attr("r", d => d.r)
+                newAddNode.append("circle")
+                    .attr('r', d => d.r)
 
-                node.append("text")
+                newAddNode.append("text")
                     .attr('font-size', 5)
                     .text(d => {
                         let showText = d.blh;
@@ -385,23 +421,31 @@
                         return showText
                     })
 
-                simulation.on("tick", () => {
-                    link
-                        .attr("x1", d => d.source.x)
-                        .attr("y1", d => d.source.y)
-                        .attr("x2", d => d.target.x)
-                        .attr("y2", d => d.target.y);
-
-                     node.attr('transform', d => `translate(${d.x}, ${d.y})`)
-                });
+                nodeUpdate.exit().remove();
+                    
+                this.simulation.alpha(1)
+                    .alphaTarget(0)
+                    .restart();
             },
             selectType() {
-                // this.selectData = TrackJSON.filter(d => !this.disbaled.includes(d[this.selectKey]));
+                this.selectData = TrackJSON.filter(d => {
+                    let isKeep = true;
+                    Object.keys(this.filterObj)
+                        .filter(key => this.filterObj[key].length > 0)
+                        .forEach(key => {
+                            isKeep && (isKeep = this.filterObj[key].includes(d[key]))
+                        })
+                    return isKeep;
+                }).filter(d => {
+                    const timeSort = this.timeRange.concat(d.fbrq).map(d1 => new Date(d1).getTime());
+                    return timeSort[2] >= timeSort[0] && timeSort[2] <= timeSort[1];
+                });
                 this.draw();
             }
         },
         mounted() {
             this.initChart();
+            this.draw();
         }
     }
 </script>
@@ -423,7 +467,6 @@
         .legend-item{
             display: flex;
             justify-content: space-between;
-            cursor: pointer;
             align-items: center;
             width: 100%;
             &.disabled{
@@ -457,7 +500,7 @@
             fill: #fff;
             text-anchor: middle;
         }
-        .link{
+        .linkItem{
             stroke: yellow;
             stroke-width: 1
         }
