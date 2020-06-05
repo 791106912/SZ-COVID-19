@@ -1,16 +1,16 @@
 <template>
     <div class="forceCom">
-        <div id="chart"></div>
         <div class="legend">
             <div
                 v-for="item in deminArr"
                 :class="{'legend-item': true, disabled: disbaled.includes(item.name)}"
                 :key="item.name"
             >
-                <span class="legend-color" :style="{background: colorObj[item.name]}"></span>
                 <span class="legend-name">{{item.name}}</span>
+                <span class="legend-color" :style="{background: colorObj[item.name]}"></span>
             </div>
         </div>
+        <div id="chart" ref='chart'></div>
     </div>
     
 </template>
@@ -26,30 +26,18 @@
         name: 'Force',
         data() {
             initData();
-            const height = 800;
-            const width = 800;
-
-            const radius = Math.min(height, width) / 2;
-            const forceRadius = [0, radius - 80];
             const fisheyeRadius = 100;
-            const timeRadius = [radius - 80, radius - 60] ;
-            const deminRadius = [radius - 30, radius];
             const timeRange = d3.extent(TrackJSON, d => {
                 return new Date(d.realDate).getTime()
             });
             
             return {
-                width,
-                height,
-                forceRadius,
-                timeRadius,
-                deminRadius,
                 fisheyeRadius,
                 deminArr: [],
                 colorObj: {},
                 disbaled: [],
-                timeRange: timeRange,
                 filterObj: {},
+                timeRange: timeRange,
             }
         },
         methods: {
@@ -77,9 +65,14 @@
                     .on("end", dragended);
             },
             initChart() {
+                const useLength = Math.min(this.width, this.height) 
                 this.svg = d3.select('#chart')
                     .append("svg")
-                    .attr("viewBox", [-this.width / 2, -this.height / 2, this.width, this.height])
+                    .attr("viewBox", [0, 0, useLength, useLength])
+                    .attr('width', useLength)
+                    .attr('height', useLength)
+                    .append('g')
+                    .attr('transform', `translate(${useLength/2}, ${useLength/2})`)
 
                 this.selectData = TrackJSON;
                 this.initTimeCircle();
@@ -474,7 +467,7 @@
 
                 nodeUpdate.exit().remove();
                     
-                this.simulation.alpha(1)
+                this.simulation.alpha(.3)
                     .alphaTarget(0)
                     .restart();
             },
@@ -498,9 +491,20 @@
                     d3.forceManyBody().strength(-forceCount)
                 )
                 this.draw();
-            }
+            },
+            calcualteData() {
+                const height = this.$refs.chart.offsetHeight;
+                const width = this.$refs.chart.offsetWidth;
+                const radius = Math.min(height, width) / 2;
+                this.width = width;
+                this.height = height;
+                this.forceRadius = [0, radius - 80];
+                this.timeRadius = [radius - 80, radius - 60] ;
+                this.deminRadius = [radius - 30, radius];
+            },
         },
         mounted() {
+            this.calcualteData()
             this.initChart();
             this.selectType();
         }
@@ -510,17 +514,20 @@
 <style lang="less">
     .forceCom{
         display: flex;
-        height: 600px;
-        margin-top: 20px;
+        padding-top: 20px;
         align-items: center;
+        height: 100%;
     }
     #chart{
-        width: 600px;
+        width: 50%;
         height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
     .legend{
         max-height: 80%;
-        margin-left: 40px;
+        margin-right: 40px;
         .legend-item{
             display: flex;
             justify-content: space-between;
@@ -530,7 +537,6 @@
                 opacity: .3;
             }
             &>span{
-                text-overflow: hi;
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
@@ -539,10 +545,11 @@
                 height: 10px;
                 width: 10px;
                 border-radius: 100px;
-                margin-right: 10px;
+                margin-left: 10px;
             }
             .legend-name{
                 width: 80px;
+                text-align: right;
             }
         }
     }

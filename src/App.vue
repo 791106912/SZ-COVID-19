@@ -33,5 +33,8 @@ export default {
         height: calc(100vh) ;
         padding-top: 80px;
         background: #071226;
+        >div{
+            height: 100%;
+        }
     }
 </style>
