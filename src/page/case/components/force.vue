@@ -378,8 +378,8 @@
                     .on("tick", () => {
                         d3.selectAll('.circleG')
                             .attr('transform', d => {
-                                //  d.x = pythag(d.r, d.y, d.x); 
-                                // d.y = pythag(d.r, d.x, d.y);
+                                //  d.x = this.pythag(d.r, d.y, d.x); 
+                                // d.y = this.pythag(d.r, d.x, d.y);
                                 return `translate(${d.x}, ${d.y})`
                             });
 
@@ -449,6 +449,9 @@
                 const newAddNode = nodeUpdate.enter()
                     .append('g')
                     .classed('circleG', true)
+                    .on('click', d => {
+                        console.log(d);
+                    })
                     .call(this.drag(this.simulation))
 
                 newAddNode.append("circle")
@@ -498,9 +501,9 @@
                 const radius = Math.min(height, width) / 2;
                 this.width = width;
                 this.height = height;
-                this.forceRadius = [0, radius - 80];
-                this.timeRadius = [radius - 80, radius - 60] ;
-                this.deminRadius = [radius - 30, radius];
+                this.forceRadius = [0, radius - 60];
+                this.timeRadius = [radius - 60, radius - 40] ;
+                this.deminRadius = [radius - 20, radius];
             },
         },
         mounted() {
@@ -521,6 +524,8 @@
     #chart{
         width: 50%;
         height: 100%;
+        min-width: 700px;
+        min-height: 700px;
         display: flex;
         align-items: center;
         justify-content: space-between;

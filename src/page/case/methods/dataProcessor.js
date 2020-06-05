@@ -97,7 +97,7 @@ export function calculateNodeAndLink(data) {
     nodes.forEach(d => {
         const count = linkIds.filter(d1 => d1 === d.blh).length;
         const r = 5;
-        d.r = r + count * 2;
+        d.r = r + count * 1.2;
     })
 
     return [nodes, links];
