@@ -350,21 +350,51 @@
                     .attr('href', d => `#hiddenArc${d.data.name}_${d.data.type}`)
                     .text(d => d.data.name);
             },
+            pythag(r, b, coord) {
+                const radius = this.forceRadius[1];
+                const hyp2 = Math.pow(radius, 2);
+                r += 5;
+                b = Math.min(radius * 2 - r, Math.max(r, b));
+                var b2 = Math.pow(
+                    (b - radius), 2
+                ),
+                a = Math.sqrt(hyp2 - b2);
+                coord = Math.max(
+                    radius - a + r,
+                    Math.min(a + radius - r, coord)
+                );
+                return coord;
+            },
             createForce() {
-                 this.simulation = d3.forceSimulation()
-                    .force("link", d3.forceLink().id(d => d.blh))
-                    .force("charge", d3.forceManyBody())
+                this.simulation = d3.forceSimulation()
+                    .force("link", d3.forceLink()
+                        .id(d => d.blh)
+                    )
+                    .force("charge", 
+                        d3.forceManyBody().strength(-20)
+                    )
                     .force("x", d3.forceX())
                     .force("y", d3.forceY())
+                    // .force('center', d3.forceCenter(0, 0))// 向心力
+                    // .force('collide',d3.forceCollide()  // 圆的碰撞力
+                    //     .radius(10)  // 根据指定的半径创建一个碰撞力。默认为 1
+                    // )
+                    // .force('r', d3.forceRadial(
+                    //         this.forceRadius[1],0,0
+                    //     ).strength(.5))
                     .on("tick", () => {
+                        d3.selectAll('.circleG')
+                            .attr('transform', d => {
+                                //  d.x = pythag(d.r, d.y, d.x); 
+                                // d.y = pythag(d.r, d.x, d.y);
+                                return `translate(${d.x}, ${d.y})`
+                            });
+
                         d3.selectAll('.linkItem')
                             .attr("x1", d => d.source.x)
                             .attr("y1", d => d.source.y)
                             .attr("x2", d => d.target.x)
                             .attr("y2", d => d.target.y);
-
-                        d3.selectAll('.circleG')
-                            .attr('transform', d => `translate(${d.x}, ${d.y})`)
                     });
 
                 const fisheye = d3Fisheye.radial()
@@ -462,12 +492,17 @@
                     const timeStap = new Date(d.realDate).getTime();
                     return timeStap >= this.timeRange[0] && timeStap <= this.timeRange[1];
                 });
+                const strengthScale = d3.scaleLinear().domain([TrackJSON.length, 0]).range([20, 40])
+                const forceCount = strengthScale(this.selectData.length);
+                this.simulation.force("charge", 
+                    d3.forceManyBody().strength(-forceCount)
+                )
                 this.draw();
             }
         },
         mounted() {
             this.initChart();
-            this.draw();
+            this.selectType();
         }
     }
 </script>
