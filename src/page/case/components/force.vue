@@ -1,6 +1,16 @@
 <template>
     <div class="forceCom">
         <div id="chart"></div>
+        <div class="legend">
+            <div
+                v-for="item in deminArr"
+                :class="{'legend-item': true, disabled: disbaled.includes(item.name)}"
+                :key="item.name"
+            >
+                <span class="legend-color" :style="{background: colorObj[item.name]}"></span>
+                <span class="legend-name">{{item.name}}</span>
+            </div>
+        </div>
     </div>
     
 </template>
@@ -10,7 +20,7 @@
     import * as d3Fisheye from 'd3-fisheye'
     import _ from 'lodash'
     import TrackJSON from '@/data/track'
-    import { initData, calculateNodeAndLink, aggre } from '../methods/dataProcessor'
+    import { initData, calculateNodeAndLink } from '../methods/dataProcessor'
     
     export default {
         name: 'Force',
@@ -31,7 +41,8 @@
                 timeRadius,
                 deminRadius,
                 fisheyeRadius,
-
+                deminArr: [],
+                colorObj: {},
                 disbaled: [],
                 selectData: TrackJSON,
                 timeIndex: [0, 0]
@@ -82,15 +93,6 @@
                     .values()
                     .orderBy(d => new Date(d).getTime(), 'desc')
                     .value();
-
-                // const valueArr = timeArr.map(d => d.value);
-                // valueArr.forEach((d, i) => {
-                //     const addition = valueArr[i - 1] ? valueArr[i - 1] : 0;
-                //     valueArr[i] = valueArr[i] + addition
-                // })
-                // timeArr.forEach((d, i) => {
-                //     d.value = valueArr[i]
-                // })
 
                 this.timeIndex = [timeArr[0].name, timeArr[timeArr.length - 1].name]
 
@@ -209,10 +211,7 @@
                 
             },
             initDemiCircle() {
-                const deminData = [{
-                    name: '聚集传播',
-                    sortkey: 'relation',
-                }, {
+                const deminArr = [{
                     name: '染病原因',
                     sortkey: 'reason',
                 }, {
@@ -226,14 +225,33 @@
                     sortkey: 'livelocation',
                 }]
 
+                this.deminArr = deminArr
+
+                const deminData = _.chain(deminArr)
+                    .map(d => {
+                        const key = d.sortkey;
+                        const deminDetailArr = _.chain(TrackJSON)
+                            .map(key)
+                            .uniq()
+                            .map(d1 => ({
+                                name: d1,
+                                type: d.name,
+                                sortkey: key,
+                            }))
+                            .value();
+                        return deminDetailArr;
+                    })
+                    .flatten()
+                    .value()
+
                 const pie = d3.pie()
                     .padAngle(0)
                     .sort(null)
                     .value(() => 1)
 
                 const arc = d3.arc()
-                    .cornerRadius(10)
-                    .padAngle(.1)
+                    // .cornerRadius(10)
+                    .padAngle(0)
                     .innerRadius(this.deminRadius[0])
                     .outerRadius(this.deminRadius[1]);
 
@@ -248,13 +266,16 @@
                 const pathContainer = container
                     .append('g')
                     .classed('path', true)
-                    
+
                 pathContainer
                     .selectAll("path")
                     .data(arcs)
                     .enter()
                     .append("path")
-                    .attr("fill", d => color(d.data.name))
+                    .attr("fill", d => {
+                        this.colorObj[d.data.type] = color(d.data.type);
+                        return color(d.data.type)
+                    })
                     .attr("d", arc)
                     .attr('stroke','none')
                     .on('click', function() {
@@ -274,7 +295,7 @@
 
                 text.append('path')
                     .attr('fill', 'none')
-                    .attr('id', d => `hiddenArc${d.data.name}`)
+                    .attr('id', d => `hiddenArc${d.data.name}_${d.data.type}`)
                     .attr('d', d => {
                         const {startAngle, endAngle} = d;
                         const [innerRadius, outerRadius] = this.deminRadius;
@@ -290,27 +311,16 @@
                     
                 text.append('textPath')
                     .attr('startOffset', '50%')
-                    .attr('href', d => `#hiddenArc${d.data.name}`)
+                    .attr('href', d => `#hiddenArc${d.data.name}_${d.data.type}`)
                     .text(d => d.data.name);
             },
             draw() {
                 const [nodes, links] = calculateNodeAndLink(this.selectData);
-
-                this.svg.select('g.force').remove();
-                this.svg.select('g.aggre').remove();
-
                 const simulation = d3.forceSimulation(nodes)
-                    // .force('r', 
-                    //     d3.forceRadial(10,0,0)
-                    //     .strength(.1)
-                    // )
                     .force("link", 
                         d3.forceLink(links).id(d => d.blh)
                     )
-                    .force("charge", 
-                        d3.forceManyBody()
-                        // .strength(-40)
-                    )
+                    .force("charge", d3.forceManyBody())
                     .force("x", d3.forceX())
                     .force("y", d3.forceY());
 
@@ -343,21 +353,6 @@
                             .attr("x2", d => d.target.fisheye[0])
                             .attr("y2", d => d.target.fisheye[1]);
                     })
-                    // .on('mouseleave', () => {
-                    //     console.log(123);
-                    //     node.attr('transform', d => `translate(${d.x}, ${d.y})`)
-                            
-                    //     node.select('circle')
-                    //         .attr('r', d => d.r);
-
-                    //     node.select('text')
-                    //         .attr('font-size', 5)
-
-                    //     link.attr("x1", d => d.source.x)
-                    //         .attr("y1", d => d.source.y)
-                    //         .attr("x2", d => d.target.x)
-                    //         .attr("y2", d => d.target.y);
-                    // })
                     
 
                 const link = forceContainer
@@ -421,6 +416,35 @@
     #chart{
         width: 600px;
         height: 100%;
+    }
+    .legend{
+        max-height: 80%;
+        margin-left: 40px;
+        .legend-item{
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+            align-items: center;
+            width: 100%;
+            &.disabled{
+                opacity: .3;
+            }
+            &>span{
+                text-overflow: hi;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+            .legend-color{
+                height: 10px;
+                width: 10px;
+                border-radius: 100px;
+                margin-right: 10px;
+            }
+            .legend-name{
+                width: 80px;
+            }
+        }
     }
     .force{
         circle {
