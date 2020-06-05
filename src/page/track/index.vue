@@ -1,7 +1,7 @@
 <template>
     <div class="analysis">
         <Section
-            title="输入轨迹"
+            title="轨迹地图"
             class="map"
             height="100%"
         >
@@ -11,8 +11,7 @@
             </div>
         </Section>
         <Section
-            title="病例关系"
-            class="relation"
+            title="轨迹详情"
             height="100%"
         >
             <SanKey />
@@ -48,9 +47,6 @@
                 height: 100%;
                 display: flex;
             }
-        }
-        .relation {
-
         }
     }
 </style>
