@@ -53,9 +53,9 @@
             }
         },
         methods: {
-            drag: () => {
+            drag: simulation => {
                 const dragstarted = d => {
-                    if (!d3.event.active) this.simulation.alphaTarget(0.3).restart();
+                    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
                     d.fx = d.x;
                     d.fy = d.y;
                 }
@@ -66,7 +66,7 @@
                 }
                 
                 const dragended = d => {
-                    if (!d3.event.active) this.simulation.alphaTarget(0);
+                    if (!d3.event.active) simulation.alphaTarget(0);
                     d.fx = null;
                     d.fy = null;
                 }
@@ -428,7 +428,7 @@
                 const newAddNode = nodeUpdate.enter()
                     .append('g')
                     .classed('circleG', true)
-                    .call(this.drag())
+                    .call(this.drag(this.simulation))
 
                 newAddNode.append("circle")
                     .attr('r', d => d.r)
@@ -451,7 +451,6 @@
                     .restart();
             },
             selectType() {
-                console.log(this.timeRange.map(d => new Date(d).toLocaleDateString()));
                 this.selectData = TrackJSON.filter(d => {
                     let isKeep = true;
                     Object.keys(this.filterObj)
