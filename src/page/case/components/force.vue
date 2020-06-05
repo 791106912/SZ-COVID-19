@@ -51,6 +51,7 @@
                 selectData: TrackJSON,
                 colorObj: {},
                 selectMeth: 'mul',
+                timeIndex: [0, 0]
             }
         },
         methods: {
@@ -108,6 +109,9 @@
                 // timeArr.forEach((d, i) => {
                 //     d.value = valueArr[i]
                 // })
+
+                this.timeIndex = [timeArr[0].name, timeArr[timeArr.length - 1].name]
+
                 const [min, max] = d3.extent(timeArr, d => d.value);
                 const color = d3.scaleLinear()
                     .domain([min, max / 2, max])
@@ -170,27 +174,42 @@
                 // const radius = (this.timeRadius[0] + this.timeRadius[1]) / 2;
                 const radius = (this.timeRadius[1]) + 4;
 
-                const endDot = container.append('circle')
+                const indexScale = d3.scaleLinear()
+                        .domain([0, 1])
+                        .range([0, timeArr.length]);
+
+                function dragStart(){
+                    const rad = Math.atan2(d3.event.y, d3.event.x);
+                    d3.select(this)
+                        .attr('cx', radius * Math.cos(rad))
+                        .attr('cy', radius * Math.sin(rad))
+                }
+
+                const dragEnd = index => {
+                    let rad = Math.atan2(d3.event.y, d3.event.x);
+                    rad += Math.PI / 2;
+                    if(rad < 0)  rad = Math.PI * 2 + rad
+                    const scale = rad / (Math.PI * 2);
+                    this.timeIndex[index] = Math.ceil(indexScale(scale))
+                }
+
+                container.append('circle')
                     .attr('r', 8)
                     .attr('fill', 'red')
                     .attr('cx',  () => {
-                        const x = radius * Math.cos(0 * 2 * Math.PI - Math.PI / 2)
+                        const x = radius * Math.cos( - Math.PI / 2)
                         return x;
                     })
                     .attr('cy', () => {
-                        const y = radius * Math.sin(0 * 2 * Math.PI - Math.PI / 2);
+                        const y = radius * Math.sin( - Math.PI / 2);
                         return y;
                     })
                     .call(d3.drag()
-                        .on("drag", function() {
-                            var rad = Math.atan2(d3.event.y, d3.event.x);
-                            d3.select(this)
-                                .attr('cx', radius * Math.cos(rad))
-                                .attr('cy', radius * Math.sin(rad))
-                        })
+                        .on("drag",dragStart)
+                        .on("end", () => dragEnd(0))
                     );
 
-                const startDot = container.append('circle')
+                container.append('circle')
                     .attr('r', 8)
                     .attr('fill', 'yellow')
                     .attr('cx',  () => {
@@ -202,12 +221,8 @@
                         return y;
                     })
                     .call(d3.drag()
-                        .on("drag", function() {
-                            var rad = Math.atan2(d3.event.y, d3.event.x);
-                            d3.select(this)
-                                .attr('cx', radius * Math.cos(rad))
-                                .attr('cy', radius * Math.sin(rad))
-                        })
+                        .on("drag", dragStart)
+                        .on("end",  () =>  dragEnd(1))
                     );
                 
             },
