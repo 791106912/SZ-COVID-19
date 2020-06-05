@@ -36,6 +36,7 @@
                     geo: {
                         show: true,
                         map: 'shenzhen',
+                        zoom: 1.2,
                         label: {
                             normal: {
                                 show: false

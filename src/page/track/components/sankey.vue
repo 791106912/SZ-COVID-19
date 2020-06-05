@@ -10,21 +10,30 @@
     import 'echarts/lib/chart/sankey'
     import TrackJSON from '@/data/track'
 
-    const DIM = ['xb', 'tran', 'fbrq']
+    const DIM = ['age_range', 'xb', 'tran', 'origin', 'fbrq']
+
+    const ITEM_STYLE = {
+        xb: {
+            '男': {
+                color: '#3a7ba5',
+            },
+            '女': {
+                color: '#9d4da7',
+            },
+        }
+    }
 
     export default {
         name: 'SanKey',
         methods: {
-            getNodes(data, itemStyle) {
+            getNodes(data) {
                 return DIM.reduce((arr, key) => {
-                    const count = _.countBy(data, key)
+                    const styles = ITEM_STYLE[key] || {}
                     const tempArr =  _.chain(data)
                         .map(d => {
-                            const value = count[d[key]]
                             return {
                                 name: d[key],
-                                itemStyle,
-                                value,
+                                itemStyle: styles[d[key]],
                             }
                         })
                         .uniqBy('name')
@@ -36,27 +45,32 @@
                 const links = [];
                 DIM.forEach((d, i, arr) => {
                     if (i === arr.length - 1) return
-                    const count = _.countBy(data, arr[i + 1])
                     data.forEach(d1 => {
-                const value = count[d1[arr[i + 1]]]
+                        const source = d1[d]
+                        const target = d1[arr[i + 1]]
+                const value = data.filter(d2 => d2[d] === source && d2[arr[i + 1]] === target).length
                         links.push({
-                            source: d1[d],
-                            target: d1[arr[i + 1]],
+                            source,
+                            target,
                             value,
                         })
                     })
                 })
-                return links
+                
+                return _.uniqWith(links, _.isEqual)
             },
             initData() {
                 const data = _.chain(TrackJSON)
-                    // .slice(0, 100)
+                    // .slice(0, 400)
                     .map(d => {
-                        const {track} = d
+                        const {track, nl} = d
                         const tran = track.length ? track[track.length - 1].tran : ''
+                        const age_left = +nl - (nl % 5)
+                        const age_range = `${age_left}岁-${age_left + 5}岁`
                         return _.pick({
                             ...d,
-                            tran: tran || '不明'
+                            tran: tran || '不明',
+                            age_range,
                         },
                         DIM
                         )
@@ -77,69 +91,25 @@
                     },
                     series: {
                         type: "sankey",
-                        layout: "none",
-                        top: 50,
-                        left: "3%",
-                        right: "12%",
-                        nodeGap: 14,
-                        // layoutIterations: 0, // 自动优化列表，尽量减少线的交叉，为0就是按照数据排列
+                        left: 10,
+                        right: 50,
+                        nodeGap: 6,
                         data: nodes, // 节点
                         links: links, // 节点之间的连线
-                        draggable: true,
+                        draggable: false,
                         focusNodeAdjacency: "allEdges", // 鼠标划上时高亮的节点和连线，allEdges表示鼠标划到节点上点亮节点上的连线及连线对应的节点
-                        // tooltip: {
-                        //   formatter: function(params) {
-                        //     if (params.data.source) {
-                        //       return `${params.data.source}：${params.data.value}`;
-                        //     } else {
-                        //       return `${params.name}：${params.value}`;
-                        //     }
-                        //   }
-                        // },
-                        // levels: [{
-                        //         depth: 0,
-                        //         itemStyle: {
-                        //             color: "#F27E7E"
-                        //         },
-                        //         lineStyle: {
-                        //             color: "source",
-                        //             opacity: 0.2
-                        //         }
-                        //     },
-                        //     {
-                        //         depth: 1,
-                        //         lineStyle: {
-                        //             color: "source",
-                        //             opacity: 0.2
-                        //         }
-                        //     },
-                        //     {
-                        //         depth: 2,
-                        //         lineStyle: {
-                        //             color: "source",
-                        //             opacity: 0.2
-                        //         }
-                        //     },
-                        //     {
-                        //         depth: 3,
-                        //         label: {
-                        //             fontSize: 12
-                        //         }
-                        //     }
-                        // ],
                         label: {
-                            fontSize: 14,
+                            fontSize: 10,
                             color: "#666"
                         },
-                        itemStyle: {
-                            normal: {
-                                borderWidth: 0
-                            }
-                        }
+                        lineStyle: {
+                            color: 'source',
+                            curveness: 0.5
+                        },
                     }
                 };
 
-                const myChart = echarts.init(document.getElementById('sankey'));
+                const myChart = echarts.init(document.getElementById('sankey'), 'light');
                 myChart.setOption(option)
             }
         },
@@ -151,6 +121,6 @@
 
 <style lang="less" scoped>
     #sankey{
-        height: 500px;
+        height: 600px;
     }
 </style>

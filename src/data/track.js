@@ -3825,7 +3825,7 @@ const TrackJSON = [
     "reason": '密切接触',
     "detailReason": '探亲',
     "origin": '深圳',
-    "detailOrigin": '余',
+    "detailOrigin": '深圳',
 },
 {
     "yqtblgx": "",

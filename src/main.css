@@ -46,6 +46,10 @@ body{
 
 }
 
+.el-picker-panel__icon-btn {
+    color: #409EFF;
+}
+
 .el-picker-panel .el-date-table .in-range div {
     background-color: #2a4a93;
 }
@@ -62,4 +66,10 @@ body{
 .el-select-dropdown .el-select-dropdown__item.hover {
     background-color: #2a4a93;
     border-color: #102B75 !important;
+}
+
+.el-button.el-button--default {
+    background-color: #b2d4f3 !important;
+    border: 1px solid #224ac0 !important;
+    color: #606266 !important;
 }
