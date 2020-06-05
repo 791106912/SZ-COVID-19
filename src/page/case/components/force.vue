@@ -11,6 +11,20 @@
             </div>
         </div>
         <div id="chart" ref='chart'></div>
+        <div class="info">
+            <Section title="病例信息">
+                <div class="info-container">
+                    <div
+                        v-for="item in caseDetail"
+                        :key="item.key"
+                        class="info-item"
+                    >
+                    <span class="info-item-key">{{item.key}}</span>：
+                    <span class="info-item-value">{{item.value}}</span>
+                    </div>
+                </div>
+            </Section>
+        </div>
     </div>
     
 </template>
@@ -20,10 +34,14 @@
     import * as d3Fisheye from 'd3-fisheye'
     import _ from 'lodash'
     import TrackJSON from '@/data/track'
+    import Section from '@/components/section'
     import { initData, calculateNodeAndLink } from '../methods/dataProcessor'
     
     export default {
         name: 'Force',
+        components: {
+            Section,
+        },
         data() {
             initData();
             const fisheyeRadius = 100;
@@ -38,6 +56,7 @@
                 disbaled: [],
                 filterObj: {},
                 timeRange: timeRange,
+                caseDetail: [],
             }
         },
         methods: {
@@ -207,7 +226,7 @@
                 container.append('polygon')
                     .attr('fill', 'yellow')
                     .attr('cursor', 'pointer')
-                    .attr('points', '0,-10 -8,10 8,10')
+                    .attr('points', '0,10 -8,-8 8,-8')
                     .attr('transform', () => {
                         return `translate(${0}, ${radius * Math.sin( - Math.PI / 2)})`
                     })
@@ -219,7 +238,7 @@
                 container.append('polygon')
                     .attr('fill', 'red')
                     .attr('cursor', 'pointer')
-                    .attr('points', '0,-10 -8,10 8,10')
+                    .attr('points', '0,10 -8,-8 8,-8')
                     .attr('transform', () => {
                         return `translate(${0}, ${radius * Math.sin( - Math.PI / 2)})`
                     })
@@ -449,8 +468,9 @@
                 const newAddNode = nodeUpdate.enter()
                     .append('g')
                     .classed('circleG', true)
+                    .attr('cursor', 'pointer')
                     .on('click', d => {
-                        console.log(d);
+                        this.calcualteDetailInfo(d)
                     })
                     .call(this.drag(this.simulation))
 
@@ -488,7 +508,7 @@
                     const timeStap = new Date(d.realDate).getTime();
                     return timeStap >= this.timeRange[0] && timeStap <= this.timeRange[1];
                 });
-                const strengthScale = d3.scaleLinear().domain([TrackJSON.length, 0]).range([20, 40])
+                const strengthScale = d3.scaleLinear().domain([TrackJSON.length, 0]).range([18, 40])
                 const forceCount = strengthScale(this.selectData.length);
                 this.simulation.force("charge", 
                     d3.forceManyBody().strength(-forceCount)
@@ -505,6 +525,38 @@
                 this.timeRadius = [radius - 60, radius - 40] ;
                 this.deminRadius = [radius - 20, radius];
             },
+            calcualteDetailInfo(d) {
+                const include = ['blh','xb', 'nl', 'yqtblgx',  'bk', 'fbrq', 'rysj', 'rbyy', 'bzzzytjd'];
+                const descObj = {
+                    "yqtblgx": "与其他病例关系",
+                    "zwhsjqj": "在武汉时间",
+                    "rbyy": "染病原因",
+                    "bzzzytjd": "备注",
+                    "bk": "病况",
+                    "xb": "性别",
+                    "rysj": "入院时间",
+                    "lssj": "来深时间",
+                    "fbingsj": "发病时间",
+                    "fbrq": "发病日期",
+                    "jzd": "居住地",
+                    "fbusj": "发布时间",
+                    "nl": "年龄",
+                    "blh": "病例号",
+                    "nationality&native":"国籍和籍贯（国内有籍贯者记录籍贯）",
+                    "track":"途径地",
+                    "track_time":"途径地的时间",
+                    "track_trans":"途径交通工具",
+                    "treatment_hospital":"救治医院"
+                }
+                const info = [];
+                include.forEach(d1 => {
+                    info.push({
+                        key: descObj[d1],
+                        value: d[d1] || '暂无',
+                    })
+                })
+                this.caseDetail = info;
+            }
         },
         mounted() {
             this.calcualteData()
@@ -584,6 +636,27 @@
         }
         .path{
             cursor: pointer;
+        }
+    }
+
+    .info {
+        flex: 1;
+        margin-left: 30px;
+        .info-container{
+            min-height: 300px;
+            display: flex;
+            height: 100%;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .info-item{
+            line-height: 30px;
+            .info-item-key{
+                display: inline-block;
+                width: 100px;
+                font-weight: bolder;
+                font-size: 14px;
+            }
         }
     }
 </style>
