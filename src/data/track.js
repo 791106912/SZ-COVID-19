@@ -1835,12 +1835,7 @@ const TrackJSON = [
     "nl": "69",
     "blh": "402",
     "nationality&native":["中国",""],
-    "track": [{
-        "from": "武汉",
-        "to": "深圳",
-        "time": "2019/11/9",
-        "tran": "",
-    }],
+    "track": [],
     "treatment_hospital":"",
     "reason": '密切接触',
     "detailReason": '家庭传播',
