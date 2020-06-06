@@ -40,7 +40,7 @@
 
 
 import Section from '@/components/section'
-import SzMap from './components/szMap'
+import SzMap from './components/szMap2'
 import SzStatic from './components/szStatic'
 import List from './components/list'
 import WorldMap from './components/worldMap'
