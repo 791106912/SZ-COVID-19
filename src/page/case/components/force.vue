@@ -357,7 +357,7 @@
                     .data(arcs)
                     .join("text")
                     .attr("dy", "0.35em")
-
+                // const typeDir = {};
                 text.append('path')
                     .attr('fill', 'none')
                     .attr('id', d => `hiddenArc${d.data.name}_${d.data.type}`)
@@ -368,6 +368,13 @@
                         const r = (innerRadius + outerRadius) / 2;
                         const middleAngle = (angles[1] + angles[0]) / 2
                         const invertDirection = middleAngle > 0 && middleAngle < Math.PI
+                        // let invertDirection = '';
+                        // if (typeDir[d.data.type]) {
+                        //     invertDirection = typeDir[d.data.type];
+                        // } else {
+                        //     invertDirection = middleAngle > 0 && middleAngle < Math.PI
+                        //     typeDir[d.data.type] = invertDirection;
+                        // }
                         if (invertDirection) angles.reverse()
                         const path = d3.path()
                         path.arc(0, 0, r, angles[0], angles[1], invertDirection)
