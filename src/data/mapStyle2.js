@@ -101,4 +101,10 @@ export default [{
     'stylers': {
         'visibility': 'off'
     }
+}, {
+    'featureType': 'districtlabel',
+    'elementType': 'all',
+    'stylers': {
+        'visibility': 'on',
+    }
 }]
