@@ -6,6 +6,7 @@
 
 <script>
     import _ from 'lodash';
+    import { extent } from 'd3'
     import echarts from 'echarts/lib/echarts';
     import 'echarts/lib/component/geo'
     import 'echarts/map/js/world.js';
@@ -13,6 +14,10 @@
     import TrackJSON from '@/data/track'
 
     const PERIOD = 2;
+
+    const DEFAULT_CENTER = [114.279, 30]
+
+    const DEFAULT_ZOOM = 9
 
     export default {
         name: 'Map',
@@ -97,8 +102,8 @@
                         },
                         geo: {
                             map: 'world',
-                            zoom: 1.3,
-                            center: [25, 14],
+                            zoom: DEFAULT_ZOOM,
+                            center: DEFAULT_CENTER,
                             label: {
                                 emphasis: {
                                     show: false
@@ -123,6 +128,7 @@
                 const myChart = echarts.init(document.getElementById('trackMap'), 'light');
                 myChart.setOption(option);
                 this.myChart = myChart
+                window.dddChart = myChart
             },
             initData() {
                 const trackObj = _.chain(TrackJSON)
@@ -185,7 +191,7 @@
                     .map((d, i, arr) => {
                         const trackData = d.map(d1 => d1.track)
                         const addTrackData = _.chain(arr)
-                            .slice(0, i)
+                            .slice(0, i + 1)
                             .flatten()
                             .map(d1 => d1.track)
                             .value()
@@ -360,9 +366,33 @@
                 );
                 return series;
             },
+            hanleTimelinechanged() {
+                this.myChart.on('timelinechanged', () => {
+                    const { series } = this.myChart.getOption()
+                    const geoArr = _.chain(series[3].data)
+                        .map(d => d.value.slice(0, 2))
+                        .value()
+                    const lngExtent = extent(geoArr, d => +d[0]).map((d, i) => +d + (i === 0 ? (-1) : 1))
+                    const latExtent = extent(geoArr, d => +d[1]).map((d, i) => +d + (i === 0 ? (-10) : 10))
+
+                    const lngCenter = Number.isNaN(lngExtent[0]) ? DEFAULT_CENTER[0] : (lngExtent[0] + lngExtent[1]) / 2
+                    const latCenter = Number.isNaN(latExtent[0]) ? DEFAULT_CENTER[1] : (latExtent[0] + latExtent[1]) / 2
+                    const center = [lngCenter, latCenter]
+                    const zoom = Number.isNaN(lngExtent[0]) ? DEFAULT_ZOOM
+                        : _.min([1 / ((lngExtent[1] - lngExtent[0]) / 360), 1 / ((latExtent[1] - latExtent[0]) / 180)])
+
+                    this.myChart.setOption({
+                        geo: {
+                            zoom,
+                            center,
+                        }
+                    }, this)
+                })
+            }
         },
         mounted() {
             this.initMap()
+            this.hanleTimelinechanged()
         }
     }
 </script>
