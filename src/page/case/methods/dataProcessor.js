@@ -17,25 +17,23 @@ export function initData() {
         let nlRange = ''
         const nl = Number(d.nl);
         if (nl <= 10) {
-            nlRange = '0~10岁'
+            nlRange = '0~10'
         } else if (nl > 10 && nl <= 20) {
-            nlRange = '10~20岁'
+            nlRange = '10~20'
         } else if (nl > 20 && nl <= 30) {
-            nlRange = '20~30岁'
+            nlRange = '20~30'
         } else if (nl > 30 && nl <= 40) {
-            nlRange = '30~40岁'
+            nlRange = '30~40'
         } else if (nl > 40 && nl <= 50) {
-            nlRange = '40~50岁'
-        } else if (nl > 50 && nl <= 60) {
-            nlRange = '50~60岁'
+            nlRange = '40~50'
         } else {
-            nlRange = '60岁以上'
+            nlRange = '50~以上'
         }
         if(d.reason === ""){
             d.reason = '未知'
         }
         d.nlRange = nlRange;
-        d.relation = linkIds.includes(d.blh) ? '聚集传播' : '其他';
+        d.relation = linkIds.includes(d.blh) ? '明确关系' : '单独病例';
         
         let livelocation = '未知' 
         if(d.jzd) {

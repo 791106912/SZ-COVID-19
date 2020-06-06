@@ -24,6 +24,9 @@
                     </div>
                 </div>
             </Section>
+            <div>
+                <Bar />
+            </div>
         </div>
     </div>
     
@@ -34,6 +37,8 @@
     import * as d3Fisheye from 'd3-fisheye'
     import _ from 'lodash'
     import TrackJSON from '@/data/track'
+    import province from '@/data/province'
+    import Bar from './bar'
     import Section from '@/components/section'
     import { initData, calculateNodeAndLink } from '../methods/dataProcessor'
     
@@ -41,6 +46,7 @@
         name: 'Force',
         components: {
             Section,
+            Bar,
         },
         data() {
             initData();
@@ -256,11 +262,14 @@
                     name: '年龄',
                     sortkey: 'nlRange',
                 }, {
-                    name: '来源地',
+                    name: '来源地(国内)',
                     sortkey: 'origin',
                 }, {
-                    name: '居住地',
-                    sortkey: 'livelocation',
+                    name: '来源地(国外)',
+                    sortkey: 'origin',
+                }, {
+                    name: '病例关系',
+                    sortkey: 'relation',
                 }]
 
                 deminArr.forEach(d => {
@@ -272,7 +281,13 @@
                 const deminData = _.chain(deminArr)
                     .map(d => {
                         const key = d.sortkey;
-                        const deminDetailArr = _.chain(TrackJSON)
+                        let useData = TrackJSON;
+                        if (d.name === '来源地(国外)') {
+                            useData = TrackJSON.filter(d1 => !province.includes(d1[key]))
+                        } else if(d.name === '来源地(国内)') {
+                            useData = TrackJSON.filter(d1 => province.includes(d1[key]))
+                        }
+                        const deminDetailArr = _.chain(useData)
                             .map(key)
                             .uniq()
                             .map(d1 => ({
@@ -281,6 +296,13 @@
                                 sortkey: key,
                             }))
                             .value();
+
+                        if(key === 'nlRange') {
+                            deminDetailArr.sort((a, b) => {
+                                const arr = [a, b].map(d1 => Number(d1.name.split('~')[0]));
+                                return arr[0] - arr[1];
+                            })
+                        }
                         return deminDetailArr;
                     })
                     .flatten()
@@ -340,7 +362,7 @@
                     .data(arcs)
                     .join("text")
                     .attr("dy", "0.35em")
-
+                // const typeDir = {};
                 text.append('path')
                     .attr('fill', 'none')
                     .attr('id', d => `hiddenArc${d.data.name}_${d.data.type}`)
@@ -351,6 +373,13 @@
                         const r = (innerRadius + outerRadius) / 2;
                         const middleAngle = (angles[1] + angles[0]) / 2
                         const invertDirection = middleAngle > 0 && middleAngle < Math.PI
+                        // let invertDirection = '';
+                        // if (typeDir[d.data.type]) {
+                        //     invertDirection = typeDir[d.data.type];
+                        // } else {
+                        //     invertDirection = middleAngle > 0 && middleAngle < Math.PI
+                        //     typeDir[d.data.type] = invertDirection;
+                        // }
                         if (invertDirection) angles.reverse()
                         const path = d3.path()
                         path.arc(0, 0, r, angles[0], angles[1], invertDirection)
@@ -443,6 +472,7 @@
                 this.nodeContainer = forceContainer.append('g').classed('nodes', true);
             },
             draw() {
+                this.calcualteDetailInfo();
                 const [nodes, links] = calculateNodeAndLink(this.selectData);
 
                 this.simulation.nodes(nodes);
@@ -526,35 +556,66 @@
                 this.deminRadius = [radius - 20, radius];
             },
             calcualteDetailInfo(d) {
-                const include = ['blh','xb', 'nl', 'yqtblgx',  'bk', 'fbrq', 'rysj', 'rbyy', 'bzzzytjd'];
-                const descObj = {
-                    "yqtblgx": "与其他病例关系",
-                    "zwhsjqj": "在武汉时间",
-                    "rbyy": "染病原因",
-                    "bzzzytjd": "备注",
-                    "bk": "病况",
-                    "xb": "性别",
-                    "rysj": "入院时间",
-                    "lssj": "来深时间",
-                    "fbingsj": "发病时间",
-                    "fbrq": "发病日期",
-                    "jzd": "居住地",
-                    "fbusj": "发布时间",
-                    "nl": "年龄",
-                    "blh": "病例号",
-                    "nationality&native":"国籍和籍贯（国内有籍贯者记录籍贯）",
-                    "track":"途径地",
-                    "track_time":"途径地的时间",
-                    "track_trans":"途径交通工具",
-                    "treatment_hospital":"救治医院"
-                }
-                const info = [];
-                include.forEach(d1 => {
-                    info.push({
-                        key: descObj[d1],
-                        value: d[d1] || '暂无',
+                let info = [];
+                if(d) {
+                    const include = ['blh','xb', 'nl', 'yqtblgx',  'bk', 'fbrq', 'rysj', 'rbyy', 'bzzzytjd'];
+                    const descObj = {
+                        "yqtblgx": "与其他病例关系",
+                        "zwhsjqj": "在武汉时间",
+                        "rbyy": "染病原因",
+                        "bzzzytjd": "备注",
+                        "bk": "病况",
+                        "xb": "性别",
+                        "rysj": "入院时间",
+                        "lssj": "来深时间",
+                        "fbingsj": "发病时间",
+                        "fbrq": "发病日期",
+                        "jzd": "居住地",
+                        "fbusj": "发布时间",
+                        "nl": "年龄",
+                        "blh": "病例号",
+                        "nationality&native":"国籍和籍贯（国内有籍贯者记录籍贯）",
+                        "track":"途径地",
+                        "track_time":"途径地的时间",
+                        "track_trans":"途径交通工具",
+                        "treatment_hospital":"救治医院"
+                    }
+                    include.forEach(d1 => {
+                        info.push({
+                            key: descObj[d1],
+                            value: d[d1] || '暂无',
+                        })
                     })
-                })
+                } else {
+                    const filterStr =  _.chain(this.filterObj)
+                        .keys()
+                        .filter(key => this.filterObj[key].length > 0)
+                        .reduce((str, key) => {
+                            const realKey = this.deminArr.find(d => d.sortkey === key).name;
+                            return str + realKey + ': ' + this.filterObj[key].join(', ') + '\n'
+                        }, '')
+                        .value();
+                    info =[
+                        {
+                            key: '选择条件',
+                            value: filterStr || '全部',
+                        }, {
+                            key: '病例数量',
+                            value: this.selectData.length,
+                        }, {
+                            key: '病例占比',
+                            value: (
+                                this.selectData.length / TrackJSON.length  * 100
+                            ).toFixed(2) + '%',
+                        }, {
+                            key: '男性',
+                            value: this.selectData.filter(d => d.xb === '男').length,
+                        }, {
+                            key: '女性',
+                            value: this.selectData.filter(d => d.xb === '女').length,
+                        },
+                    ]
+                }
                 this.caseDetail = info;
             }
         },
@@ -585,6 +646,7 @@
     .legend{
         max-height: 80%;
         margin-right: 40px;
+        width: 100px;
         .legend-item{
             display: flex;
             justify-content: space-between;
@@ -641,21 +703,29 @@
 
     .info {
         flex: 1;
+        display: flex;
         margin-left: 30px;
+        flex-direction: column;
+        justify-content: space-between;
         .info-container{
-            min-height: 300px;
+            min-height: 200px;
             display: flex;
             height: 100%;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: space-around;
         }
         .info-item{
             line-height: 30px;
+            display: flex;
             .info-item-key{
                 display: inline-block;
                 width: 100px;
                 font-weight: bolder;
                 font-size: 14px;
+            }
+            .info-item-value{
+                flex: 1;
+                white-space: pre-wrap;
             }
         }
     }
