@@ -587,16 +587,34 @@
                         })
                     })
                 } else {
-                    info =[{
-                        key: '展示病例数量',
-                        value: this.selectData.length,
-                    }, {
-                        key: '男性',
-                        value: this.selectData.filter(d => d.xb === '男').length,
-                    }, {
-                        key: '女性',
-                        value: this.selectData.filter(d => d.xb === '女').length,
-                    }]
+                    const filterStr =  _.chain(this.filterObj)
+                        .keys()
+                        .filter(key => this.filterObj[key].length > 0)
+                        .reduce((str, key) => {
+                            const realKey = this.deminArr.find(d => d.sortkey === key).name;
+                            return str + realKey + ': ' + this.filterObj[key].join(', ') + '\n'
+                        }, '')
+                        .value();
+                    info =[
+                        {
+                            key: '选择条件',
+                            value: filterStr || '全部',
+                        }, {
+                            key: '病例数量',
+                            value: this.selectData.length,
+                        }, {
+                            key: '病例占比',
+                            value: (
+                                this.selectData.length / TrackJSON.length  * 100
+                            ).toFixed(2) + '%',
+                        }, {
+                            key: '男性',
+                            value: this.selectData.filter(d => d.xb === '男').length,
+                        }, {
+                            key: '女性',
+                            value: this.selectData.filter(d => d.xb === '女').length,
+                        },
+                    ]
                 }
                 this.caseDetail = info;
             }
@@ -706,7 +724,8 @@
                 font-size: 14px;
             }
             .info-item-value{
-                flex: 1
+                flex: 1;
+                white-space: pre-wrap;
             }
         }
     }
