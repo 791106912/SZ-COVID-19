@@ -27,7 +27,7 @@ export function initData() {
         } else if (nl > 40 && nl <= 50) {
             nlRange = '40~50'
         } else {
-            nlRange = '50~'
+            nlRange = '50~以上'
         }
         if(d.reason === ""){
             d.reason = '未知'

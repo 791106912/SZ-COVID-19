@@ -8,6 +8,7 @@
     import 'echarts/lib/chart/bar'
     import 'echarts/lib/chart/pictorialBar'
     import 'echarts/lib/component/axis'
+    import 'echarts/lib/component/tooltip'
     import women from '@/assets/woman.png'
     import men from '@/assets/man.png'
     import womenBg from '@/assets/womanBg.png'
@@ -98,22 +99,32 @@
                             axisLabel: {
                                 color: 'red',
                                 align: 'center',
-                                margin: 20,
+                                margin: 40,
                             }
                         }
                     ],
+                    tooltip: {
+                        trigger: "item",
+                         formatter: function(a){
+                            return  a.marker + a.seriesName + '<br />' + 
+                                    a.name + ': ' + Math.abs(a.value);
+                        }
+                    },
                     grid: [
                         {
                             width: '40%',
                             top: "0%",
                             bottom: "0%",
-                            left: 0,
+                            left: '5%',
                             gridIndex: 0,
+                            containLabel: true
                         }, {
-                            left: '50%',
+                            width: '50%',
+                            left: '45%',
                             top: "0%",
                             bottom: "0%",
                             gridIndex: 1,
+                            containLabel: true
                     }],
                     series: [
                         {
@@ -132,7 +143,7 @@
                         },
                        {
                             z: 6,
-                            name: '女性年龄分布',
+                            name: '女性',
                             gridIndex: 0,
                             type: "pictorialBar",
                             symbolSize: symbleSize,
@@ -163,7 +174,7 @@
                         },
                         {
                             z: 6,
-                            name: '男性年龄分布',
+                            name: '男性',
                             type: "pictorialBar",
                             symbolSize: symbleSize,
                             xAxisIndex: 1,

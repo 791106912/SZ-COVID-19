@@ -24,6 +24,9 @@
                     </div>
                 </div>
             </Section>
+            <div>
+                <Bar />
+            </div>
         </div>
     </div>
     
@@ -35,6 +38,7 @@
     import _ from 'lodash'
     import TrackJSON from '@/data/track'
     import province from '@/data/province'
+    import Bar from './bar'
     import Section from '@/components/section'
     import { initData, calculateNodeAndLink } from '../methods/dataProcessor'
     
@@ -42,6 +46,7 @@
         name: 'Force',
         components: {
             Section,
+            Bar,
         },
         data() {
             initData();
@@ -623,6 +628,7 @@
     .legend{
         max-height: 80%;
         margin-right: 40px;
+        width: 100px;
         .legend-item{
             display: flex;
             justify-content: space-between;
@@ -679,7 +685,10 @@
 
     .info {
         flex: 1;
+        display: flex;
         margin-left: 30px;
+        flex-direction: column;
+        justify-content: space-between;
         .info-container{
             min-height: 200px;
             display: flex;
