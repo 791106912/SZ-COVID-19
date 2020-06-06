@@ -33,7 +33,7 @@ export function initData() {
             d.reason = '未知'
         }
         d.nlRange = nlRange;
-        d.relation = linkIds.includes(d.blh) ? '聚集传播' : '其他';
+        d.relation = linkIds.includes(d.blh) ? '明确关系' : '单独病例';
         
         let livelocation = '未知' 
         if(d.jzd) {

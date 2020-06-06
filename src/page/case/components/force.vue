@@ -34,6 +34,7 @@
     import * as d3Fisheye from 'd3-fisheye'
     import _ from 'lodash'
     import TrackJSON from '@/data/track'
+    import province from '@/data/province'
     import Section from '@/components/section'
     import { initData, calculateNodeAndLink } from '../methods/dataProcessor'
     
@@ -256,11 +257,14 @@
                     name: '年龄',
                     sortkey: 'nlRange',
                 }, {
-                    name: '来源地',
+                    name: '来源地(国内)',
                     sortkey: 'origin',
                 }, {
-                    name: '居住地',
-                    sortkey: 'livelocation',
+                    name: '来源地(国外)',
+                    sortkey: 'origin',
+                }, {
+                    name: '病例关系',
+                    sortkey: 'relation',
                 }]
 
                 deminArr.forEach(d => {
@@ -272,7 +276,13 @@
                 const deminData = _.chain(deminArr)
                     .map(d => {
                         const key = d.sortkey;
-                        const deminDetailArr = _.chain(TrackJSON)
+                        let useData = TrackJSON;
+                        if (d.name === '来源地(国外)') {
+                            useData = TrackJSON.filter(d1 => !province.includes(d1[key]))
+                        } else if(d.name === '来源地(国内)') {
+                            useData = TrackJSON.filter(d1 => province.includes(d1[key]))
+                        }
+                        const deminDetailArr = _.chain(useData)
                             .map(key)
                             .uniq()
                             .map(d1 => ({
