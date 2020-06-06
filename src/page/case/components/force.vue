@@ -460,6 +460,7 @@
                 this.nodeContainer = forceContainer.append('g').classed('nodes', true);
             },
             draw() {
+                this.calcualteDetailInfo();
                 const [nodes, links] = calculateNodeAndLink(this.selectData);
 
                 this.simulation.nodes(nodes);
@@ -543,35 +544,48 @@
                 this.deminRadius = [radius - 20, radius];
             },
             calcualteDetailInfo(d) {
-                const include = ['blh','xb', 'nl', 'yqtblgx',  'bk', 'fbrq', 'rysj', 'rbyy', 'bzzzytjd'];
-                const descObj = {
-                    "yqtblgx": "与其他病例关系",
-                    "zwhsjqj": "在武汉时间",
-                    "rbyy": "染病原因",
-                    "bzzzytjd": "备注",
-                    "bk": "病况",
-                    "xb": "性别",
-                    "rysj": "入院时间",
-                    "lssj": "来深时间",
-                    "fbingsj": "发病时间",
-                    "fbrq": "发病日期",
-                    "jzd": "居住地",
-                    "fbusj": "发布时间",
-                    "nl": "年龄",
-                    "blh": "病例号",
-                    "nationality&native":"国籍和籍贯（国内有籍贯者记录籍贯）",
-                    "track":"途径地",
-                    "track_time":"途径地的时间",
-                    "track_trans":"途径交通工具",
-                    "treatment_hospital":"救治医院"
-                }
-                const info = [];
-                include.forEach(d1 => {
-                    info.push({
-                        key: descObj[d1],
-                        value: d[d1] || '暂无',
+                let info = [];
+                if(d) {
+                    const include = ['blh','xb', 'nl', 'yqtblgx',  'bk', 'fbrq', 'rysj', 'rbyy', 'bzzzytjd'];
+                    const descObj = {
+                        "yqtblgx": "与其他病例关系",
+                        "zwhsjqj": "在武汉时间",
+                        "rbyy": "染病原因",
+                        "bzzzytjd": "备注",
+                        "bk": "病况",
+                        "xb": "性别",
+                        "rysj": "入院时间",
+                        "lssj": "来深时间",
+                        "fbingsj": "发病时间",
+                        "fbrq": "发病日期",
+                        "jzd": "居住地",
+                        "fbusj": "发布时间",
+                        "nl": "年龄",
+                        "blh": "病例号",
+                        "nationality&native":"国籍和籍贯（国内有籍贯者记录籍贯）",
+                        "track":"途径地",
+                        "track_time":"途径地的时间",
+                        "track_trans":"途径交通工具",
+                        "treatment_hospital":"救治医院"
+                    }
+                    include.forEach(d1 => {
+                        info.push({
+                            key: descObj[d1],
+                            value: d[d1] || '暂无',
+                        })
                     })
-                })
+                } else {
+                    info =[{
+                        key: '展示病例数量',
+                        value: this.selectData.length,
+                    }, {
+                        key: '男性',
+                        value: this.selectData.filter(d => d.xb === '男').length,
+                    }, {
+                        key: '女性',
+                        value: this.selectData.filter(d => d.xb === '女').length,
+                    }]
+                }
                 this.caseDetail = info;
             }
         },
@@ -660,11 +674,11 @@
         flex: 1;
         margin-left: 30px;
         .info-container{
-            min-height: 300px;
+            min-height: 200px;
             display: flex;
             height: 100%;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: space-around;
         }
         .info-item{
             line-height: 30px;
