@@ -3,7 +3,7 @@
         <div class="map-tool">
             <el-tooltip class="item"
                 effect="dark"
-                :content="isAll ? '累计' : '新增'"
+                :content="isAll ? `累计` : `新增`"
                 placement="top">
                 <el-switch
                     v-model="isAll"
