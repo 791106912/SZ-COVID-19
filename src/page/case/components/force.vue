@@ -281,6 +281,13 @@
                                 sortkey: key,
                             }))
                             .value();
+
+                        if(key === 'nlRange') {
+                            deminDetailArr.sort((a, b) => {
+                                const arr = [a, b].map(d1 => Number(d1.name.split('~')[0]));
+                                return arr[0] - arr[1];
+                            })
+                        }
                         return deminDetailArr;
                     })
                     .flatten()
@@ -651,11 +658,15 @@
         }
         .info-item{
             line-height: 30px;
+            display: flex;
             .info-item-key{
                 display: inline-block;
                 width: 100px;
                 font-weight: bolder;
                 font-size: 14px;
+            }
+            .info-item-value{
+                flex: 1
             }
         }
     }
