@@ -7,8 +7,6 @@
     import 'echarts/extension/bmap/bmap'
     import style from '@/data/mapStyle2'
 
-    const linesData = [];
-
     export default {
             name: 'SzMap',
             data () {

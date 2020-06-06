@@ -49,8 +49,9 @@ export default [{
 }, {
     'featureType': 'subway',
     'elementType': 'geometry',
-    'stylers': {
-        'lightness': -70
+    "stylers": {
+        "visibility": "off",
+        "weight": 1
     }
 }, {
     'featureType': 'building',
