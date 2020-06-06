@@ -178,6 +178,7 @@ export default {
 
 <style lang="less">
     .search-list {
+        width: 30%;
         display: flex;
         flex-direction: column;
         .search-form {
@@ -225,6 +226,9 @@ export default {
                         flex: 1;
                     }
                     .el-select {
+                        width: 100%;
+                    }
+                    .el-range-editor--mini.el-input__inner {
                         width: 100%;
                     }
                 }
