@@ -1,16 +1,13 @@
 <template>
     <div class="lines-map-container">
         <div class="map-tool">
-            <el-tooltip class="item"
-                effect="dark"
-                :content="isAll ? '累计' : '新增'"
-                placement="top">
-                <el-switch
-                    v-model="isAll"
-                    :width="15"
-                    @change="handleAllChange"
-                />
-            </el-tooltip>
+            <el-switch
+                v-model="isAll"
+                active-text="全部"
+                inactive-text="新增"
+                inactive-color="#b2d4f3"
+                @change="handleAllChange"
+            />
         </div>
         <div id="trackMap">
 
@@ -19,6 +16,7 @@
 </template>
 
 <script>
+    import eventBus from '../eventBus';
     import _ from 'lodash';
     import { extent } from 'd3'
     import echarts from 'echarts/lib/echarts';
@@ -202,6 +200,7 @@
             },
             initOptions() {
                 const timeTrack = this.initData()
+                this.timeTrack = timeTrack
                 const options = _.chain(timeTrack)
                     .orderBy(d => new Date(d[0].track[0].time).getTime())
                     .map((d, i, arr) => {
@@ -385,7 +384,8 @@
                 return series;
             },
             hanleTimelinechanged() {
-                this.myChart.on('timelinechanged', () => {
+                this.updateDate(0)
+                this.myChart.on('timelinechanged', ({ currentIndex }) => {
                     const { series } = this.myChart.getOption()
                     const seriesIndex = this.isAll ? 3 : 1
                     const geoArr = _.chain(series[seriesIndex].data)
@@ -407,7 +407,20 @@
                             center,
                         }
                     }, this)
+
+                    this.updateDate(currentIndex)
                 })
+            },
+            updateDate(index) {
+                const timeArr = _.chain(this.timeTrack)
+                    .map((d, k) => ({
+                        date: k,
+                        time: new Date(k).getTime(),
+                    }))
+                    .orderBy('time')
+                    .map('date')
+                    .value()
+                eventBus.$emit('trackMapTime', timeArr[index])
             },
             handleAllChange() {
                 this.initMap()
@@ -432,26 +445,26 @@
         width: 70%;
         .map-tool {
             position: absolute;
-            right: 5px;
+            bottom: 5px;
             z-index: 2;
             transform: scale(.8);
             .el-switch {
-                height: 15px;
-                line-height: 15px;
+                // height: 15px;
+                // line-height: 15px;
                 &.is-checked {
                     .el-switch__core {
-                    height: 15px;
-                    background-color: #3c8af1;
+                    // height: 15px;
+                    // background-color: #3c8af1;
                     &::after {
-                        background-color: transparent;
+                        // background-color: transparent;
                     }
                 }
                 }
                 .el-switch__core {
-                    height: 15px;
-                    background-color: #aaa;
+                    // height: 15px;
+                    // background-color: #aaa;
                     &::after {
-                        background-color: transparent;
+                        // background-color: transparent;
                     }
                 }
             }

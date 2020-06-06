@@ -1,98 +1,72 @@
 <template>
     <div class="search-list">
-        <div class="search-form">
-            <div class="form-border" :style="styles" />
-            <el-form :model="formData" label-position="left" label-width="80px" size="mini">
-                <el-form-item
-                    prop="name"
-                    label="查找患者"
-                >
-                    <el-input v-model="formData.name" clearable />
-                </el-form-item>
-                <el-form-item
-                    prop="range"
-                    label="时间范围"
-                >
-                    <el-date-picker
-                        v-model="formData.range"
-                        type="datetimerange"
-                        start-placeholder="起始时间"
-                        end-placeholder="结束时间"
-                    />
-                </el-form-item>
-                <el-form-item
-                    prop="distance"
-                    label="相似距离"
-                >
-                    <el-select v-model="formData.distance"
-                        placeholder="请选择"
-                        clearable    
-                    >
-                        <el-option
-                            v-for="item in options"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                        />
-                    </el-select>
-                </el-form-item>
-            </el-form>
-            <el-button
-                class="search-button"
-                size="mini"
-                @click="hanleSearch"
-            >search</el-button>
-        </div>
         <div class="search-lists">
+            <header class="lists-header">
+                <span>病例来源列表</span>
+                <span class="lists-header-date">{{currentDate}}</span>
+            </header>
             <ul >
                 <li
                     v-for="item in listArr"
                     :key="item.name"
                 >
                     <span>{{item.name}}</span>
-                    <span>重复次数:&nbsp;&nbsp;{{item.count}}</span>
+                    <span>人数:&nbsp;&nbsp;{{item.count}}</span>
                 </li>
             </ul>
+        </div>
+        <div class="traffic-list">
+            <header>交通工具列表</header>
+            <Swiper
+                :options="swiperOption"
+                :auto-update="true"
+            >
+                <SwiperSlide v-for="item in transArr" :key="item.tran">
+                    <div class="traffic-list-item">
+                        <span>{{item.tran}}</span>
+                        <span class="list-item-count">{{item.count}}</span>
+                    </div>
+                </SwiperSlide>
+            </Swiper>
         </div>
     </div>
 </template>
 
 <script>
+import eventBus from '../eventBus'
 import _ from 'lodash'
 import picture from '@/assets/border.png'
 import TrackJSON from '@/data/track'
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import 'swiper/css/swiper.css'
 
 export default {
 
     name: 'search-list',
+    components: {
+        Swiper,
+        SwiperSlide,
+    },
     data() {
         return {
+            swiperOption: {
+                direction : 'vertical',
+                autoplay: {
+                    delay: 1000,
+                    disableOnInteraction: false,
+                },
+                loop: true,
+                slidesPerView: 8,
+                mousewheel: true,
+                height: 300,
+            },
             styles: {
                 backgroundImage: `url(${picture})`,
                 backgroundRepeat: 'no-repeat',
             },
-            formData: {
-                name: '',
-                range: null,
-                distance: '',
-            },
-            options: [{
-                value: '500',
-                label: '500km',
-            }, 
-            {
-                value: '1000',
-                label: '1000km',
-            },
-            {
-                value: '1500',
-                label: '158km',
-            },
-            {
-                value: '2000',
-                label: '2000km',
-            }],
             listArr: [],
+            currentDate: '',
+            transArr: [],
         }
     },
     methods: {
@@ -100,15 +74,19 @@ export default {
             this.initTrackData = TrackJSON.map(d => ({
                 ...d,
                 place: _.chain(d.track)
+                    .slice(0, 1)
                     .reduce((arr, d1) => {
                         arr.push({
                             name: d1.from,
+                            date: d1.time,
                             time: new Date(d1.time).getTime(),
                         },
-                        {
-                            name: d1.to,
-                            time: new Date(d1.time).getTime(),
-                        })
+                        // {
+                        //     name: d1.to,
+                        //     date: d1.time,
+                        //     time: new Date(d1.time).getTime(),
+                        // }
+                        )
                         return arr
                     }, [])
                     .uniqBy('name')
@@ -138,108 +116,76 @@ export default {
                 .map('place')
                 .flatten()
                 .value()
-                
+
+            this.transArr = _.chain(this.initTrackData)
+                .map(d => d.track.map(d1 => d1.tran))
+                .flattenDeep()
+                .compact()
+                .map(d => d.indexOf('航班') !== -1 ? '航空': d)
+                .countBy()
+                .map((d, k) => ({
+                    tran: k,
+                    count: d
+                }))
+                .orderBy('count', 'desc')
+                .value()
+            
             this.startSearch()
         },
-        startSearch() {
-            const { name }  = this.formData
-            let { range } = this.formData
-            range = range ? range.map(d => d.getTime()) : null
-            const findItem = this.initTrackData.find(d => name.toString() === d.blh)
-
-            const places = findItem ? findItem.place.map(d => d.name) : null
-            
+        startSearch(date = '') {
             this.listArr = _.chain(this.originListArr)
                 .map(d => ({
                     ...d,
-                    count: this.getCount(d.name, range, places)
+                    count: this.getCount(d.name, date)
                 }))
                 .orderBy('count', 'desc')
                 .value()
             
         },
-        getCount(name, range, places) {
-            if (!places) return this.allCountObj[name]
-            if (!places.includes(name)) return 0
-            return this.placeArr.filter(d => places.includes(d.name))
-                .filter(d => d.name === name)
-                .filter(d => (!range || d.time >= range[0] && d.time <= range[1]))
+        getCount(name, date) {
+            if (!date) return this.allCountObj[name] || 0
+            return this.placeArr
+                .filter(d => (d.date === date) && d.name === name)
                 .length
         },
         hanleSearch() {
             this.startSearch()
         },
+        watchTime() {
+            eventBus.$on('trackMapTime', date => {
+                this.currentDate = date
+                this.startSearch(date)
+            })
+        }
     },
     mounted() {
         this.initData()
+        this.watchTime()
     },
 }
 </script>
 
 <style lang="less">
     .search-list {
-        width: 30%;
+        margin-left: 20px;
+        width: calc(30% - 20px);
         display: flex;
         flex-direction: column;
-        .search-form {
-            height: 40%;
-            margin: 40px 0 0  40px;
-            display: flex;
-            align-items: center;
-            position: relative;
-            border: 1px solid #224ac0;
-            border-top: none;
-            padding: 20px 40px 20px;
-            background: radial-gradient(95% 100% ellipse, #071226 50%, #224ac0);
-            .form-border {
-                height: 30px;
-                padding: 0;
-                margin: 0;
-                position: absolute;
-                top: -20px;
-                left: -5px;
-                right: -1px;
-                background-size: 110% 30px;
-            }
-            .search-button {
-                position: absolute;
-                top: calc(100% - 10px);
-                left: 128px;
-                border: 1px solid #224ac0;
-                padding: 3px 10px;
-                background-color: #b2d4f3;
-                font-weight: bold;
-                &:hover {
-                    color: #606266;
-                }
-                &:focus {
-                    color: #606266;
-                }
-            }
-            .el-form {
-                width: 100%;
-                .el-form-item {
-                    width: 100%;
-                    display: flex;
-                    .el-form-item__content {
-                        margin-left: 10px !important;
-                        flex: 1;
-                    }
-                    .el-select {
-                        width: 100%;
-                    }
-                    .el-range-editor--mini.el-input__inner {
-                        width: 100%;
-                    }
-                }
-            }
-        }
         .search-lists {
             margin-top: 20px;
             margin-bottom: 20px;
-            height: calc(60% - 20px);
+            height: calc(50% - 20px);
             overflow: auto;
+            .lists-header {
+                display: flex;
+                justify-content: space-between;
+                font-size: 14px;
+                .lists-header-date {
+                    font-size: 12px;
+                }
+            }
             ul {
+                padding-left: 0;
                 color: #aaa;
                 list-style-type: none;
                 font-size: 14px;
@@ -249,6 +195,27 @@ export default {
                     border-bottom: 1px dotted #224ac0;
                     line-height: 2.5em;
                     span:nth-last-child(1) {
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+        .traffic-list {
+            height: 50%;
+            overflow: hidden;
+            font-size: 14px;
+            header {
+                font-size: 14px;
+            }
+            .swiper-container {
+                margin-top: 20px;
+                color: #aaa;
+                .traffic-list-item {
+                    line-height: 2.5em;
+                    display: flex;
+                    justify-content: space-between;
+                    border-bottom: 1px dotted #224ac0;
+                    .list-item-count {
                         margin-right: 10px;
                     }
                 }
