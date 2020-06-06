@@ -1,18 +1,29 @@
 <template>
     <div class="forceCom">
-        <div id="chart"></div>
         <div class="legend">
             <div
-                v-for="item in legendArr"
+                v-for="item in deminArr"
                 :class="{'legend-item': true, disabled: disbaled.includes(item.name)}"
                 :key="item.name"
-                v-on:click="()=> selectType(item.name)"
             >
-                <span class="legend-color" :style="{background: colorObj[item.name]}"></span>
                 <span class="legend-name">{{item.name}}</span>
-                <span class="legend-count">{{item.value}}</span>
-                <span class="legend-percent">{{item.percent}}</span>
+                <span class="legend-color" :style="{background: colorObj[item.name]}"></span>
             </div>
+        </div>
+        <div id="chart" ref='chart'></div>
+        <div class="info">
+            <Section title="病例信息">
+                <div class="info-container">
+                    <div
+                        v-for="item in caseDetail"
+                        :key="item.key"
+                        class="info-item"
+                    >
+                    <span class="info-item-key">{{item.key}}</span>：
+                    <span class="info-item-value">{{item.value}}</span>
+                    </div>
+                </div>
+            </Section>
         </div>
     </div>
     
@@ -23,50 +34,45 @@
     import * as d3Fisheye from 'd3-fisheye'
     import _ from 'lodash'
     import TrackJSON from '@/data/track'
-    import { initData, calculateNodeAndLink, aggre } from '../methods/dataProcessor'
+    import Section from '@/components/section'
+    import { initData, calculateNodeAndLink } from '../methods/dataProcessor'
     
     export default {
         name: 'Force',
+        components: {
+            Section,
+        },
         data() {
-            const height = 800;
-            const width = 800;
-
-            const radius = Math.min(height, width) / 2;
-            const forceRadius = [0, radius - 80];
+            initData();
             const fisheyeRadius = 100;
-            const timeRadius = [radius - 80, radius - 60] ;
-            const deminRadius = [radius - 30, radius];
+            const timeRange = d3.extent(TrackJSON, d => {
+                return new Date(d.realDate).getTime()
+            });
             
             return {
-                width,
-                height,
-                forceRadius,
-                timeRadius,
-                deminRadius,
                 fisheyeRadius,
-                legendArr: [],
-                disbaled: [],
-                selectKey: 'relation',
-                selectGraph: null,
-                selectData: TrackJSON,
+                deminArr: [],
                 colorObj: {},
-                selectMeth: 'mul',
+                disbaled: [],
+                filterObj: {},
+                timeRange: timeRange,
+                caseDetail: [],
             }
         },
         methods: {
             drag: simulation => {
-                function dragstarted(d) {
+                const dragstarted = d => {
                     if (!d3.event.active) simulation.alphaTarget(0.3).restart();
                     d.fx = d.x;
                     d.fy = d.y;
                 }
                 
-                function dragged(d) {
+                const dragged = d => {
                     d.fx = d3.event.x;
                     d.fy = d3.event.y;
                 }
                 
-                function dragended(d) {
+                const dragended = d => {
                     if (!d3.event.active) simulation.alphaTarget(0);
                     d.fx = null;
                     d.fy = null;
@@ -78,21 +84,26 @@
                     .on("end", dragended);
             },
             initChart() {
+                const useLength = Math.min(this.width, this.height) 
                 this.svg = d3.select('#chart')
                     .append("svg")
-                    .attr("viewBox", [-this.width / 2, -this.height / 2, this.width, this.height])
+                    .attr("viewBox", [0, 0, useLength, useLength])
+                    .attr('width', useLength)
+                    .attr('height', useLength)
+                    .append('g')
+                    .attr('transform', `translate(${useLength/2}, ${useLength/2})`)
 
-                initData();
+                this.selectData = TrackJSON;
                 this.initTimeCircle();
                 this.initDemiCircle();
-                this.initLegend(this.selectKey)
+                this.createForce();
             },
             initTimeCircle() {
-                const timeArr = _.chain(TrackJSON)
+                const gapTimeArr = _.chain(TrackJSON)
                     .reduce((obj, d) => {
-                        obj[d.fbrq] = {
-                            name: d.fbrq,
-                            value: obj[d.fbrq] ? obj[d.fbrq].value + 1 : 1,
+                        obj[d.realDate] = {
+                            name: d.realDate,
+                            value: obj[d.realDate] ? obj[d.realDate].value + 1 : 1,
                         }
                         return obj;
                     }, {})
@@ -100,14 +111,23 @@
                     .orderBy(d => new Date(d).getTime(), 'desc')
                     .value();
 
-                // const valueArr = timeArr.map(d => d.value);
-                // valueArr.forEach((d, i) => {
-                //     const addition = valueArr[i - 1] ? valueArr[i - 1] : 0;
-                //     valueArr[i] = valueArr[i] + addition
-                // })
-                // timeArr.forEach((d, i) => {
-                //     d.value = valueArr[i]
-                // })
+                const oneDay = 24 * 3600 * 1000;
+                const timeArr = [];
+                gapTimeArr.forEach((d, i) => {
+                    timeArr.push(d);
+                    if(gapTimeArr[i+1]) {
+                        const timeItemArr = [d.name, gapTimeArr[i+1].name].map(d1 => new Date(d1).getTime())
+                        const timeSpace = timeItemArr[1] - timeItemArr[0] - oneDay;
+                        const dayCount = timeSpace/oneDay;
+                        for(let i = 1; i <= dayCount; i++){
+                            timeArr.push({
+                                name: new Date(timeItemArr[0] + i * oneDay).toLocaleDateString(),
+                                value: d.value
+                            })
+                        }
+                    }
+                })
+
                 const [min, max] = d3.extent(timeArr, d => d.value);
                 const color = d3.scaleLinear()
                     .domain([min, max / 2, max])
@@ -165,57 +185,71 @@
                     .attr('font-size', '9px')
                     .attr('fill', '#fff')
                     .attr('href', d => `#hiddenArc${d.data.name}`)
-                    .text(d => d.data.name);
+                    .text(d => d.data.name.replace('2020/', ''));
+                    
+                const radius = this.timeRadius[1] + (this.deminRadius[0] - this.timeRadius[1]) / 2;
 
-                // const radius = (this.timeRadius[0] + this.timeRadius[1]) / 2;
-                const radius = (this.timeRadius[1]) + 4;
+                const indexScale = d3.scaleLinear()
+                        .domain([0, 1])
+                        .range([0, timeArr.length - 1]);
 
-                const endDot = container.append('circle')
-                    .attr('r', 8)
-                    .attr('fill', 'red')
-                    .attr('cx',  () => {
-                        const x = radius * Math.cos(0 * 2 * Math.PI - Math.PI / 2)
-                        return x;
-                    })
-                    .attr('cy', () => {
-                        const y = radius * Math.sin(0 * 2 * Math.PI - Math.PI / 2);
-                        return y;
-                    })
-                    .call(d3.drag()
-                        .on("drag", function() {
-                            var rad = Math.atan2(d3.event.y, d3.event.x);
-                            d3.select(this)
-                                .attr('cx', radius * Math.cos(rad))
-                                .attr('cy', radius * Math.sin(rad))
+                function dragStart(){
+                    let rad = Math.atan2(d3.event.y, d3.event.x);
+                    d3.select(this)
+                        .style('transform', () => {
+                            const x = radius * Math.cos(rad);
+                            const y = radius * Math.sin(rad);
+                            rad += Math.PI / 2;
+                            if(rad < 0)  rad = Math.PI * 2 + rad
+                            const scale = rad / (Math.PI * 2) * 360;
+                            return `translate(${x}px, ${y}px) rotate(${scale}deg)`
                         })
-                    );
+                }
 
-                const startDot = container.append('circle')
-                    .attr('r', 8)
+                const dragEnd = (index) => {
+                    let rad = Math.atan2(d3.event.y, d3.event.x);
+                    rad += Math.PI / 2;
+                    if(rad < 0)  rad = Math.PI * 2 + rad
+                    const scale = rad / (Math.PI * 2);
+                    // const timeIndex = Math.ceil(indexScale(scale));
+                    const timeIndex = parseInt(indexScale(scale));
+                    const timeItem = new Date(timeArr[timeIndex].name).getTime();
+                    // if(timeItem <= this.timeRange[0]) {
+                        // index = 0
+                    // } else if(timeItem >= this.timeRange[1]) {
+                        // index = 1;
+                    // }
+                    this.timeRange[index] = timeItem;
+                    this.selectType();
+                }
+
+                container.append('polygon')
                     .attr('fill', 'yellow')
-                    .attr('cx',  () => {
-                        const x = radius * Math.cos(0 * 2 * Math.PI - Math.PI / 2)
-                        return x;
+                    .attr('cursor', 'pointer')
+                    .attr('points', '0,10 -8,-8 8,-8')
+                    .attr('transform', () => {
+                        return `translate(${0}, ${radius * Math.sin( - Math.PI / 2)})`
                     })
-                    .attr('cy', () => {
-                        const y = radius * Math.sin(0 * 2 * Math.PI - Math.PI / 2);
-                        return y;
-                    })
-                    .call(d3.drag()
-                        .on("drag", function() {
-                            var rad = Math.atan2(d3.event.y, d3.event.x);
-                            d3.select(this)
-                                .attr('cx', radius * Math.cos(rad))
-                                .attr('cy', radius * Math.sin(rad))
-                        })
+                    .call(
+                        d3.drag()
+                        .on("drag", dragStart)
                     );
-                
+
+                container.append('polygon')
+                    .attr('fill', 'red')
+                    .attr('cursor', 'pointer')
+                    .attr('points', '0,10 -8,-8 8,-8')
+                    .attr('transform', () => {
+                        return `translate(${0}, ${radius * Math.sin( - Math.PI / 2)})`
+                    })
+                    .call(
+                        d3.drag()
+                        .on("drag", dragStart)
+                        .on("end",  () =>  dragEnd(1))
+                    );
             },
             initDemiCircle() {
-                const deminData = [{
-                    name: '聚集传播',
-                    sortkey: 'relation',
-                }, {
+                const deminArr = [{
                     name: '染病原因',
                     sortkey: 'reason',
                 }, {
@@ -229,14 +263,37 @@
                     sortkey: 'livelocation',
                 }]
 
+                deminArr.forEach(d => {
+                    this.filterObj[d.sortkey] = [];
+                })
+
+                this.deminArr = deminArr
+
+                const deminData = _.chain(deminArr)
+                    .map(d => {
+                        const key = d.sortkey;
+                        const deminDetailArr = _.chain(TrackJSON)
+                            .map(key)
+                            .uniq()
+                            .map(d1 => ({
+                                name: d1,
+                                type: d.name,
+                                sortkey: key,
+                            }))
+                            .value();
+                        return deminDetailArr;
+                    })
+                    .flatten()
+                    .value()
+
                 const pie = d3.pie()
                     .padAngle(0)
                     .sort(null)
                     .value(() => 1)
 
                 const arc = d3.arc()
-                    .cornerRadius(10)
-                    .padAngle(.1)
+                    // .cornerRadius(10)
+                    .padAngle(0)
                     .innerRadius(this.deminRadius[0])
                     .outerRadius(this.deminRadius[1]);
 
@@ -251,27 +308,30 @@
                 const pathContainer = container
                     .append('g')
                     .classed('path', true)
+                
                 const _this = this;
+
                 pathContainer
                     .selectAll("path")
                     .data(arcs)
                     .enter()
                     .append("path")
-                    .attr("fill", d => color(d.data.name))
-                    .attr("d", arc)
-                    .attr('stroke', d => {
-                        if(this.selectKey === d.data.sortkey) {
-                            return '#fff'
-                        }
-                        return 'none'
+                    .attr("fill", d => {
+                        this.colorObj[d.data.type] = color(d.data.type);
+                        return color(d.data.type)
                     })
+                    .attr("d", arc)
+                    .attr('stroke','none')
                     .on('click', function(d) {
-                        pathContainer
-                            .selectAll('path')
-                            .attr("stroke", 'none')
-                        d3.select(this)
-                            .attr("stroke", '#fff')
-                        _this.initLegend(d.data.sortkey);
+                        const {sortkey, name} = d.data;
+                        if(_this.filterObj[sortkey].includes(name)) {
+                            d3.select(this).attr('stroke', 'none');
+                            _this.filterObj[sortkey] = _this.filterObj[sortkey].filter(d => d !== name);
+                        } else {
+                            d3.select(this).attr('stroke', '#fff');
+                            _this.filterObj[sortkey].push(name);
+                        }
+                        _this.selectType();
                     })
 
                 const text = container.append("g")
@@ -283,7 +343,7 @@
 
                 text.append('path')
                     .attr('fill', 'none')
-                    .attr('id', d => `hiddenArc${d.data.name}`)
+                    .attr('id', d => `hiddenArc${d.data.name}_${d.data.type}`)
                     .attr('d', d => {
                         const {startAngle, endAngle} = d;
                         const [innerRadius, outerRadius] = this.deminRadius;
@@ -299,230 +359,125 @@
                     
                 text.append('textPath')
                     .attr('startOffset', '50%')
-                    .attr('href', d => `#hiddenArc${d.data.name}`)
+                    .attr('href', d => `#hiddenArc${d.data.name}_${d.data.type}`)
                     .text(d => d.data.name);
             },
-            initAggreGraph() {
-                this.svg.select('g.force').remove();
-                this.svg.select('g.aggre').remove();
-                
-                const useKey = this.selectKey
-                const clusterPadding = 20
-                const maxRadius = 10;
-                const padding = 5;
-
-                const nodes = this.selectData.map(d => ({
-                    ...d,
-                    radius: 5
-                }))
-                
-                const line = d3.line().curve(d3.curveBasisClosed)
-                const simulation = d3.forceSimulation()
-                    .force('collide', d3.forceCollide(d => d.radius + padding))
-                    .nodes(nodes, d => d.blh)
-                    .restart();
-                const aggreContainer = this.svg.append('g')
-                    .classed('aggre', true);
-                    
-                const hullG = aggreContainer.append('g')
-                    .attr('class', 'hulls');
-
-                const color = d3.scaleOrdinal(d3.schemeCategory10)
-                
-                const node = aggreContainer.append('g')
-                    .attr('class', 'nodes')
-                    .selectAll('circle')
-                    .data(nodes, d => d.blh)
-                    .enter()
-                    .append('circle')
-                    .attr('r', d => d.radius)
-                    .attr('fill', d => {
-                        this.colorObj[d[useKey]] = color(d[useKey]);
-                        return color(d[useKey])
-                    })
-                    .call(this.drag(simulation));
-
-                const clusters = {};
-                nodes.forEach(n => {
-                    if (!clusters[n[useKey]] || (n.radius > clusters[n[useKey]].radius)) clusters[n[useKey]] = n;
-                });
-
-                const hullPoints = function (data) {
-                    let pointArr = [];
-                    const padding = 2.5;
-                    data.each(d => {
-                        const pad = d.radius + padding;
-                        pointArr = pointArr.concat([
-                        [d.x - pad, d.y - pad],
-                        [d.x - pad, d.y + pad],
-                        [d.x + pad, d.y - pad],
-                        [d.x + pad, d.y + pad]
-                        ]);
-                    });
-                    return pointArr;
-                }
-                
-                const hulls = hullG
-                    .selectAll('path')
-                    .data(Object.keys(clusters).map(c => {
-                    return {
-                        [useKey]: c,
-                        nodes: node.filter(d => d[useKey] == c)
-                    };
-                    }).filter(d => d[useKey] != 0), d => d[useKey])
-                    .enter().append('path')
-                    .attr('d', d => line(d3.polygonHull(hullPoints(d.nodes))))
-                    .attr('fill', d => color(d[useKey]))
-                    .attr('opacity', 0.4);
-
-                const cluster = function(alpha) {
-                    return function (d) {
-                        const cluster = clusters[d[useKey]];
-                        if (cluster === d || d[useKey] == 0) return;
-                        let x = d.x - cluster.x,
-                            y = d.y - cluster.y,
-                            l = Math.sqrt(x * x + y * y),
-                            r = d.radius + cluster.radius + 3;
-                        if (l != r) {
-                        l = (l - r) / l * alpha;
-                        d.x -= x *= l;
-                        d.y -= y *= l;
-                        cluster.x += x;
-                        cluster.y += y;
-                        }
-                    };
-                }
-
-                const collide = (alpha) => {
-                    const quadtree = d3.quadtree()
-                        .x(d => d.x)
-                        .y(d => d.y)
-                        .extent([[0, 0], [this.width, this.height]])
-                        .addAll(nodes);
-                    return function (d) {
-                        let r = d.radius + (maxRadius * 8) + Math.max(padding, clusterPadding),
-                            nx1 = d.x - r,
-                            nx2 = d.x + r,
-                            ny1 = d.y - r,
-                            ny2 = d.y + r;
-                        quadtree.visit(function (quad, x1, y1, x2, y2) {
-                        let data = quad.data;
-                        if (data && data !== d) {
-                            let x = d.x - data.x,
-                                y = d.y - data.y,
-                                l = Math.sqrt(x * x + y * y),
-                                r = d.radius + data.radius + (d[useKey] == data[useKey] ? padding : clusterPadding);
-                            if (l < r) {
-                            l = (l - r) / l * alpha;
-                            d.x -= x *= l;
-                            d.y -= y *= l;
-                            data.x += x;
-                            data.y += y;
-                            }
-                        }
-                        return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
-                        });
-                    };
-                }
-
-                simulation.on("tick", () => {
-                    node
-                    .each(cluster(0.2))
-                    .each(collide(0.1))
-                    .attr('cx', d => d.x)
-                    .attr('cy', d => d.y);
-                    
-                    hulls
-                    .attr('d', d => line(d3.polygonHull(hullPoints(d.nodes))));
-                })
+            pythag(r, b, coord) {
+                const radius = this.forceRadius[1];
+                const hyp2 = Math.pow(radius, 2);
+                r += 5;
+                b = Math.min(radius * 2 - r, Math.max(r, b));
+                var b2 = Math.pow(
+                    (b - radius), 2
+                ),
+                a = Math.sqrt(hyp2 - b2);
+                coord = Math.max(
+                    radius - a + r,
+                    Math.min(a + radius - r, coord)
+                );
+                return coord;
             },
-            initForce() {
-                const [nodes, links] = calculateNodeAndLink(this.selectData);
-
-                this.svg.select('g.force').remove();
-                this.svg.select('g.aggre').remove();
-
-                const simulation = d3.forceSimulation(nodes)
-                    // .force('r', 
-                    //     d3.forceRadial(10,0,0)
-                    //     .strength(.1)
-                    // )
-                    .force("link", 
-                        d3.forceLink(links).id(d => d.blh)
+            createForce() {
+                this.simulation = d3.forceSimulation()
+                    .force("link", d3.forceLink()
+                        .id(d => d.blh)
                     )
                     .force("charge", 
-                        d3.forceManyBody()
-                        // .strength(-40)
+                        d3.forceManyBody().strength(-20)
                     )
                     .force("x", d3.forceX())
-                    .force("y", d3.forceY());
+                    .force("y", d3.forceY())
+                    // .force('center', d3.forceCenter(0, 0))// 向心力
+                    // .force('collide',d3.forceCollide()  // 圆的碰撞力
+                    //     .radius(10)  // 根据指定的半径创建一个碰撞力。默认为 1
+                    // )
+                    // .force('r', d3.forceRadial(
+                    //         this.forceRadius[1],0,0
+                    //     ).strength(.5))
+                    .on("tick", () => {
+                        d3.selectAll('.circleG')
+                            .attr('transform', d => {
+                                //  d.x = this.pythag(d.r, d.y, d.x); 
+                                // d.y = this.pythag(d.r, d.x, d.y);
+                                return `translate(${d.x}, ${d.y})`
+                            });
+
+                        d3.selectAll('.linkItem')
+                            .attr("x1", d => d.source.x)
+                            .attr("y1", d => d.source.y)
+                            .attr("x2", d => d.target.x)
+                            .attr("y2", d => d.target.y);
+                    });
 
                 const fisheye = d3Fisheye.radial()
                     .radius(this.fisheyeRadius)
                     .distortion(2)
                     .smoothing(0.5);
 
+                this.svg.on('mousemove', function() {
+                    const mouse = d3.mouse(this);
+                    fisheye.focus(mouse);
+                    d3.selectAll('.circleG').each(d => {
+                            d.fisheye = fisheye([d.x, d.y]);
+                        })
+                        .attr('transform', d => `translate(${d.fisheye[0]}, ${d.fisheye[1]})`)
+                    d3.selectAll('.circleG')
+                        .select('circle')
+                        .attr('r', d => d.fisheye[2] * d.r);
+
+                    d3.selectAll('.circleG')
+                        .select('text')
+                        .attr('font-size', d => d.fisheye[2] * 5);
+
+                    d3.selectAll('.linkItem')
+                        .attr("x1", d => d.source.fisheye[0])
+                        .attr("y1", d => d.source.fisheye[1])
+                        .attr("x2", d => d.target.fisheye[0])
+                        .attr("y2", d => d.target.fisheye[1]);
+                })
+
                 const forceContainer = this.svg.append('g')
                     .classed('force', true)
-                this.svg.on('mousemove', function() {
-                        const mouse = d3.mouse(this);
-                        fisheye.focus(mouse);
-                        node.each(d => {
-                                d.fisheye = fisheye([d.x, d.y]);
-                            })
-                            .attr('transform', d => `translate(${d.fisheye[0]}, ${d.fisheye[1]})`)
-                        node.select('circle')
-                            .attr('r', d => {
-                                return d.fisheye[2] * d.r
-                            })
 
-                        node.select('text')
-                            .attr('font-size', d => {
-                                return d.fisheye[2] * 5
-                            })
+                this.linkContainer = forceContainer.append('g').classed('links', true);
+                this.nodeContainer = forceContainer.append('g').classed('nodes', true);
+            },
+            draw() {
+                const [nodes, links] = calculateNodeAndLink(this.selectData);
 
-                        link.attr("x1", d => d.source.fisheye[0])
-                            .attr("y1", d => d.source.fisheye[1])
-                            .attr("x2", d => d.target.fisheye[0])
-                            .attr("y2", d => d.target.fisheye[1]);
-                    })
-                    // .on('mouseleave', () => {
-                    //     console.log(123);
-                    //     node.attr('transform', d => `translate(${d.x}, ${d.y})`)
-                            
-                    //     node.select('circle')
-                    //         .attr('r', d => d.r);
+                this.simulation.nodes(nodes);
+                this.simulation.force("link").links(links);
 
-                    //     node.select('text')
-                    //         .attr('font-size', 5)
-
-                    //     link.attr("x1", d => d.source.x)
-                    //         .attr("y1", d => d.source.y)
-                    //         .attr("x2", d => d.target.x)
-                    //         .attr("y2", d => d.target.y);
-                    // })
+                const linkUpdate = this.linkContainer
+                    .selectAll(".linkItem")
+                    .data(links, d => `${d.source.blh}_${d.target.blh}`);
                     
+                linkUpdate.enter()
+                    .append("line")
+                    .classed('linkItem', true);
 
-                const link = forceContainer
-                    .append("g")
-                    .classed('link', true)
-                    .selectAll("line")
-                    .data(links)
-                    .join("line")
+                linkUpdate.exit().remove();
 
-                const node = forceContainer.append("g")
-                    .classed('node', true)
+                const nodeUpdate = this.nodeContainer
                     .selectAll(".circleG")
                     .data(nodes, d => d.blh)
-                    .enter()
+
+                nodeUpdate.select('circle')
+                        .attr('r', d => d.r)
+
+                const newAddNode = nodeUpdate.enter()
                     .append('g')
                     .classed('circleG', true)
-                    .attr('transform', d => `translate(${d.x}, ${d.y})`)
-                    .call(this.drag(simulation));
+                    .attr('cursor', 'pointer')
+                    .on('click', d => {
+                        this.calcualteDetailInfo(d)
+                    })
+                    .call(this.drag(this.simulation))
 
-                node.append("circle").attr("r", d => d.r)
+                newAddNode.append("circle")
+                    .attr('r', d => d.r)
 
-                node.append("text")
+                newAddNode.append("text")
                     .attr('font-size', 5)
                     .text(d => {
                         let showText = d.blh;
@@ -533,50 +488,80 @@
                         return showText
                     })
 
-                simulation.on("tick", () => {
-                    link
-                        .attr("x1", d => d.source.x)
-                        .attr("y1", d => d.source.y)
-                        .attr("x2", d => d.target.x)
-                        .attr("y2", d => d.target.y);
-
-                     node.attr('transform', d => `translate(${d.x}, ${d.y})`)
+                nodeUpdate.exit().remove();
+                    
+                this.simulation.alpha(.3)
+                    .alphaTarget(0)
+                    .restart();
+            },
+            selectType() {
+                console.log(this.timeRange.map(d => new Date(d).toLocaleDateString()));
+                this.selectData = TrackJSON.filter(d => {
+                    let isKeep = true;
+                    Object.keys(this.filterObj)
+                        .filter(key => this.filterObj[key].length > 0)
+                        .forEach(key => {
+                            isKeep && (isKeep = this.filterObj[key].includes(d[key]))
+                        })
+                    return isKeep;
+                }).filter(d => {
+                    const timeStap = new Date(d.realDate).getTime();
+                    return timeStap >= this.timeRange[0] && timeStap <= this.timeRange[1];
                 });
+                const strengthScale = d3.scaleLinear().domain([TrackJSON.length, 0]).range([18, 40])
+                const forceCount = strengthScale(this.selectData.length);
+                this.simulation.force("charge", 
+                    d3.forceManyBody().strength(-forceCount)
+                )
+                this.draw();
             },
-            initLegend(key) {
-                this.selectKey = key;
-                this.disbaled = [];
-                this.selectData = TrackJSON
-                this.legendArr = aggre(key);
-
-                if (this.selectKey === 'relation') {
-                    this.selectGraph = this.initForce
-                    this.selectData = TrackJSON.filter(d => d.relation === '聚集传播')
-                    this.disbaled = ['其他']
-                    this.selectMeth = 'only';
-                } else {
-                    this.selectGraph = this.initAggreGraph
-                    this.selectMeth = 'mul';
-                }
-                this.selectGraph();
+            calcualteData() {
+                const height = this.$refs.chart.offsetHeight;
+                const width = this.$refs.chart.offsetWidth;
+                const radius = Math.min(height, width) / 2;
+                this.width = width;
+                this.height = height;
+                this.forceRadius = [0, radius - 60];
+                this.timeRadius = [radius - 60, radius - 40] ;
+                this.deminRadius = [radius - 20, radius];
             },
-            selectType(name) {
-                if (this.selectMeth === 'only') {
-                    this.disbaled= this.legendArr
-                        .filter(d => !(d.name === name))
-                        .map(d => d.name);
-                } else {
-                    this.disbaled.includes(name)
-                        ? this.disbaled = this.disbaled.filter(d => !(d === name))
-                        : this.disbaled.push(name)
+            calcualteDetailInfo(d) {
+                const include = ['blh','xb', 'nl', 'yqtblgx',  'bk', 'fbrq', 'rysj', 'rbyy', 'bzzzytjd'];
+                const descObj = {
+                    "yqtblgx": "与其他病例关系",
+                    "zwhsjqj": "在武汉时间",
+                    "rbyy": "染病原因",
+                    "bzzzytjd": "备注",
+                    "bk": "病况",
+                    "xb": "性别",
+                    "rysj": "入院时间",
+                    "lssj": "来深时间",
+                    "fbingsj": "发病时间",
+                    "fbrq": "发病日期",
+                    "jzd": "居住地",
+                    "fbusj": "发布时间",
+                    "nl": "年龄",
+                    "blh": "病例号",
+                    "nationality&native":"国籍和籍贯（国内有籍贯者记录籍贯）",
+                    "track":"途径地",
+                    "track_time":"途径地的时间",
+                    "track_trans":"途径交通工具",
+                    "treatment_hospital":"救治医院"
                 }
-
-                this.selectData = TrackJSON.filter(d => !this.disbaled.includes(d[this.selectKey]));
-                this.selectGraph();
+                const info = [];
+                include.forEach(d1 => {
+                    info.push({
+                        key: descObj[d1],
+                        value: d[d1] || '暂无',
+                    })
+                })
+                this.caseDetail = info;
             }
         },
         mounted() {
+            this.calcualteData()
             this.initChart();
+            this.selectType();
         }
     }
 </script>
@@ -584,30 +569,31 @@
 <style lang="less">
     .forceCom{
         display: flex;
-        height: 600px;
-        margin-top: 20px;
+        padding-top: 20px;
         align-items: center;
+        height: 100%;
     }
     #chart{
-        width: 600px;
+        width: 50%;
         height: 100%;
+        min-width: 700px;
+        min-height: 700px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
     .legend{
         max-height: 80%;
-        overflow-y: scroll;
-        margin-left: 40px;
-        min-width: 200px;
+        margin-right: 40px;
         .legend-item{
             display: flex;
             justify-content: space-between;
-            cursor: pointer;
             align-items: center;
             width: 100%;
             &.disabled{
                 opacity: .3;
             }
             &>span{
-                text-overflow: hi;
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
@@ -616,16 +602,11 @@
                 height: 10px;
                 width: 10px;
                 border-radius: 100px;
+                margin-left: 10px;
             }
             .legend-name{
                 width: 80px;
-            }
-            .legend-percent{
-                width: 50px;
-            }
-            .legend-count{
                 text-align: right;
-                margin-right: 10px;
             }
         }
     }
@@ -640,7 +621,7 @@
             fill: #fff;
             text-anchor: middle;
         }
-        .link{
+        .linkItem{
             stroke: yellow;
             stroke-width: 1
         }
@@ -655,6 +636,27 @@
         }
         .path{
             cursor: pointer;
+        }
+    }
+
+    .info {
+        flex: 1;
+        margin-left: 30px;
+        .info-container{
+            min-height: 300px;
+            display: flex;
+            height: 100%;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .info-item{
+            line-height: 30px;
+            .info-item-key{
+                display: inline-block;
+                width: 100px;
+                font-weight: bolder;
+                font-size: 14px;
+            }
         }
     }
 </style>

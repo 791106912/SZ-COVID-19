@@ -7,7 +7,7 @@ module.exports = [{
     comName: 'Track',
     path: 'track',
   }, {
-    name: '病例管理',
+    name: '病例分析',
     comName: 'Case',
     path: 'case',
   }, {
