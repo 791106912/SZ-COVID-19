@@ -1,6 +1,20 @@
 <template>
-    <div id="trackMap">
+    <div class="lines-map-container">
+        <div class="map-tool">
+            <el-tooltip class="item"
+                effect="dark"
+                :content="isAll ? '累计' : '新增'"
+                placement="top">
+                <el-switch
+                    v-model="isAll"
+                    :width="15"
+                    @change="handleAllChange"
+                />
+            </el-tooltip>
+        </div>
+        <div id="trackMap">
 
+        </div>
     </div>
 </template>
 
@@ -21,6 +35,11 @@
 
     export default {
         name: 'Map',
+        data() {
+            return {
+                isAll: false
+            }
+        },
         methods: {
             initMap() {
                 const series = this.initSeries();
@@ -29,7 +48,7 @@
                     baseOption: {
                         timeline: {
                             orient: 'vertical',
-                            top: '10',
+                            top: '20',
                             left: '90%',
                             right: '20',
                             bottom: '10',
@@ -125,10 +144,7 @@
                     },
                     options,
                 };
-                const myChart = echarts.init(document.getElementById('trackMap'), 'light');
-                myChart.setOption(option);
-                this.myChart = myChart
-                window.dddChart = myChart
+                this.myChart.setOption(option, true);
             },
             initData() {
                 const trackObj = _.chain(TrackJSON)
@@ -190,11 +206,13 @@
                     .orderBy(d => new Date(d[0].track[0].time).getTime())
                     .map((d, i, arr) => {
                         const trackData = d.map(d1 => d1.track)
-                        const addTrackData = _.chain(arr)
+                        const addTrackData = this.isAll
+                        ? _.chain(arr)
                             .slice(0, i + 1)
                             .flatten()
                             .map(d1 => d1.track)
                             .value()
+                        : []
                         const scatterData = this.getScatterData(trackData)
                         const addScatterData = this.getScatterData(addTrackData)
                         return {
@@ -369,9 +387,11 @@
             hanleTimelinechanged() {
                 this.myChart.on('timelinechanged', () => {
                     const { series } = this.myChart.getOption()
-                    const geoArr = _.chain(series[3].data)
+                    const seriesIndex = this.isAll ? 3 : 1
+                    const geoArr = _.chain(series[seriesIndex].data)
                         .map(d => d.value.slice(0, 2))
                         .value()
+                    geoArr.push(StationGeo["深圳"])
                     const lngExtent = extent(geoArr, d => +d[0]).map((d, i) => +d + (i === 0 ? (-1) : 1))
                     const latExtent = extent(geoArr, d => +d[1]).map((d, i) => +d + (i === 0 ? (-10) : 10))
 
@@ -388,18 +408,57 @@
                         }
                     }, this)
                 })
-            }
+            },
+            handleAllChange() {
+                this.initMap()
+            },
         },
         mounted() {
+            this.myChart = echarts.init(document.getElementById('trackMap'), 'light');
             this.initMap()
             this.hanleTimelinechanged()
+        },
+        beforeDestroy() {
+            this.myChart.dispose()
         }
     }
 </script>
 
-<style lang="less" scoped>
-    #trackMap{
+<style lang="less">
+    .lines-map-container {
+        position: relative;
+        padding: 0;
+        margin: 0;
         width: 70%;
-        height: 100%;
+        .map-tool {
+            position: absolute;
+            right: 5px;
+            z-index: 2;
+            transform: scale(.8);
+            .el-switch {
+                height: 15px;
+                line-height: 15px;
+                &.is-checked {
+                    .el-switch__core {
+                    height: 15px;
+                    background-color: #3c8af1;
+                    &::after {
+                        background-color: transparent;
+                    }
+                }
+                }
+                .el-switch__core {
+                    height: 15px;
+                    background-color: #aaa;
+                    &::after {
+                        background-color: transparent;
+                    }
+                }
+            }
+        }
+        #trackMap{
+            width: 100%;
+            height: 100%;
+        }
     }
 </style>
