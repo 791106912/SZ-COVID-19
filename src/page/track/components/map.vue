@@ -106,7 +106,7 @@
                             transitionDuration: 0,
                             extraCssText: 'z-index:100',
                         },
-                        visualMap: { //图例值控制
+                        visualMap: [{ //图例值控制
                             show: false,
                             seriesIndex: 1,
                             min: 0,
@@ -117,6 +117,12 @@
                                 color: '#fff'
                             }
                         },
+                        {
+                            show: false,
+                            seriesIndex: 5,
+                            min: 0,
+                            max: 1000,
+                        }],
                         geo: {
                             map: 'world',
                             zoom: DEFAULT_ZOOM,
@@ -380,6 +386,10 @@
                             value: StationGeo['深圳'].concat([10]),
                         }],
                     },
+                    {
+                        type: 'map',
+                        geoIndex: 0,
+                    }
                 );
                 return series;
             },
