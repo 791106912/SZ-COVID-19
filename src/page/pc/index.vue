@@ -23,13 +23,12 @@
                 </div>
             </Section>
             <Section
-                title="世界分布"
+                title="中国省市排行"
                 class="right-map"
                 height="100%"
             >
                 <div class="part-world">
-                    <WorldMap class="world-map" />
-                    <Bar class="world-bar" />
+                    <CityList />
                 </div>
             </Section>
        </div>
@@ -44,8 +43,7 @@ import Section from '@/components/section'
 import SzMap from './components/szMap2'
 import SzStatic from './components/szStatic'
 import List from './components/list'
-import WorldMap from './components/worldMap'
-import Bar from './components/bar'
+import CityList from './components/cityList'
 
 
 export default {
@@ -59,8 +57,7 @@ export default {
         List,
         SzMap,
         SzStatic,
-        WorldMap,
-        Bar,
+        CityList,
     },
     methods: {
         
