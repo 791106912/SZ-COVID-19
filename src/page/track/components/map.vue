@@ -3,7 +3,7 @@
         <div class="map-tool">
             <el-switch
                 v-model="isAll"
-                active-text="全部"
+                active-text="累计"
                 inactive-text="新增"
                 inactive-color="#b2d4f3"
                 @change="handleAllChange"
