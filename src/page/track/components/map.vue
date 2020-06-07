@@ -24,6 +24,7 @@
     import 'echarts/map/js/world.js';
     import StationGeo from '@/data/station'
     import TrackJSON from '@/data/track'
+    import CountryMappingJSON from '@/data/countryMapping'
 
     const PERIOD = 2;
 
@@ -118,10 +119,15 @@
                             }
                         },
                         {
+                            id: 'heatmap',
                             show: false,
                             seriesIndex: 5,
-                            min: 0,
-                            max: 1000,
+                            min: 1,
+                            max: 10000,
+                            inRange: {
+                                color: ['rgba(51, 69, 89, .5)', '#bfb139', '#a54343'],
+                                opacity: [.3, .5, .7]
+                            }
                         }],
                         geo: {
                             map: 'world',
@@ -149,6 +155,13 @@
                     options,
                 };
                 this.myChart.setOption(option, true);
+            },
+            initHeatData() {
+                return fetch('d/format_timeseries.json')
+                    .then(res => res.json())
+                    .then(res => {
+                        this.heatData = _.pickBy(res, (d, k) => CountryMappingJSON[k])
+                    })
             },
             initData() {
                 const trackObj = _.chain(TrackJSON)
@@ -204,6 +217,17 @@
                     .values()
                     .value();
             },
+            getHeatData(date) {
+                return _.chain(this.heatData)
+                    .map((arr, k) => {
+                        const findItem = arr.find(d1 => d1.date === date) || {}
+                        return {
+                            name: CountryMappingJSON[k],
+                            value: findItem.exist || 0
+                        }
+                    })
+                    .value()
+            },
             initOptions() {
                 const timeTrack = this.initData()
                 this.timeTrack = timeTrack
@@ -220,6 +244,11 @@
                         : []
                         const scatterData = this.getScatterData(trackData)
                         const addScatterData = this.getScatterData(addTrackData)
+                        
+                        const newDate = new Date(d[0].track[0].time)
+                        const currentDate = `${newDate.getFullYear()}-${
+                            newDate.getMonth() + 1}-${newDate.getDate()}`
+                        const heatData = this.getHeatData(currentDate)
                         return {
                             series: [{
                                 data: trackData,
@@ -232,6 +261,10 @@
                             },
                             {
                                 data: addScatterData
+                            },
+                            {},
+                            {
+                                data: heatData
                             }]
                         }
                     })
@@ -389,6 +422,9 @@
                     {
                         type: 'map',
                         geoIndex: 0,
+                        tooltip: {
+                            show: false
+                        },
                     }
                 );
                 return series;
@@ -411,10 +447,16 @@
                     const zoom = Number.isNaN(lngExtent[0]) ? DEFAULT_ZOOM
                         : _.min([1 / ((lngExtent[1] - lngExtent[0]) / 360), 1 / ((latExtent[1] - latExtent[0]) / 180)])
 
+                    const heatExtent = extent(series[5].data, d => d.value)
                     this.myChart.setOption({
                         geo: {
                             zoom,
                             center,
+                        },
+                        visualMap: {
+                            id: 'heatmap',
+                            min: heatExtent[0] + 1,
+                            max: heatExtent[1] + heatExtent[1] * .2
                         }
                     }, this)
 
@@ -437,9 +479,11 @@
             },
         },
         mounted() {
-            this.myChart = echarts.init(document.getElementById('trackMap'), 'light');
-            this.initMap()
-            this.hanleTimelinechanged()
+            this.initHeatData().then(() => {
+                this.myChart = echarts.init(document.getElementById('trackMap'), 'light');
+                this.initMap()
+                this.hanleTimelinechanged()
+            })
         },
         beforeDestroy() {
             this.myChart.dispose()
@@ -458,26 +502,6 @@
             bottom: 5px;
             z-index: 2;
             transform: scale(.8);
-            .el-switch {
-                // height: 15px;
-                // line-height: 15px;
-                &.is-checked {
-                    .el-switch__core {
-                    // height: 15px;
-                    // background-color: #3c8af1;
-                    &::after {
-                        // background-color: transparent;
-                    }
-                }
-                }
-                .el-switch__core {
-                    // height: 15px;
-                    // background-color: #aaa;
-                    &::after {
-                        // background-color: transparent;
-                    }
-                }
-            }
         }
         #trackMap{
             width: 100%;
