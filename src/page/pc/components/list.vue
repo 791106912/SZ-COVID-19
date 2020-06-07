@@ -5,27 +5,17 @@
         <el-table-column
             prop="name"
             label="地区"
-            min-width="10%"
+            min-width="15%"
         />
         <el-table-column
             prop="now"
-            label="现有确诊"
-            min-width="10%"
+            label="现有"
+            min-width="15%"
         />
         <el-table-column
             prop="acc"
-            label="累计确诊"
-            min-width="10%"
-        />
-        <el-table-column
-            prop="crue"
-            label="治愈"
-            min-width="10%"
-        />
-        <el-table-column
-            prop="death"
-            label="死亡"
-            min-width="10%"
+            label="累计"
+            min-width="15%"
         />
         <el-table-column
             prop="chart"
@@ -83,7 +73,8 @@
                             name: nameObj[d],
                             data: dataArr,
                             id: d,
-                            acc: dataArr[0].count
+                            acc: dataArr[0].count,
+                            now: 0,
                         }
                         return obj;
                     }, {})
@@ -101,7 +92,6 @@
                         id={d.id}
                     />
                 });
-                    
                 this.data = final
             }
         },

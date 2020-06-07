@@ -39,8 +39,8 @@
                         },
                         axisLine: {
                             lineStyle: {
-                                 type: 'dashed',
-                                 color: '#fff'
+                                 type: 'dotted',
+                                 color: 'gray'
                             },
                         }
                     },

@@ -54,12 +54,12 @@
 
 <style lang="less" scoped>
     .sz-count{
-        flex: 1;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        justify-content: space-between;
         .sz-count-item{
             margin: 10px 0;
+            display: flex;
+            align-items: center;
             .sz-count-item-count{
                 margin-left: 10px;
                 font-size: 24px;

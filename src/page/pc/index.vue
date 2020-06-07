@@ -7,12 +7,14 @@
                 height="100%"
             >
                 <div class="part-sz">
-                    <SzMap />
                     <SzStatic />
+                    <SzMap />
                 </div>
             </Section>
-            <Section
-                class="left-list"
+       </div>
+        <div class="pc-right">
+             <Section
+                class="right-list"
                 title="各区分布"
                 height="100%"
             >
@@ -20,10 +22,9 @@
                     <List />
                 </div>
             </Section>
-       </div>
-        <div class="pc-right">
             <Section
                 title="世界分布"
+                class="right-map"
                 height="100%"
             >
                 <div class="part-world">
@@ -40,7 +41,7 @@
 
 
 import Section from '@/components/section'
-import SzMap from './components/szMap'
+import SzMap from './components/szMap2'
 import SzStatic from './components/szStatic'
 import List from './components/list'
 import WorldMap from './components/worldMap'
@@ -76,36 +77,41 @@ export default {
         height: 100%;
         .pc-left {
             width: 66%;
-            margin-right: 20px;
-            display: flex;
-            flex-direction: column;
             overflow: hidden;
-            padding-bottom: 20px;
             .left-map {
-                height: 50%;
+                height: 100%;
             }
-            .left-list {
-                height: calc(50% - 20px);
+            .part-sz{
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                .map{
+                    flex: 1;
+                    width: 100%;
+                }
             }
         }
         .pc-right {
-            display: flex;
-            flex: 1;
-        }
-        .part-sz{
-            display: flex;
-            height: 100%;
-        }
-        .part-world {
+            margin-left: 20px;
             display: flex;
             flex-direction: column;
-            height: 100%;
-            overflow: hidden;
-            .world-map {
-                height: 50%;
+            flex: 1;
+            .right-list{
+                height: calc(50% - 10px);
             }
-            .world-bar {
-                flex: 1;
+            .right-map{
+                height: calc(50% - 10px);
+            }
+            .part-world {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                .world-map {
+                    height: 50%;
+                }
+                .world-bar {
+                    flex: 1;
+                }
             }
         }
     }
