@@ -78,7 +78,9 @@
                             data: ['确诊病例小区', '发热门诊'],
                             textStyle: {
                                 color: '#fff'
-                            }
+                            },
+                            itemHeight: 14,
+                            itemWidth : 14,
                         },
                         series: [{
                             name: '确诊病例小区',
