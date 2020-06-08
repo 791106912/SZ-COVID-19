@@ -98,6 +98,35 @@
                     .attr('height', useLength)
                     .append('g')
                     .attr('transform', `translate(${useLength/2}, ${useLength/2})`)
+                    
+                    const gradient = d3.select('#chart>svg')
+                        .append('defs')
+                        .append('radialGradient')
+                        .attr('id', 'radial')
+
+                    gradient
+                        .append('stop')
+                        .attr('offset', '0%')
+                        .attr('style', 'stop-color: #1f468b;')
+                    gradient
+                        .append('stop')
+                        .attr('offset', '100%')
+                        .attr('style', 'stop-color: #0e2244;')
+
+                    this.svg
+                        .append('circle')
+                        .attr('cx', 0)
+                        .attr('cy', 0)
+                        .attr('r', this.forceRadius[1])
+                        .classed('circle-bg', true)
+
+                    this.svg
+                        .append('g')
+                        .classed('fisheye-bg', true)
+                        .append('circle')
+                        .attr('r', this.fisheyeRadius)
+                        .attr('fill', 'none')
+                        .attr('display', 'none')
 
                 this.selectData = TrackJSON;
                 this.initTimeCircle();
@@ -312,6 +341,10 @@
                     .padAngle(0)
                     .sort(null)
                     .value(() => 1)
+                    // .value(d => {
+                    //     if (d.sortkey === 'origin') return .8
+                    //     return 1
+                    // })
 
                 const arc = d3.arc()
                     // .cornerRadius(10)
@@ -321,6 +354,10 @@
 
                 const arcs = pie(deminData);
 
+                // const colorArr = ["#416eb6", "#ffa354", "#8f8754",
+                // "#dc8e79", "#715ca8", "#8c564b", "#e377c2",
+                // "#7f7f7f", "#bcbd22", "#17becf"]
+                // const color =  d3.scaleOrdinal(colorArr)
                 const color =  d3.scaleOrdinal(d3.schemeCategory10)
 
                 const container = this.svg
@@ -443,7 +480,11 @@
                     .distortion(2)
                     .smoothing(0.5);
 
-                this.svg.on('mousemove', function() {
+
+                const forceContainer = this.svg.append('g')
+                    .classed('force', true)
+
+                forceContainer.on('mousemove', function() {
                     const mouse = d3.mouse(this);
                     fisheye.focus(mouse);
                     d3.selectAll('.circleG').each(d => {
@@ -464,9 +505,48 @@
                         .attr("x2", d => d.target.fisheye[0])
                         .attr("y2", d => d.target.fisheye[1]);
                 })
+                .on('mouseout', function() {
+                    d3.event.preventDefault()
+                        d3.event.stopImmediatePropagation()
+                    d3.selectAll('.circleG')
+                        .attr('transform', d => `translate(${d.x}, ${d.y})`)
+                    d3.selectAll('.circleG')
+                        .select('circle')
+                        .attr('r', d => d.r);
 
-                const forceContainer = this.svg.append('g')
-                    .classed('force', true)
+                    d3.selectAll('.circleG')
+                        .select('text')
+                        .attr('font-size', 5);
+
+                    d3.selectAll('.linkItem')
+                        .attr("x1", d => d.source.x)
+                        .attr("y1", d => d.source.y)
+                        .attr("x2", d => d.target.x)
+                        .attr("y2", d => d.target.y);
+
+                })
+
+                const _this = this
+
+                // 鱼眼背景
+                this.svg
+                    .on('mousemove', function() {
+                        const mouse = d3.mouse(this)
+                        const fisheyeBg = d3.select('.fisheye-bg>circle')
+                            .attr('cx', mouse[0])
+                            .attr('cy', mouse[1])
+                            .attr('display', null)
+
+                        const mouseR = Math.sqrt(mouse.reduce((c, d) => c + Math.pow(d, 2), 0))
+                        if (mouseR > (_this.forceRadius[1])) {
+                            fisheyeBg.attr('display', 'none')
+                        }
+                    })
+                    .on('mouseleave', () => {
+                        d3.select('.fisheye-bg>circle')
+                            .attr('display', 'none')
+                    })
+
 
                 this.linkContainer = forceContainer.append('g').classed('links', true);
                 this.nodeContainer = forceContainer.append('g').classed('nodes', true);
@@ -503,6 +583,11 @@
                         this.calcualteDetailInfo(d)
                     })
                     .call(this.drag(this.simulation))
+                    .on('mouseout', function() {
+                        d3.event.preventDefault()
+                        d3.event.stopImmediatePropagation()
+                        return false
+                    })
 
                 newAddNode.append("circle")
                     .attr('r', d => d.r)
@@ -675,6 +760,8 @@
     .force{
         circle {
             stroke: #fff;
+            // stroke-width: 0;
+            // fill: #bf5658;
             stroke-width: 1.5;
             fill: red;
             cursor: pointer;
@@ -684,6 +771,7 @@
             text-anchor: middle;
         }
         .linkItem{
+            // stroke: rgba(219, 128, 184, 1);
             stroke: yellow;
             stroke-width: 1
         }
@@ -728,5 +816,12 @@
                 white-space: pre-wrap;
             }
         }
+    }
+    .circle-bg {
+        fill:url(#radial)
+    }
+    .fisheye-bg>circle {
+        fill: #4f659b;
+        opacity: .3;
     }
 </style>
