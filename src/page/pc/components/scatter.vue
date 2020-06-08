@@ -4,6 +4,7 @@
 
 <script>
     import echarts from 'echarts/lib/echarts';
+    import _ from 'lodash';
     import 'echarts/lib/chart/scatter'
     import { scaleLinear } from 'd3'
     
@@ -12,21 +13,26 @@
         props: ['data', 'id', 'extent'],
         methods: {
             initMap() {
-                const useData = this.data
+                const useData = _.chain(this.data)
                     .map(d => [d.time, d.addCount])
                     .reverse()
+                    .chunk(3)
+                    .map(d => {
+                        return [`${d[0][0]}-${_.last(d)[0]}`, _.sumBy(d, d1 => d1[1])] 
+                    })
+                    .value();
 
                 const scale = scaleLinear()
                     .domain(this.extent)
-                    .range([2, 15])
+                    .range([2, 20])
 
                 const option = {
                     singleAxis: {
                         height: 0,
-                        left: 5,
+                        left: 25,
                         top: 20,
                         type: 'category',
-                        boundaryGap: false,
+                        boundaryGap: true,
                         data: useData.map(d => d[0]),
                         axisLabel: {
                             show: false,
@@ -46,7 +52,7 @@
                     },
                     tooltip: {
                         formatter: ({data}) => {
-                            return `2020年${data[0]}<br />新增确诊人数：${data[1]}`
+                            return `${data[0]}<br />新增确诊人数：${data[1]}`
                         },
                         backgroundColor: 'rgba(32, 57, 112, .7)'
                     },
