@@ -6,6 +6,7 @@
         <div class="section-right-bottom section-radius"></div>
         <div class="section-title">
             {{title}}
+            <slot name="extra"></slot>
         </div>
         <div class="section-body" :style="{height: height ? `calc(${height} - 20px)` : 'auto'}">
             <slot></slot>
@@ -60,10 +61,13 @@
             border-top-width: 0;
         }
         .section-title{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             line-height: 40px;
             margin: 0 -30px;
             font-size: 14px;
-            padding-left: 20px;
+            padding:0 20px;
             background: linear-gradient(to right, #1f468b, 30%, #0f1f3c);
             color: #70c0ff;
         }
