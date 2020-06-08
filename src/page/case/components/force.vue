@@ -340,11 +340,10 @@
                 const pie = d3.pie()
                     .padAngle(0)
                     .sort(null)
-                    .value(() => 1)
-                    // .value(d => {
-                    //     if (d.sortkey === 'origin') return .8
-                    //     return 1
-                    // })
+                    .value(d => {
+                        if (d.sortkey === 'origin') return .8
+                        return 1
+                    })
 
                 const arc = d3.arc()
                     // .cornerRadius(10)
