@@ -1,7 +1,7 @@
 <template>
     <div class="analysis">
         <Section
-            title="轨迹地图"
+            title="新冠病毒传播轨迹分析"
             class="map"
             height="100%"
         >
@@ -11,7 +11,7 @@
             </div>
         </Section>
         <Section
-            title="轨迹详情"
+            title="新冠病毒病例特征聚类分析"
             height="100%"
         >
             <SanKey />
