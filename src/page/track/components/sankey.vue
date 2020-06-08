@@ -9,6 +9,7 @@
     import echarts from 'echarts/lib/echarts';
     import 'echarts/lib/chart/sankey'
     import TrackJSON from '@/data/track'
+    // import { scaleLinear } from 'd3'
 
 
     const DIM = ['age_range', 'xb','fbrq','origin', 'tran', ]
@@ -41,6 +42,10 @@
     const COUNTRY = ["巴西", "法国", "柬埔寨", "澳门", "荷兰",
         "菲律宾", "俄罗斯", "新加坡", "西班牙", "瑞士", "泰国",
         "英国", "美国"]
+
+    // const scale = scaleLinear()
+    //     .domain([1, 200])
+    //     .range(['#87cc7c', '#966d4b','#935740', '#69277e', '#9d4da7'])
 
     export default {
         name: 'SanKey',
@@ -75,10 +80,13 @@
                             source,
                             target,
                             value,
+                            lineStyle: {
+                                // color: scale(value),
+                            },
                         })
                     })
                 })
-                
+
                 return _.uniqWith(links, _.isEqual)
             },
             initData() {
@@ -108,7 +116,7 @@
                 const { nodes, links } = this.initData()
                 
                 const option = {
-                    color: ['#87cc7c', '#966d4b', '#935740','#935740', '#69277e', '#69277e', '#9d4da7'],
+                    color: ['#87cc7c', '#966d4b', '#935740', '#69277e', '#9d4da7'],
                     tooltip: {
                         trigger: "item",
                         triggerOn: "mousemove"
