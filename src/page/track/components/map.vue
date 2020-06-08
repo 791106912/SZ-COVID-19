@@ -1,16 +1,13 @@
 <template>
     <div class="lines-map-container">
         <div class="map-tool">
-            <el-tooltip class="item"
-                effect="dark"
-                :content="isAll ? `累计` : `新增`"
-                placement="top">
-                <el-switch
-                    v-model="isAll"
-                    :width="15"
-                    @change="handleAllChange"
-                />
-            </el-tooltip>
+            <el-switch
+                v-model="isAll"
+                active-text="累计"
+                inactive-text="新增"
+                inactive-color="#b2d4f3"
+                @change="handleAllChange"
+            />
         </div>
         <div id="trackMap">
 
@@ -19,6 +16,7 @@
 </template>
 
 <script>
+    import eventBus from '../eventBus';
     import _ from 'lodash';
     import { extent } from 'd3'
     import echarts from 'echarts/lib/echarts';
@@ -26,6 +24,7 @@
     import 'echarts/map/js/world.js';
     import StationGeo from '@/data/station'
     import TrackJSON from '@/data/track'
+    import CountryMappingJSON from '@/data/countryMapping'
 
     const PERIOD = 2;
 
@@ -108,7 +107,7 @@
                             transitionDuration: 0,
                             extraCssText: 'z-index:100',
                         },
-                        visualMap: { //图例值控制
+                        visualMap: [{ //图例值控制
                             show: false,
                             seriesIndex: 1,
                             min: 0,
@@ -119,6 +118,17 @@
                                 color: '#fff'
                             }
                         },
+                        {
+                            id: 'heatmap',
+                            show: false,
+                            seriesIndex: 5,
+                            min: 1,
+                            max: 10000,
+                            inRange: {
+                                color: ['rgba(51, 69, 89, .5)', '#bfb139', '#a54343'],
+                                opacity: [.3, .5, .7]
+                            }
+                        }],
                         geo: {
                             map: 'world',
                             zoom: DEFAULT_ZOOM,
@@ -145,6 +155,13 @@
                     options,
                 };
                 this.myChart.setOption(option, true);
+            },
+            initHeatData() {
+                return fetch('d/format_timeseries.json')
+                    .then(res => res.json())
+                    .then(res => {
+                        this.heatData = _.pickBy(res, (d, k) => CountryMappingJSON[k])
+                    })
             },
             initData() {
                 const trackObj = _.chain(TrackJSON)
@@ -200,8 +217,20 @@
                     .values()
                     .value();
             },
+            getHeatData(date) {
+                return _.chain(this.heatData)
+                    .map((arr, k) => {
+                        const findItem = arr.find(d1 => d1.date === date) || {}
+                        return {
+                            name: CountryMappingJSON[k],
+                            value: findItem.exist || 0
+                        }
+                    })
+                    .value()
+            },
             initOptions() {
                 const timeTrack = this.initData()
+                this.timeTrack = timeTrack
                 const options = _.chain(timeTrack)
                     .orderBy(d => new Date(d[0].track[0].time).getTime())
                     .map((d, i, arr) => {
@@ -215,6 +244,11 @@
                         : []
                         const scatterData = this.getScatterData(trackData)
                         const addScatterData = this.getScatterData(addTrackData)
+                        
+                        const newDate = new Date(d[0].track[0].time)
+                        const currentDate = `${newDate.getFullYear()}-${
+                            newDate.getMonth() + 1}-${newDate.getDate()}`
+                        const heatData = this.getHeatData(currentDate)
                         return {
                             series: [{
                                 data: trackData,
@@ -227,6 +261,10 @@
                             },
                             {
                                 data: addScatterData
+                            },
+                            {},
+                            {
+                                data: heatData
                             }]
                         }
                     })
@@ -381,11 +419,19 @@
                             value: StationGeo['深圳'].concat([10]),
                         }],
                     },
+                    {
+                        type: 'map',
+                        geoIndex: 0,
+                        tooltip: {
+                            show: false
+                        },
+                    }
                 );
                 return series;
             },
             hanleTimelinechanged() {
-                this.myChart.on('timelinechanged', () => {
+                this.updateDate(0)
+                this.myChart.on('timelinechanged', ({ currentIndex }) => {
                     const { series } = this.myChart.getOption()
                     const seriesIndex = this.isAll ? 3 : 1
                     const geoArr = _.chain(series[seriesIndex].data)
@@ -401,22 +447,43 @@
                     const zoom = Number.isNaN(lngExtent[0]) ? DEFAULT_ZOOM
                         : _.min([1 / ((lngExtent[1] - lngExtent[0]) / 360), 1 / ((latExtent[1] - latExtent[0]) / 180)])
 
+                    const heatExtent = extent(series[5].data, d => d.value)
                     this.myChart.setOption({
                         geo: {
                             zoom,
                             center,
+                        },
+                        visualMap: {
+                            id: 'heatmap',
+                            min: heatExtent[0] + 1,
+                            max: heatExtent[1] + heatExtent[1] * .2
                         }
                     }, this)
+
+                    this.updateDate(currentIndex)
                 })
+            },
+            updateDate(index) {
+                const timeArr = _.chain(this.timeTrack)
+                    .map((d, k) => ({
+                        date: k,
+                        time: new Date(k).getTime(),
+                    }))
+                    .orderBy('time')
+                    .map('date')
+                    .value()
+                eventBus.$emit('trackMapTime', timeArr[index])
             },
             handleAllChange() {
                 this.initMap()
             },
         },
         mounted() {
-            this.myChart = echarts.init(document.getElementById('trackMap'), 'light');
-            this.initMap()
-            this.hanleTimelinechanged()
+            this.initHeatData().then(() => {
+                this.myChart = echarts.init(document.getElementById('trackMap'), 'light');
+                this.initMap()
+                this.hanleTimelinechanged()
+            })
         },
         beforeDestroy() {
             this.myChart.dispose()
@@ -432,29 +499,9 @@
         width: 70%;
         .map-tool {
             position: absolute;
-            right: 5px;
+            bottom: 5px;
             z-index: 2;
             transform: scale(.8);
-            .el-switch {
-                height: 15px;
-                line-height: 15px;
-                &.is-checked {
-                    .el-switch__core {
-                    height: 15px;
-                    background-color: #3c8af1;
-                    &::after {
-                        background-color: transparent;
-                    }
-                }
-                }
-                .el-switch__core {
-                    height: 15px;
-                    background-color: #aaa;
-                    &::after {
-                        background-color: transparent;
-                    }
-                }
-            }
         }
         #trackMap{
             width: 100%;

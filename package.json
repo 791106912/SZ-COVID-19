@@ -18,7 +18,9 @@
     "echarts": "^4.8.0",
     "element-ui": "^2.13.2",
     "lodash": "^4.17.15",
+    "swiper": "^5.4.2",
     "vue": "^2.6.11",
+    "vue-awesome-swiper": "^4.1.1",
     "vue-router": "^3.2.0"
   },
   "devDependencies": {
