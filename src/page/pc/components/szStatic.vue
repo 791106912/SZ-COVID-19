@@ -43,7 +43,7 @@
                     },
                     {
                         name: '接受观察',
-                        count: '1',
+                        count: '0',
                         color: '#70aff7',
                     },
                 ],
