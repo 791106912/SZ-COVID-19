@@ -759,10 +759,8 @@
     .force{
         circle {
             stroke: #fff;
-            // stroke-width: 0;
-            // fill: #bf5658;
-            stroke-width: 1.5;
-            fill: red;
+            stroke-width: 0;
+            fill: #bf5658;
             cursor: pointer;
         }
         text{
@@ -770,8 +768,7 @@
             text-anchor: middle;
         }
         .linkItem{
-            // stroke: rgba(219, 128, 184, 1);
-            stroke: yellow;
+            stroke: rgba(219, 128, 184, 1);
             stroke-width: 1
         }
     }
