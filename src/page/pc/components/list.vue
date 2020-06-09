@@ -61,8 +61,9 @@
                         const dataArr = PartJSON.filter(d => d.jzsj === '24时')
                         .map((d1, i, arr) => {
                             const addCount = i === arr.length - 1
-                                ? 0
-                                : Number(d1[d]) - Number(arr[i + 1][d])
+                                ? Number(d1[d])
+                                : Number(d1[d]) - Number(arr[i + 1][d]);
+
                             return {
                                 addCount,
                                 count: Number(d1[d]),
