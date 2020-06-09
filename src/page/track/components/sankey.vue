@@ -27,15 +27,27 @@
         }
     }
 
+    const TRAN_ORDER = {
+        '私家/专车': 0,
+        '出租车': 1,
+        '3A109航船': 2,
+        '深圳湾口岸': 3,
+        '航空': 4,
+        '不明': 5,
+    }
+
     const SORT_FUN = {
         'age_range': data => {
             return _.orderBy(data, 'name')
         },
         'fbrq': data => {
-            return data.reverse()
+            return data
         },
         'origin': data => {
             return data.sort(a => COUNTRY.indexOf(a.name) !== -1 ? 1 : -1)
+        },
+        'tran': data => {
+            return _.orderBy(data, d => TRAN_ORDER[d.name])
         }
     }
 
@@ -96,6 +108,8 @@
                         const {track, nl} = d
                         let tran = track.length ? track[track.length - 1].tran : ''
                         tran = tran.indexOf('航班') !== -1 ? '航空' : tran
+                        tran = /(私家)|(自驾)|(专车)|(商务车)/.test(tran) ? '私家/专车' : tran
+                        tran = /(的士)|(出租车)/.test(tran) ? '出租车' : tran
                         const age_left = +nl - (nl % 5)
                         const age_range = `${age_left}岁-${age_left + 5}岁`
                         return _.pick({
