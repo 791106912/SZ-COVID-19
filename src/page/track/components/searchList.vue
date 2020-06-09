@@ -16,20 +16,65 @@
             </ul>
         </div>
         <div class="traffic-list">
-            <header>交通工具列表</header>
+            <header>高感染风险的公共交通名单</header>
             <Swiper
-                v-if="transObj[currentDate] && transObj[currentDate].length"
                 :options="swiperOption"
                 :auto-update="true"
             >
-                <SwiperSlide v-for="item in transObj[currentDate]" :key="item.tran">
+                <SwiperSlide v-for="item in transArr" :key="item.tran">
                     <div class="traffic-list-item">
-                        <span>{{item.tran}}</span>
-                        <span class="list-item-count">{{item.count}}</span>
+                        <div class="item-date">
+                            {{item.date}}
+                        </div>
+                        <div class="item-child-container">
+                            <div class="item-child">
+                                <span class="item-child-icon">
+                                    <MyIconTrain />
+                                </span>
+                                <span class="item-child-value">
+                                    <span
+                                        v-for="d in item.train"
+                                        :key="d"
+                                    >{{d}}</span>
+                                </span>
+                            </div>
+                            <div class="item-child">
+                                <span class="item-child-icon">
+                                    <MyIconBus />
+                                </span>
+                                <span class="item-child-value">
+                                    <span
+                                        v-for="d in item.bus"
+                                        :key="d"
+                                    >{{d}}</span>
+                                </span>
+                            </div>
+                            <div class="item-child">
+                                <span class="item-child-icon">
+                                    <MyIconPlane />
+                                </span>
+                                <span class="item-child-value">
+                                    <span
+                                        v-for="d in item.plane"
+                                        :key="d"
+                                    >{{d}}</span>
+                                </span>
+                            </div>
+                            <div class="item-child">
+                                <span class="item-child-icon">
+                                    <MyIconShip />
+                                </span>
+                                <span class="item-child-value">
+                                    <span
+                                        v-for="d in item.ship"
+                                        :key="d"
+                                    >{{d}}</span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </SwiperSlide>
             </Swiper>
-            <NoData v-else />
         </div>
     </div>
 </template>
@@ -41,7 +86,7 @@ import picture from '@/assets/border.png'
 import TrackJSON from '@/data/track'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
-import NoData from '@/components/noData'
+import { MyIconBus, MyIconPlane, MyIconTrain, MyIconShip } from '@/components/icons'
 
 export default {
 
@@ -49,7 +94,10 @@ export default {
     components: {
         Swiper,
         SwiperSlide,
-        NoData,
+        MyIconBus,
+        MyIconPlane,
+        MyIconTrain,
+        MyIconShip,
     },
     data() {
         return {
@@ -60,9 +108,9 @@ export default {
                     disableOnInteraction: false,
                 },
                 loop: true,
-                slidesPerView: 8,
+                slidesPerView: 3,
                 mousewheel: true,
-                height: 300,
+                height: 400,
             },
             styles: {
                 backgroundImage: `url(${picture})`,
@@ -123,25 +171,29 @@ export default {
                 .flatten()
                 .value()
 
+            // this.transArr = _.chain(this.initTrackData)
+            //     .map(d => d.track.map(d1 => d1.tran))
+            //     .flattenDeep()
+            //     .compact()
+            //     .countBy()
+            //     .map((d, k) => ({
+            //         tran: k,
+            //         count: d
+            //     }))
+            //     .orderBy('count', 'desc')
+            //     .value()
+
+            const banTran = ['私家车', '商务车', '的士', '出租车', '自驾车', '专车', '不详']
+
             this.transArr = _.chain(this.initTrackData)
-                .map(d => d.track.map(d1 => d1.tran))
-                .flattenDeep()
-                .compact()
-                .countBy()
-                .map((d, k) => ({
-                    tran: k,
-                    count: d
+                .map(d => d.track.map(d1 => {
+                    // let tran = /(航班)/.test(d1.tran) ? 'plane' : d1.tran
+                    // tran = /(航船)/.test(tran) ? 'ship' : tran
+                    return {
+                        time: d1.time,
+                        tran: d1.tran,
+                    }
                 }))
-                .orderBy('count', 'desc')
-                .value()
-
-            const banTran = ['私家车', '商务车', '的士', '出租车', '自驾车', '专车']
-
-            this.transObj = _.chain(this.initTrackData)
-                .map(d => d.track.map(d1 => ({
-                    time: d1.time,
-                    tran: d1.tran
-                })))
                 .flattenDeep()
                 .reduce((obj, d) => {
                     const key = d.time
@@ -152,18 +204,31 @@ export default {
                     return obj
                 }, {})
                 .forEach((d, k, obj) => {
-                    obj[k] = _.chain(d)
+                    obj[k] = {
+                        ..._.chain(d)
                         .map(d => d.tran)
                         .compact()
                         .filter(d => !banTran.includes(d))
-                        .countBy()
-                        .map((d, k) => ({
-                            tran: k,
-                            count: d,
-                        }))
-                        .orderBy('count', 'desc')
-                        .value()
+                        .reduce((obj, d) => {
+                            let key = ''
+                            if ( /(航班)/.test(d)) {
+                                key = 'plane'
+                            }
+                            if (/(航船)/.test(d)) {
+                                key = 'ship'
+                            }
+                            if (!obj[key]) {
+                                obj[key] = []
+                            }
+                            obj[key].push(d.slice(0, -2))
+                            return obj
+                        }, {})
+                        .value(),
+                        date: k,
+                    }
                 })
+                .values()
+                .orderBy(d => new Date(d.date).getTime())
                 .value()
 
             this.startSearch()
@@ -254,12 +319,34 @@ export default {
                 margin-top: 20px;
                 color: #aaa;
                 .traffic-list-item {
-                    line-height: 2.5em;
                     display: flex;
                     justify-content: space-between;
-                    border-bottom: 1px dotted #224ac0;
-                    .list-item-count {
-                        margin-right: 10px;
+                    padding: 20px 10px;
+                    .item-date{
+                        width: 7em;
+                    }
+                    .item-child-container {
+                        flex: 1;
+                        display: flex;
+                        justify-content: space-between;
+                        flex-wrap: wrap;
+                        .item-child {
+                            width: 100%;
+                            display: flex;
+                            padding: 0 20px;
+                            .item-child-icon {
+                                color: #285ac7;
+                                font-size: 20px;
+                            }
+                            .item-child-value {
+                                font-size: 12px;
+                                display: flex;
+                                flex-wrap: wrap;
+                                span {
+                                    padding: 0 5px;
+                                }
+                            }
+                        }
                     }
                 }
             }
