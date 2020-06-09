@@ -15,7 +15,9 @@
             data () {
                 return {
                     chart: echarts.ECharts,
-                    bmap: {},
+                    bmap: {
+                        enableMapClick: false,
+                    },
                     linesSeries: [],
                     scatterSeries: [],
                     effectScatterSeries: [],
@@ -63,6 +65,7 @@
                             trigger: 'item',
                             formatter: d => {
                                 let final = '';
+                                console.log(d.seriesName);
                                 switch (d.seriesName) {
                                     case '码头':
                                     case '火车站':
@@ -137,12 +140,6 @@
                             symbolSize: 13,
                             symbol: matouStr,
                             zlevel: 2,
-                            tooltip: {
-                                formatter: a => {
-                                    console.log(a);
-                                    return  a.seriesName + '<br />' + a.marker + a.name
-                                }
-                            },
                             label: {
                                 normal: {
                                     formatter: '{b}',
