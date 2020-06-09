@@ -1,19 +1,38 @@
 <template>
     <div class="forceCom">
-        <div class="legend">
-            <div
-                v-for="item in deminArr"
-                :class="{'legend-item': true, disabled: disbaled.includes(item.name)}"
-                :key="item.name"
-            >
-                <span class="legend-name">{{item.name}}</span>
-                <span class="legend-color" :style="{background: colorObj[item.name]}"></span>
+        <div class="forceCom-left">
+            <div class="filter">
+                <Section title="筛选条件">
+                    <div
+                        class="filter-item"
+                    >
+                        <span class="filter-item-value">{{filterCondition[0] && filterCondition[0].value}}</span>
+                    </div>
+                    <div
+                        class="filter-item"
+                    >
+                        <span class="filter-item-key">{{filterCondition[1] && filterCondition[1].key}}</span>
+                        <span class="filter-item-value">{{filterCondition[1] &&filterCondition[1].value}}</span>
+                    </div>
+                </Section>
+            </div>
+            <div class="legend">
+                <div
+                    v-for="item in deminArr"
+                    :class="{'legend-item': true, disabled: disbaled.includes(item.name)}"
+                    :key="item.name"
+                >
+                    <span class="legend-name">{{item.name}}</span>
+                    <span class="legend-color" :style="{background: colorObj[item.name]}"></span>
+                </div>
             </div>
         </div>
         <div id="chart" ref='chart'></div>
         <div class="info">
             <Section title="病例信息">
-                <div class="info-container">
+                <div v-if="caseDetail.length"
+                    class="info-container"
+                >
                     <div
                         v-for="item in caseDetail"
                         :key="item.key"
@@ -23,6 +42,7 @@
                     <span class="info-item-value">{{item.value}}</span>
                     </div>
                 </div>
+                <NoData v-else title="请选择病例" />
             </Section>
             <div>
                 <Bar />
@@ -40,6 +60,7 @@
     import province from '@/data/province'
     import Bar from './bar'
     import Section from '@/components/section'
+    import NoData from '@/components/noData'
     import { initData, calculateNodeAndLink } from '../methods/dataProcessor'
     
     export default {
@@ -47,6 +68,7 @@
         components: {
             Section,
             Bar,
+            NoData,
         },
         data() {
             initData();
@@ -63,6 +85,7 @@
                 filterObj: {},
                 timeRange: timeRange,
                 caseDetail: [],
+                filterCondition: [],
             }
         },
         methods: {
@@ -337,6 +360,9 @@
                     .flatten()
                     .value()
 
+                this.forignOrigin = deminData.filter(d => d.type === "来源地(国外)")
+                    .map(d => d.name)
+
                 const pie = d3.pie()
                     .padAngle(0)
                     .sort(null)
@@ -353,11 +379,10 @@
 
                 const arcs = pie(deminData);
 
-                // const colorArr = ["#416eb6", "#ffa354", "#8f8754",
-                // "#dc8e79", "#715ca8", "#8c564b", "#e377c2",
-                // "#7f7f7f", "#bcbd22", "#17becf"]
-                // const color =  d3.scaleOrdinal(colorArr)
-                const color =  d3.scaleOrdinal(d3.schemeCategory10)
+                const colorArr = ["#416eb6", "#ffa354", "#8f8754",
+                "#dc8e79", "#715ca8", "#8c564b", "#e377c2",
+                "#7f7f7f", "#bcbd22", "#17becf"]
+                const color =  d3.scaleOrdinal(colorArr)
 
                 const container = this.svg
                     .append('g')
@@ -479,11 +504,12 @@
                     .distortion(2)
                     .smoothing(0.5);
 
+                const _this = this
 
                 const forceContainer = this.svg.append('g')
                     .classed('force', true)
 
-                forceContainer.on('mousemove', function() {
+                this.svg.on('mousemove', function() {
                     const mouse = d3.mouse(this);
                     fisheye.focus(mouse);
                     d3.selectAll('.circleG').each(d => {
@@ -503,49 +529,36 @@
                         .attr("y1", d => d.source.fisheye[1])
                         .attr("x2", d => d.target.fisheye[0])
                         .attr("y2", d => d.target.fisheye[1]);
-                })
-                .on('mouseout', function() {
-                    d3.event.preventDefault()
-                        d3.event.stopImmediatePropagation()
-                    d3.selectAll('.circleG')
-                        .attr('transform', d => `translate(${d.x}, ${d.y})`)
-                    d3.selectAll('.circleG')
-                        .select('circle')
-                        .attr('r', d => d.r);
 
-                    d3.selectAll('.circleG')
-                        .select('text')
-                        .attr('font-size', 5);
-
-                    d3.selectAll('.linkItem')
-                        .attr("x1", d => d.source.x)
-                        .attr("y1", d => d.source.y)
-                        .attr("x2", d => d.target.x)
-                        .attr("y2", d => d.target.y);
-
-                })
-
-                const _this = this
-
-                // 鱼眼背景
-                this.svg
-                    .on('mousemove', function() {
-                        const mouse = d3.mouse(this)
-                        const fisheyeBg = d3.select('.fisheye-bg>circle')
+                    const mouseR = Math.sqrt(mouse.reduce((c, d) => c + Math.pow(d, 2), 0))
+                    
+                    // 鱼眼背景
+                    const fisheyeBg = d3.select('.fisheye-bg>circle')
                             .attr('cx', mouse[0])
                             .attr('cy', mouse[1])
                             .attr('display', null)
 
-                        const mouseR = Math.sqrt(mouse.reduce((c, d) => c + Math.pow(d, 2), 0))
-                        if (mouseR > (_this.forceRadius[1])) {
-                            fisheyeBg.attr('display', 'none')
-                        }
-                    })
-                    .on('mouseleave', () => {
-                        d3.select('.fisheye-bg>circle')
-                            .attr('display', 'none')
-                    })
+                    // 鼠标移出后移除效果
+                    if (mouseR > (_this.forceRadius[1])) {
+                        fisheyeBg.attr('display', 'none')
 
+                        d3.selectAll('.circleG')
+                            .attr('transform', d => `translate(${d.x}, ${d.y})`)
+                        d3.selectAll('.circleG')
+                            .select('circle')
+                            .attr('r', d => d.r);
+
+                        d3.selectAll('.circleG')
+                            .select('text')
+                            .attr('font-size', 5);
+
+                        d3.selectAll('.linkItem')
+                            .attr("x1", d => d.source.x)
+                            .attr("y1", d => d.source.y)
+                            .attr("x2", d => d.target.x)
+                            .attr("y2", d => d.target.y);
+                    }
+                })
 
                 this.linkContainer = forceContainer.append('g').classed('links', true);
                 this.nodeContainer = forceContainer.append('g').classed('nodes', true);
@@ -670,13 +683,24 @@
                             value: d[d1] || '暂无',
                         })
                     })
+                    this.caseDetail = info
                 } else {
-                    const filterStr =  _.chain(this.filterObj)
+                    const deminArr = this.deminArr.map(d => ({
+                        name: d.name,
+                        sortkey: d.name === '来源地(国外)' ? 'forignOrigin' : d.sortkey,
+                    }))
+                    const filterObj = {
+                        ...this.filterObj,
+                        origin: this.filterObj.origin.filter(d => !this.forignOrigin.includes(d)),
+                        forignOrigin: this.filterObj.origin.filter(d => this.forignOrigin.includes(d)),
+                    }
+                    
+                    const filterStr =  _.chain(filterObj)
                         .keys()
-                        .filter(key => this.filterObj[key].length > 0)
+                        .filter(key => filterObj[key].length > 0)
                         .reduce((str, key) => {
-                            const realKey = this.deminArr.find(d => d.sortkey === key).name;
-                            return str + realKey + ': ' + this.filterObj[key].join(', ') + '\n'
+                            const realKey = deminArr.find(d => d.sortkey === key).name;
+                            return str + realKey + ': ' + filterObj[key].join(', ') + '\n'
                         }, '')
                         .value();
                     info =[
@@ -686,21 +710,22 @@
                         }, {
                             key: '病例数量',
                             value: this.selectData.length,
-                        }, {
-                            key: '病例占比',
-                            value: (
-                                this.selectData.length / TrackJSON.length  * 100
-                            ).toFixed(2) + '%',
-                        }, {
-                            key: '男性',
-                            value: this.selectData.filter(d => d.xb === '男').length,
-                        }, {
-                            key: '女性',
-                            value: this.selectData.filter(d => d.xb === '女').length,
-                        },
+                        }, 
+                        // {
+                        //     key: '病例占比',
+                        //     value: (
+                        //         this.selectData.length / TrackJSON.length  * 100
+                        //     ).toFixed(2) + '%',
+                        // }, {
+                        //     key: '男性',
+                        //     value: this.selectData.filter(d => d.xb === '男').length,
+                        // }, {
+                        //     key: '女性',
+                        //     value: this.selectData.filter(d => d.xb === '女').length,
+                        // },
                     ]
+                this.filterCondition = info;
                 }
-                this.caseDetail = info;
             }
         },
         mounted() {
@@ -717,6 +742,42 @@
         padding-top: 20px;
         align-items: center;
         height: 100%;
+        position: relative;
+    }
+    .forceCom-left {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        height: 100%;
+        width: 20%;
+    }
+    .filter {
+        width: 100%;
+        font-size: 14px;
+        .section {
+            width: 100%;
+            padding-bottom: 10px;
+            .section-body {
+                width: 100%;
+                line-height: 2.5em;
+                min-height: auto !important;
+            }
+        }
+        .filter-item {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            white-space: pre-wrap;
+            .filter-item-key{
+                display: inline-block;
+                width: 5em;
+                font-size: 14px;
+            }
+            .filter-item-value{
+                flex: 1;
+                white-space: pre-wrap;
+            }
+        }
     }
     #chart{
         width: 50%;
@@ -730,10 +791,10 @@
     .legend{
         max-height: 80%;
         margin-right: 40px;
-        width: 100px;
+        width: 300px;
         .legend-item{
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             width: 100%;
             &.disabled{
@@ -748,10 +809,10 @@
                 height: 10px;
                 width: 10px;
                 border-radius: 100px;
-                margin-left: 10px;
+                margin-left: 20px;
             }
             .legend-name{
-                width: 80px;
+                width: 100px;
                 text-align: right;
             }
         }
@@ -759,7 +820,7 @@
     .force{
         circle {
             stroke: #fff;
-            stroke-width: 0;
+            stroke-width: 1;
             fill: #bf5658;
             cursor: pointer;
         }
@@ -786,6 +847,7 @@
     }
 
     .info {
+        height: 100%;
         flex: 1;
         display: flex;
         margin-left: 30px;
