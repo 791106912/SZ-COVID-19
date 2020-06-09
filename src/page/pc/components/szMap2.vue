@@ -8,12 +8,7 @@
     import style from '@/data/mapStyle2'
     import ComJSON from '@/data/community';
     import OutPJSON from '@/data/outpatient'
-    import { yiyuanStr, matouStr } from './../data'
-
-    const addLocation = [{
-        name: '深圳湾口岸',
-        coord: ['113.944533', '22.499256'],
-    }]
+    import { yiyuanStr, matouStr, addLocation, huocheStr, feijiStr} from './../data'
 
     export default {
             name: 'SzMap',
@@ -35,7 +30,7 @@
                     return ComJSON
                         .map(d => ({
                             name: d.name,
-                            value: d.coord.concat(8),
+                            value: d.coord.concat(5),
                         }))
                 },
                 initOutpatient() {
@@ -44,8 +39,8 @@
                         value: [d.latitude1, d.longitude1, 100]
                     }))
                 },
-                initAddLocation() {
-                    return addLocation.map(d => ({
+                initAddLocation(data) {
+                    return data.map(d => ({
                         name: d.name,
                         value: d.coord.concat(8),
                     }))
@@ -53,7 +48,6 @@
                 initMap () { 
                     const communityData = this.initCommunity();
                     const outpatientData = this.initOutpatient();
-                    const addLocationData = this.initAddLocation();
                     this.chart = echarts.init(this.$refs.map)
                     this.chart.setOption({
                         animation: false,
@@ -67,15 +61,44 @@
                         },
                         tooltip : {
                             trigger: 'item',
-                            formatter: function(a){
-                                return  a.seriesName + '<br />' + a.marker + a.name
+                            formatter: d => {
+                                let final = '';
+                                switch (d.seriesName) {
+                                    case '码头':
+                                    case '火车站':
+                                    case '机场':
+                                        final = `
+                                                ${d.marker}${d.name}<br />
+                                                客流量: &nbsp;&nbsp;&nbsp;<br />
+                                                核酸检测人数: &nbsp;&nbsp;&nbsp;<br />
+                                                发现疑似病例: &nbsp;&nbsp;&nbsp;
+                                            `
+                                        break;
+                                    case '确诊病例小区': 
+                                        final = `
+                                            ${d.seriesName}<br />
+                                            ${d.marker}${d.name}
+                                        `
+                                        break;
+                                    case '发热门诊': 
+                                        final = `
+                                                ${d.marker}${d.name}<br />
+                                                累计接诊: &nbsp;&nbsp;&nbsp;<br />
+                                                出院人数: &nbsp;&nbsp;&nbsp;<br />
+                                                现有病例: &nbsp;&nbsp;&nbsp;
+                                            `
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                return final;
                             }
                         },
                         legend: {
                             orient: 'vertical',
                             y: 'bottom',
                             x: 'right',
-                            data: ['确诊病例小区', '发热门诊'],
+                            data: ['确诊病例小区', '发热门诊', '码头', '火车站', '机场'],
                             textStyle: {
                                 color: '#fff'
                             },
@@ -95,20 +118,8 @@
                             hoverAnimation: true,
                             zlevel: 1,
                             itemStyle: {
-                                normal: {
-                                    shadowBlur: 0,
-                                }
-                            },
-                            label: {
-                                normal: {
-                                    formatter: '{b}',
-                                    position: 'right',
-                                    show: false,
-                                    color: '#c03636',
-                                },
-                                emphasis: {
-                                    show: true
-                                }
+                                // color: 'blue',
+                                shadowBlur: 0,
                             },
                         }, {
                             name: '发热门诊',
@@ -117,24 +128,59 @@
                             data: outpatientData,
                             symbolSize: 12,
                             symbol: yiyuanStr,
+                            zlevel: 1,
+                        }, {
+                            name: '码头',
+                            type: 'scatter',
+                            coordinateSystem: 'bmap',
+                            data: this.initAddLocation(addLocation.filter(d => d.type==="码头")),
+                            symbolSize: 13,
+                            symbol: matouStr,
+                            zlevel: 2,
+                            tooltip: {
+                                formatter: a => {
+                                    console.log(a);
+                                    return  a.seriesName + '<br />' + a.marker + a.name
+                                }
+                            },
                             label: {
                                 normal: {
                                     formatter: '{b}',
                                     position: 'right',
-                                    show: false,
-                                    color: '#37A2DA',
+                                    show: true,
+                                    color: 'gray',
                                 },
                                 emphasis: {
                                     show: true
                                 }
                             },
                         }, {
-                            name: '码头',
+                            name: '火车站',
                             type: 'scatter',
                             coordinateSystem: 'bmap',
-                            data: addLocationData,
-                            symbolSize: 10,
-                            symbol: matouStr,
+                            data: this.initAddLocation(addLocation.filter(d => d.type==="火车站")),
+                            symbolSize: 13,
+                            symbol: huocheStr,
+                            zlevel: 2,
+                            label: {
+                                normal: {
+                                    formatter: '{b}',
+                                    position: 'right',
+                                    show: true,
+                                    color: 'gray',
+                                },
+                                emphasis: {
+                                    show: true
+                                }
+                            },
+                        }, {
+                            name: '机场',
+                            type: 'scatter',
+                            coordinateSystem: 'bmap',
+                            data: this.initAddLocation(addLocation.filter(d => d.type==="机场")),
+                            symbolSize: 13,
+                            symbol: feijiStr,
+                            zlevel: 2,
                             label: {
                                 normal: {
                                     formatter: '{b}',
