@@ -28,13 +28,14 @@
             167.15581zM585.142857 170.666667h48.761905V0h-48.761905z"
             p-id="2875"></path>
         </svg>
-        <div>无数据</div>
+        <div>{{title ? title : '无数据'}}</div>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'noData'
+    name: 'noData',
+    props: ['title']
 }
 </script>
 
@@ -54,6 +55,7 @@ export default {
         }
     }
     div {
+        font-size: 14px;
         margin-top: 10px;
     }
 }
