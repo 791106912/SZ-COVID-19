@@ -107,4 +107,28 @@ export default [{
     'stylers': {
         'visibility': 'on',
     }
+}, {
+    'featureType': 'scenicspotslabel',
+    'elementType': 'all',
+    'stylers': {
+        'visibility': 'off',
+    }
+}, {
+    'featureType': 'entertainmentlabel',
+    'elementType': 'all',
+    'stylers': {
+        'visibility': 'off',
+    }
+}, {
+    'featureType': 'transportationlabel',
+    'elementType': 'all',
+    'stylers': {
+        'visibility': 'off',
+    }
+}, {
+    'featureType': 'airportlabel',
+    'elementType': 'all',
+    'stylers': {
+        'visibility': 'off',
+    }
 }]
