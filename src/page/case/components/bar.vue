@@ -204,7 +204,8 @@
 
 <style lang="less" scoped>
     #barChart{
-        height: 200px;
+        margin-top: 20px;
+        height: 300px;
         width: 100%;
     }
 </style>
