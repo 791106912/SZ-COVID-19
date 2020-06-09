@@ -18,16 +18,18 @@
         <div class="traffic-list">
             <header>交通工具列表</header>
             <Swiper
+                v-if="transObj[currentDate] && transObj[currentDate].length"
                 :options="swiperOption"
                 :auto-update="true"
             >
-                <SwiperSlide v-for="item in transArr" :key="item.tran">
+                <SwiperSlide v-for="item in transObj[currentDate]" :key="item.tran">
                     <div class="traffic-list-item">
                         <span>{{item.tran}}</span>
                         <span class="list-item-count">{{item.count}}</span>
                     </div>
                 </SwiperSlide>
             </Swiper>
+            <NoData v-else />
         </div>
     </div>
 </template>
@@ -39,6 +41,7 @@ import picture from '@/assets/border.png'
 import TrackJSON from '@/data/track'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
+import NoData from '@/components/noData'
 
 export default {
 
@@ -46,6 +49,7 @@ export default {
     components: {
         Swiper,
         SwiperSlide,
+        NoData,
     },
     data() {
         return {
@@ -67,6 +71,8 @@ export default {
             listArr: [],
             currentDate: '',
             transArr: [],
+            transObj: {},
+            idAdd: false,
         }
     },
     methods: {
@@ -121,7 +127,6 @@ export default {
                 .map(d => d.track.map(d1 => d1.tran))
                 .flattenDeep()
                 .compact()
-                .map(d => d.indexOf('航班') !== -1 ? '航空': d)
                 .countBy()
                 .map((d, k) => ({
                     tran: k,
@@ -129,7 +134,38 @@ export default {
                 }))
                 .orderBy('count', 'desc')
                 .value()
-            
+
+            const banTran = ['私家车', '商务车', '的士', '出租车', '自驾车', '专车']
+
+            this.transObj = _.chain(this.initTrackData)
+                .map(d => d.track.map(d1 => ({
+                    time: d1.time,
+                    tran: d1.tran
+                })))
+                .flattenDeep()
+                .reduce((obj, d) => {
+                    const key = d.time
+                    if (!obj[key]) {
+                        obj[key] = []
+                    }
+                    obj[key].push(d)
+                    return obj
+                }, {})
+                .forEach((d, k, obj) => {
+                    obj[k] = _.chain(d)
+                        .map(d => d.tran)
+                        .compact()
+                        .filter(d => !banTran.includes(d))
+                        .countBy()
+                        .map((d, k) => ({
+                            tran: k,
+                            count: d,
+                        }))
+                        .orderBy('count', 'desc')
+                        .value()
+                })
+                .value()
+
             this.startSearch()
         },
         startSearch(date = '') {
@@ -144,15 +180,22 @@ export default {
         },
         getCount(name, date) {
             if (!date) return this.allCountObj[name] || 0
+            const timeStamp = new Date(date).getTime()
             return this.placeArr
-                .filter(d => (d.date === date) && d.name === name)
+                .filter(d => {
+                    let tempFlag = false
+                    if (this.isAdd) {
+                        tempFlag = d.time <= timeStamp
+                    } else {
+                        tempFlag = d.date === date
+                    }
+                    return tempFlag && d.name === name}
+                )
                 .length
         },
-        hanleSearch() {
-            this.startSearch()
-        },
         watchTime() {
-            eventBus.$on('trackMapTime', date => {
+            eventBus.$on('trackMapTime', ({date, isAdd}) => {
+                this.isAdd = isAdd
                 this.currentDate = date
                 this.startSearch(date)
             })
