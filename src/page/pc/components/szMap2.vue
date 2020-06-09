@@ -69,9 +69,9 @@
                                     case '机场':
                                         final = `
                                                 ${d.marker}${d.name}<br />
-                                                 &nbsp;&nbsp;&nbsp;客流量: <br />
-                                                 &nbsp;&nbsp;&nbsp;核酸检测人数: <br />
-                                                 &nbsp;&nbsp;&nbsp;发现疑似病例:
+                                                客流量: &nbsp;&nbsp;&nbsp;<br />
+                                                核酸检测人数: &nbsp;&nbsp;&nbsp;<br />
+                                                发现疑似病例: &nbsp;&nbsp;&nbsp;
                                             `
                                         break;
                                     case '确诊病例小区': 
@@ -83,9 +83,9 @@
                                     case '发热门诊': 
                                         final = `
                                                 ${d.marker}${d.name}<br />
-                                                 &nbsp;&nbsp;&nbsp;累计接诊: <br />
-                                                 &nbsp;&nbsp;&nbsp;出院人数: <br />
-                                                 &nbsp;&nbsp;&nbsp;现有病例:
+                                                累计接诊: &nbsp;&nbsp;&nbsp;<br />
+                                                出院人数: &nbsp;&nbsp;&nbsp;<br />
+                                                现有病例: &nbsp;&nbsp;&nbsp;
                                             `
                                         break;
                                     default:
