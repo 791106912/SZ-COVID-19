@@ -472,7 +472,10 @@
                     .orderBy('time')
                     .map('date')
                     .value()
-                eventBus.$emit('trackMapTime', timeArr[index])
+                eventBus.$emit('trackMapTime', {
+                    date: timeArr[index],
+                    isAdd: this.isAll,
+                })
             },
             handleAllChange() {
                 this.initMap()
