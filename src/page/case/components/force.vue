@@ -565,6 +565,7 @@
             },
             draw() {
                 this.calcualteDetailInfo();
+                this.calcualteDetailInfo(-1);
                 const [nodes, links] = calculateNodeAndLink(this.selectData);
 
                 this.simulation.nodes(nodes);
@@ -680,7 +681,7 @@
                     include.forEach(d1 => {
                         info.push({
                             key: descObj[d1],
-                            value: d[d1] || '暂无',
+                            value: d === -1 ? '' : d[d1] || '暂无',
                         })
                     })
                     this.caseDetail = info
