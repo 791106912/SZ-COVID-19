@@ -1,29 +1,33 @@
 <template>
-    <el-table
-        :data="data"
-    >
-        <el-table-column
-            prop="name"
-            label="地区"
-            min-width="15%"
-        />
-        <el-table-column
-            prop="now"
-            label="现有"
-            min-width="15%"
-        />
-        <el-table-column
-            prop="acc"
-            label="累计"
-            min-width="15%"
-        />
-        <el-table-column
-            prop="chart"
-            label="趋势"
-            min-width="50%"
-            class-name="scatter-chart"
-        />
-    </el-table>
+    <div class="table-container" ref="container">
+        <el-table
+            :data="data"
+            :height="height"
+        >
+            <el-table-column
+                prop="name"
+                label="地区"
+                min-width="15%"
+            />
+            <el-table-column
+                prop="now"
+                label="现有"
+                min-width="15%"
+            />
+            <el-table-column
+                prop="acc"
+                label="累计"
+                min-width="15%"
+            />
+            <el-table-column
+                prop="chart"
+                label="趋势"
+                min-width="50%"
+                class-name="scatter-chart"
+            />
+        </el-table>
+    </div>
+    
 </template>
 
 <script>
@@ -36,7 +40,8 @@
         name: 'List',
         data() {
             return {
-                data: []
+                data: [],
+                height: 200,
             }
         },
         methods: {
@@ -50,9 +55,9 @@
                     yt: '盐田',
                     ba: '宝安',
                     ps: '坪山',
-                    qt: '其他',
                     lh_u: '罗湖', 
                     lh_ua: '龙华',
+                    qt: '其他',
                 }
 
                 const final = _.chain(nameObj)
@@ -97,17 +102,23 @@
             }
         },
         mounted() {
+            this.$nextTick(() => {
+                this.height = this.$refs.container.offsetHeight
+            })
             this.initData()
         }
     }
 </script>
 
 <style lang="less">
+    .table-container{
+        height: 100%;
+    }
     .el-table{
         background-color: rgba(0, 0, 0, 0);
         color: #869ea7 !important;
         .el-table__body-wrapper {
-            overflow: visible;
+            // overflow: visible;
         }
         thead{
             color: #97c9ef !important;

@@ -146,6 +146,9 @@ export default {
             display: flex;
             flex-direction: column;
             flex: 1;
+            .part-list{
+                height: 100%;
+            }
             .right-list{
                 height: calc(50% - 10px);
             }
