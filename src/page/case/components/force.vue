@@ -496,10 +496,19 @@
                             });
 
                         d3.selectAll('.linkItem')
-                            .attr("x1", d => d.source.x)
-                            .attr("y1", d => d.source.y)
-                            .attr("x2", d => d.target.x)
-                            .attr("y2", d => d.target.y);
+                            .attr('transform', d => {
+                                return `translate(${d.source.x}, ${d.source.y})`
+                            })
+                            .select('line')
+                            .attr("x1", 0)
+                            .attr("y1", 0)
+                            .attr("x2", d => d.target.x - d.source.x)
+                            .attr("y2", d => d.target.y - d.source.y);
+                        
+                        d3.selectAll('.linkItem')
+                            .select('text')
+                            .attr('dx', d => (d.target.x - d.source.x) / 2)
+                            .attr('dy', d => (d.target.y - d.source.y) / 2)
                     });
 
                 const fisheye = d3Fisheye.radial()
@@ -528,10 +537,18 @@
                         .attr('font-size', d => d.fisheye[2] * 5);
 
                     d3.selectAll('.linkItem')
-                        .attr("x1", d => d.source.fisheye[0])
-                        .attr("y1", d => d.source.fisheye[1])
-                        .attr("x2", d => d.target.fisheye[0])
-                        .attr("y2", d => d.target.fisheye[1]);
+                        .attr('transform', d => `translate(${d.source.fisheye[0]}, ${d.source.fisheye[1]})`)
+                        .select('line')
+                        .attr("x1", 0)
+                        .attr("y1", 0)
+                        .attr("x2", d => d.target.fisheye[0] - d.source.fisheye[0])
+                        .attr("y2", d => d.target.fisheye[1] - d.source.fisheye[1])
+
+                    d3.selectAll('.linkItem')
+                        .select('text')
+                        .attr('font-size', d => d.source.fisheye[2] * 5)
+                        .attr('dx', d => (d.target.fisheye[0] - d.source.fisheye[0]) / 2)
+                        .attr('dy', d => (d.target.fisheye[1] - d.source.fisheye[1]) / 2)
 
                     const mouseR = Math.sqrt(mouse.reduce((c, d) => c + Math.pow(d, 2), 0))
                     
@@ -556,10 +573,16 @@
                             .attr('font-size', 5);
 
                         d3.selectAll('.linkItem')
-                            .attr("x1", d => d.source.x)
-                            .attr("y1", d => d.source.y)
-                            .attr("x2", d => d.target.x)
-                            .attr("y2", d => d.target.y);
+                            .attr('transform', d => `translate(${d.source.x}, ${d.source.y})`)
+                            .select('line')
+                            .attr("x1", 0)
+                            .attr("y1", 0)
+                            .attr("x2", d => d.target.x - d.source.x)
+                            .attr("y2", d => d.target.y - d.source.y)
+                        
+                        d3.selectAll('.linkItem')
+                            .select('text')
+                            .attr('font-size', 5)
                     }
                 })
 
@@ -577,10 +600,27 @@
                 const linkUpdate = this.linkContainer
                     .selectAll(".linkItem")
                     .data(links, d => `${d.source.blh}_${d.target.blh}`);
-                    
-                linkUpdate.enter()
-                    .append("line")
+                
+                const linkG = linkUpdate.enter()
+                    .append('g')
                     .classed('linkItem', true);
+
+                linkG.append("line")
+
+                linkG.append('text')
+                    .attr('font-size', 5)
+                    .attr('x', 0)
+                    .attr('y', 0)
+                    .attr('dx', d => (d.target.x - d.source.x) / 2)
+                    .attr('dy', d => (d.target.y - d.source.y) / 2)
+                    .text(d => {
+                        let showText = d.target.blh;
+                        if(d.target.yqtblgx) {
+                            const blharr = d.target.yqtblgx.match(/(\d+、?)+/g)[0];
+                            showText = d.target.yqtblgx.split(blharr)[1];
+                        }
+                        return showText
+                    })
 
                 linkUpdate.exit().remove();
 
@@ -612,10 +652,6 @@
                     .attr('font-size', 5)
                     .text(d => {
                         let showText = d.blh;
-                        if(d.yqtblgx) {
-                            const blharr = d.yqtblgx.match(/(\d+、?)+/g)[0];
-                            showText = d.yqtblgx.split(blharr)[1];
-                        }
                         return showText
                     })
 
