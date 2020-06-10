@@ -772,6 +772,9 @@
                     .on('click.reset', () => {
                         if(d3.event.target === chartContainer
                             || d3.event.target === chartContainer.querySelector('svg')) {
+                                this.timeRange = d3.extent(TrackJSON, d => {
+                                    return new Date(d.realDate).getTime()
+                                });
                                 this.initChart()
                                 this.selectType();
                             }
