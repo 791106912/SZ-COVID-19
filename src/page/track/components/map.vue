@@ -25,6 +25,7 @@
     import StationGeo from '@/data/station'
     import TrackJSON from '@/data/track'
     import CountryMappingJSON from '@/data/countryMapping'
+    import CountryI18n from '@/data/countryI18n'
 
     const PERIOD = 2;
 
@@ -36,7 +37,8 @@
         name: 'Map',
         data() {
             return {
-                isAll: false
+                isAll: false,
+                currentDate: '',
             }
         },
         methods: {
@@ -107,17 +109,18 @@
                             transitionDuration: 0,
                             extraCssText: 'z-index:100',
                         },
-                        visualMap: [{ //图例值控制
-                            show: false,
-                            seriesIndex: 1,
-                            min: 0,
-                            max: 1,
-                            calculable: true,
-                            // color: ['#f44336', '#fc9700', '#ffde00', '#ffde00', '#00eaff'],
-                            textStyle: {
-                                color: '#fff'
-                            }
-                        },
+                        visualMap: [
+                        //     { //图例值控制
+                        //     show: false,
+                        //     seriesIndex: 1,
+                        //     min: 0,
+                        //     max: 1,
+                        //     calculable: true,
+                        //     // color: ['#f44336', '#fc9700', '#ffde00', '#ffde00', '#00eaff'],
+                        //     textStyle: {
+                        //         color: '#fff'
+                        //     }
+                        // },
                         {
                             id: 'heatmap',
                             show: false,
@@ -328,7 +331,7 @@
                         itemStyle: {
                             normal: {
                                 show: false,
-                                color: '#f00'
+                                color: 'white'
                             }
                         },
                     },
@@ -380,8 +383,8 @@
                         itemStyle: {
                             normal: {
                                 show: false,
-                                color: '#f00',
-                                opacity: .4,
+                                color: 'whites',
+                                opacity: .8,
                             }
                         },
                         animation: false,
@@ -423,7 +426,14 @@
                         type: 'map',
                         geoIndex: 0,
                         tooltip: {
-                            show: false
+                            show: true,
+                            formatter: ({data}) => {
+                                const name = CountryI18n[data.name] ? CountryI18n[data.name] : data.name
+                                const value = isNaN(data.value) || !data.value ? 0 : data.value
+                                let str = `${this.currentDate}<br/>${name}: ${value}  例`
+                                if (!data.name) str = null
+                                return str
+                            }
                         },
                     }
                 );
@@ -476,6 +486,7 @@
                     date: timeArr[index],
                     isAdd: this.isAll,
                 })
+                this.currentDate = timeArr[index]
             },
             handleAllChange() {
                 this.initMap()
