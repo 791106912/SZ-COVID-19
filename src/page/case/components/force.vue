@@ -72,7 +72,7 @@
         },
         data() {
             initData();
-            const fisheyeRadius = 100;
+            const fisheyeRadius = 80;
             const timeRange = d3.extent(TrackJSON, d => {
                 return new Date(d.realDate).getTime()
             });
@@ -501,7 +501,7 @@
 
                 const fisheye = d3Fisheye.radial()
                     .radius(this.fisheyeRadius)
-                    .distortion(2)
+                    .distortion(3)
                     .smoothing(0.5);
 
                 const _this = this
