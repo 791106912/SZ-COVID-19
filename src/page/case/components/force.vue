@@ -549,6 +549,7 @@
                         .attr('font-size', d => d.source.fisheye[2] * 5)
                         .attr('dx', d => (d.target.fisheye[0] - d.source.fisheye[0]) / 2)
                         .attr('dy', d => (d.target.fisheye[1] - d.source.fisheye[1]) / 2)
+                        .attr('display', d => d.target.fisheye[2] === 1 ? 'none' : null)
 
                     const mouseR = Math.sqrt(mouse.reduce((c, d) => c + Math.pow(d, 2), 0))
                     
@@ -613,6 +614,7 @@
                     .attr('y', 0)
                     .attr('dx', d => (d.target.x - d.source.x) / 2)
                     .attr('dy', d => (d.target.y - d.source.y) / 2)
+                    .attr('display', 'none')
                     .text(d => {
                         let showText = d.target.blh;
                         if(d.target.yqtblgx) {
