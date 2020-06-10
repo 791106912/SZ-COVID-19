@@ -239,6 +239,7 @@ export default {
                     ...d,
                     count: this.getCount(d.name, date)
                 }))
+                .filter(d => d.count)
                 .orderBy('count', 'desc')
                 .value()
             
