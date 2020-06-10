@@ -830,7 +830,7 @@
             text-anchor: middle;
         }
         .linkItem{
-            stroke: rgba(219, 128, 184, 1);
+            stroke: #bf5658;
             stroke-width: 1
         }
     }
