@@ -131,4 +131,27 @@ export default [{
     'stylers': {
         'visibility': 'off',
     }
-}]
+},
+// {
+//     "featureType": "district",
+//     "elementType": "labels.text.stroke",
+//     "stylers": {
+//         "color": "#2196F3ff",
+//         // "weight": 31.5
+//     }
+// }, 
+// {
+//     "featureType": "district",
+//     "elementType": "labels.text",
+//     "stylers": {
+//         "size": 20
+//     }
+// }, 
+// {
+//     "featureType": "district",
+//     "elementType": "labels.text.fill",
+//     "stylers": {
+//         "color": "#ffffffff"
+//     }
+// }
+]
