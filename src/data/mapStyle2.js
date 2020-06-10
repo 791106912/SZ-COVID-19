@@ -2,7 +2,7 @@ export default [{
     'featureType': 'water',
     'elementType': 'all',
     'stylers': {
-        'color': '#031628'
+        'color': '#103456'
     }
 }, {
     'featureType': 'land',

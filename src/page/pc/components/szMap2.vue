@@ -101,7 +101,7 @@
                             orient: 'vertical',
                             y: 'bottom',
                             x: 'right',
-                            data: ['确诊病例小区', '发热门诊', '码头', '火车站', '机场'],
+                            data: ['码头', '火车站', '机场', '发热门诊', '确诊病例小区'],
                             textStyle: {
                                 color: '#fff'
                             },
@@ -121,7 +121,7 @@
                             hoverAnimation: true,
                             zlevel: 1,
                             itemStyle: {
-                                color: '#EF5350',
+                                color: 'rgba(239, 83, 80, 0.54)',
                                 shadowBlur: 0,
                             },
                         }, {
