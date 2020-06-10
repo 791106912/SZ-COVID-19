@@ -750,7 +750,7 @@
         justify-content: space-between;
         flex-direction: column;
         height: 100%;
-        width: 20%;
+        width: 15%;
     }
     .filter {
         width: 100%;
@@ -759,9 +759,12 @@
             width: 100%;
             padding-bottom: 10px;
             .section-body {
+                min-height: 150px;
                 width: 100%;
                 line-height: 2.5em;
-                min-height: auto !important;
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
             }
         }
         .filter-item {
@@ -792,10 +795,11 @@
     .legend{
         max-height: 80%;
         margin-right: 40px;
-        width: 300px;
+        // width: 300px;
         .legend-item{
             display: flex;
-            justify-content: flex-start;
+            justify-content: flex-end;
+            flex-direction: row-reverse;
             align-items: center;
             width: 100%;
             &.disabled{
@@ -810,11 +814,11 @@
                 height: 10px;
                 width: 10px;
                 border-radius: 100px;
-                margin-left: 20px;
+                margin-right: 20px;
             }
             .legend-name{
                 width: 100px;
-                text-align: right;
+                text-align: left;
             }
         }
     }
