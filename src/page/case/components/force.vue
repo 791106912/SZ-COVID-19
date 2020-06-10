@@ -549,6 +549,16 @@
                         .attr('font-size', d => d.source.fisheye[2] * 5)
                         .attr('dx', d => (d.target.fisheye[0] - d.source.fisheye[0]) / 2)
                         .attr('dy', d => (d.target.fisheye[1] - d.source.fisheye[1]) / 2)
+                        .attr('transform', d => {
+                            const { atan, abs, PI} = Math
+                            const [x1, y1] = d.source.fisheye
+                            const [x2, y2] = d.target.fisheye
+                            const x = abs(x2 - x1)
+                            const y = abs(y2 - y1)
+                            const rad = atan(y / x)
+                            const ang = 180 / PI * rad
+                            return `rotate(${ang}, ${(x2 - x1) / 2}, ${(y2 - y1) / 2})`
+                        })
                         .attr('display', d => d.target.fisheye[2] === 1 ? 'none' : null)
 
                     const mouseR = Math.sqrt(mouse.reduce((c, d) => c + Math.pow(d, 2), 0))
