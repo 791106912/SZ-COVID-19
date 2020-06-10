@@ -114,6 +114,9 @@
             },
             initChart() {
                 const useLength = Math.min(this.width, this.height) 
+
+                d3.select('#chart').select('svg').remove()
+                
                 this.svg = d3.select('#chart')
                     .append("svg")
                     .attr("viewBox", [0, 0, useLength, useLength])
@@ -166,7 +169,7 @@
                         return obj;
                     }, {})
                     .values()
-                    .orderBy(d => new Date(d).getTime(), 'desc')
+                    .orderBy(d => new Date(d.name).getTime())
                     .value();
 
                 const oneDay = 24 * 3600 * 1000;
@@ -192,7 +195,7 @@
                     .range(['#009688', '#ffc107', '#ff0000'])
 
                 const pie = d3.pie()
-                    .padAngle(.01)
+                    .padAngle(0)
                     .sort(null)
                     .value(() => 1)
 
@@ -364,16 +367,16 @@
                     .map(d => d.name)
 
                 const pie = d3.pie()
-                    .padAngle(0)
+                    .padAngle(.005)
                     .sort(null)
                     .value(d => {
-                        if (d.sortkey === 'origin') return .8
+                        if (['origin'].includes(d.sortkey)) return .8
                         return 1
                     })
 
                 const arc = d3.arc()
                     // .cornerRadius(10)
-                    .padAngle(0)
+                    // .padAngle(0)
                     .innerRadius(this.deminRadius[0])
                     .outerRadius(this.deminRadius[1]);
 
@@ -501,7 +504,7 @@
 
                 const fisheye = d3Fisheye.radial()
                     .radius(this.fisheyeRadius)
-                    .distortion(3)
+                    .distortion(2)
                     .smoothing(0.5);
 
                 const _this = this
@@ -727,12 +730,24 @@
                     ]
                 this.filterCondition = info;
                 }
-            }
+            },
+            handleReset() {
+                const chartContainer = d3.select('#chart')
+                    .on('click.reset', () => {
+                        if(d3.event.target === chartContainer
+                            || d3.event.target === chartContainer.querySelector('svg')) {
+                                this.initChart()
+                                this.selectType();
+                            }
+                    })
+                    .node()
+            },
         },
         mounted() {
             this.calcualteData()
             this.initChart();
             this.selectType();
+            this.handleReset()
         }
     }
 </script>
