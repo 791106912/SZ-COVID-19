@@ -65,7 +65,6 @@
                             trigger: 'item',
                             formatter: d => {
                                 let final = '';
-                                console.log(d.seriesName);
                                 switch (d.seriesName) {
                                     case '码头':
                                     case '火车站':
@@ -198,23 +197,28 @@
                     this.bmap.setMaxZoom(15) // 设置地图最大缩放比例
                     const name = ['南山', '光明', '大鹏', '福田', '龙岗', '盐田', '宝安', '坪山', '罗湖', '龙华']
                     name.map(d => {
-                        this.drawLine(`广东省深圳市${d}区`);
+                        this.drawLine(`广东省深圳市${d}区`,  {
+                                strokeWeight: 2,
+                                strokeColor: 'gray',
+                                fillColor: 'rgba(0,0,0,0)',
+                            });
                     })
+                    this.drawLine(`广东省深圳市`,  {
+                        strokeWeight: 2,
+                        strokeStyle: 'dashed',
+                        strokeColor: 'yellow',
+                        fillColor: 'rgba(0,0,0,0)',
+                        strokeOpacity: .5,
+                    });
                 },
-                drawLine (name) {
+                drawLine (name, style) {
                     var bdary = new window.BMap.Boundary();
                     bdary.get(name, rs => {//获取行政区域
                         // this.bmap.clearOverlays();//清除地图覆盖物
                         var count = rs.boundaries.length; //行政区域的点有多少个
                         var pointArray = [];
                         for (var i = 0; i < count; i++) {
-                            var ply = new window.BMap.Polygon(rs.boundaries[i], 
-                                {
-                                    strokeWeight: 1,
-                                    strokeColor: "#EEEEEE",
-                                    fillColor: 'rgba(0,0,0,0)',
-                                }
-                            ); //建立多边形覆盖物
+                            var ply = new window.BMap.Polygon(rs.boundaries[i], style); //建立多边形覆盖物
                             this.bmap.addOverlay(ply);  //添加覆盖物
                             pointArray = pointArray.concat(ply.getPath());
                         }    
