@@ -180,7 +180,7 @@
                             coord: StationGeo[startstation.from],
                         }, {
                             name: endstation.to,
-                            time: startstation.time,
+                            time: endstation.time,
                             value: 1,
                             coord: StationGeo[endstation.to],
                         }]

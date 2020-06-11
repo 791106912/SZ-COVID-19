@@ -125,26 +125,28 @@ export default {
     },
     methods: {
         initData() {
-            this.initTrackData = TrackJSON.map(d => ({
-                ...d,
-                place: _.chain(d.track)
-                    .slice(0, 1)
-                    .reduce((arr, d1, i, arr1) => {
-                        arr.push({
-                            name: d1.from,
-                            date: arr1[arr1.length - 1].time,
-                            time: new Date(arr1[arr1.length - 1].time).getTime(),
-                        },
-                        // {
-                        //     name: d1.to,
-                        //     date: d1.time,
-                        //     time: new Date(d1.time).getTime(),
-                        // }
-                        )
-                        return arr
-                    }, [])
-                    .uniqBy('name')
-                    .value()
+            this.initTrackData = TrackJSON
+                .filter(d => d.track.length)
+                .map(d => ({
+                    ...d,
+                    place: _.chain(d.track)
+                        .slice(0, 1)
+                        .reduce((arr, d1) => {
+                            arr.push({
+                                name: d1.from,
+                                date: d.track[d.track.length - 1].time,
+                                time: new Date(d.track[d.track.length - 1].time).getTime(),
+                            },
+                            // {
+                            //     name: d1.to,
+                            //     date: d1.time,
+                            //     time: new Date(d1.time).getTime(),
+                            // }
+                            )
+                            return arr
+                        }, [])
+                        .uniqBy('name')
+                        .value()
             }))
 
             this.originListArr = _.chain(this.initTrackData)
