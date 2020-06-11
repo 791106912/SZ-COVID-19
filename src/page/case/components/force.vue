@@ -44,9 +44,9 @@
                 </div>
                 <NoData v-else title="请选择病例" />
             </Section>
-            <div>
+            <!-- <div>
                 <Bar />
-            </div>
+            </div> -->
         </div>
     </div>
     
@@ -58,7 +58,7 @@
     import _ from 'lodash'
     import TrackJSON from '@/data/track'
     import province from '@/data/province'
-    import Bar from './bar'
+    // import Bar from './bar'
     import Section from '@/components/section'
     import NoData from '@/components/noData'
     import { initData, calculateNodeAndLink } from '../methods/dataProcessor'
@@ -67,7 +67,7 @@
         name: 'Force',
         components: {
             Section,
-            Bar,
+            // Bar,
             NoData,
         },
         data() {
@@ -246,25 +246,31 @@
                     .enter()
                     .append('g')
                     .classed('timelineArc', true)
+                    .on('click', function(d) {
+                        if (!type) return
+                        const { name } = d.data;
+                        const arc = d3.select(this)
+                            .select('path.normal')
+                        const arcBigger = d3.select(this)
+                            .select('path.bigger')
+
+                        if(_this.filterObj[type].includes(name)) {
+                            arc.classed('arc-none', false)
+                            arcBigger.classed('arc-none', true)
+                            _this.filterObj[type] = _this.filterObj[type].filter(d => d !== name);
+                        } else {
+                            arc.classed('arc-none', true)
+                            arcBigger.classed('arc-none', false)
+                            _this.filterObj[type].push(name);
+                        }
+                        _this.selectType();
+                    })
 
                 arcG.append('path')
                     .attr("fill", d => color(d.data.value))
                     .attr("d", arc)
                     .attr('cursor', () => type ? 'pointer' : null)
-                    .on('click', function(d) {
-                        if (!type) return
-                        const { name } = d.data;
-                        const arcG = d3.select(this.parentNode)
-
-                        if(_this.filterObj[type].includes(name)) {
-                            arcG.classed('outer-bigger', false);
-                            _this.filterObj[type] = _this.filterObj[type].filter(d => d !== name);
-                        } else {
-                            arcG.classed('outer-bigger', true);
-                            _this.filterObj[type].push(name);
-                        }
-                        _this.selectType();
-                    })
+                    .classed('normal', true)
                     .transition()
                     .duration(300)
                     .ease(d3.easeCubicIn)
@@ -274,7 +280,18 @@
                             d.endAngle   = a(t);
                             return arc(d);
                         };
-                    });
+                    })
+
+                const arcBigger = d3.arc()
+                    .innerRadius(this.timeRadius[0])
+                    .outerRadius(this.timeRadius[1] + 5);
+
+                arcG.append('path')
+                    .attr("fill", d => color(d.data.value))
+                    .attr("d", arcBigger)
+                    .attr('cursor', () => type ? 'pointer' : null)
+                    .classed('bigger', true)
+                    .classed('arc-none', true)
 
                 const text = arcG.append('text')
                     .attr("dy", "0.35em")
@@ -454,6 +471,10 @@
                     .innerRadius(this.deminRadius[0])
                     .outerRadius(this.deminRadius[1]);
 
+                const arcBigger = d3.arc()
+                    .innerRadius(this.deminRadius[0])
+                    .outerRadius(this.deminRadius[1] + 5);
+
                 const arcs = pie(deminArr);
 
                 const colorArr = ["#416eb6", "#ffa354", "#8f8754",
@@ -465,34 +486,35 @@
                     .append('g')
                     .classed('sunBurst', true)
 
+                const _this = this
+
                 const arcG = container
                     .selectAll('g.sunBurstArc')
                     .data(arcs)
                     .enter()
                     .append('g')
                     .classed('sunBurstArc', true)
-
-                const _this = this
-
-                arcG.append('path')
-                    .attr("fill", d => {
-                        this.colorObj[d.data.name] = color(d.data.name);
-                        return color(d.data.name)
-                    })
-                    .attr("d", arc)
-                    .attr('stroke','none')
                     .on('click', function(d) {
+                        // d3.event.stopProppagation()
                         const {sortkey} = d.data;
-                        const arc = d3.select(this.parentNode)
-                        const arcs = d3.select(arc.node().parentNode)
-                            .selectAll('.sunBurstArc')
-
-                        if (!arc.classed('outer-bigger')) {
-                            arcs.classed('outer-bigger', false)
-                            arc.classed('outer-bigger', true)
+                        const arc = d3.select(this)
+                            .select('path.normal')
+                        const arcBigger = d3.select(this)
+                            .select('path.bigger')
+                        const arcG = d3.select(this.parentNode)
+                        if (arcBigger.classed('arc-none')) {
+                            arcG.selectAll('path.normal')
+                                .classed('arc-none', false)
+                            arcG.selectAll('path.bigger')
+                                .classed('arc-none', true)
+                            arcBigger.classed('arc-none', false)
+                            arc.classed('arc-none', true)
                             _this.initTimeCircle(sortkey)
                         } else {
-                            arcs.classed('outer-bigger', false)
+                            arcG.selectAll('path.normal')
+                                .classed('arc-none', false)
+                            arcG.selectAll('path.bigger')
+                                .classed('arc-none', true)
                             _this.initTimeCircle()
                         }
                         // if(_this.filterObj[sortkey].includes(name)) {
@@ -504,6 +526,27 @@
                         // }
                         // _this.selectType();
                     })
+
+
+                arcG.append('path')
+                    .attr("fill", d => {
+                        this.colorObj[d.data.name] = color(d.data.name);
+                        return color(d.data.name)
+                    })
+                    .attr("d", arc)
+                    .attr('stroke','none')
+                    .classed('normal', true)
+                    
+
+                arcG.append('path')
+                    .attr("fill", d => {
+                        this.colorObj[d.data.name] = color(d.data.name);
+                        return color(d.data.name)
+                    })
+                    .attr("d", arcBigger)
+                    .attr('stroke','none')
+                    .classed('bigger', true)
+                    .classed('arc-none', true)
                 
                 const text = arcG.append("text")
                     .attr("dy", "0.35em")
@@ -782,9 +825,9 @@
                 const radius = Math.min(height, width) / 2;
                 this.width = width;
                 this.height = height;
-                this.forceRadius = [0, radius - 60];
-                this.timeRadius = [radius - 60, radius - 40] ;
-                this.deminRadius = [radius - 20, radius];
+                this.forceRadius = [0, radius - 70];
+                this.timeRadius = [radius - 70, radius - 50] ;
+                this.deminRadius = [radius - 30, radius - 10];
             },
             calcualteDetailInfo(d) {
                 let info = [];
@@ -1044,7 +1087,7 @@
         fill: #4f659b;
         opacity: .3;
     }
-    .outer-bigger {
-        transform: scale(1.01);
+    .arc-none {
+        display: none;
     }
 </style>
