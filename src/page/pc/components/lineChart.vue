@@ -178,7 +178,6 @@
                 const timeArr = sortByTime[0].data.map(d => d.date);
                 const option = this.myChart.getOption();
                 option.xAxis[0].data = timeArr;
-                console.log(cityArr[0].data);
                 cityArr.forEach((d, i) => {
                     option.series[i].data = d.data.map(d1 => d1.confirmed - d1.cured - d1.dead);
                 })
