@@ -211,7 +211,7 @@
                             var ply = new window.BMap.Polygon(rs.boundaries[i], 
                                 {
                                     strokeWeight: 1,
-                                    strokeColor: "gray",
+                                    strokeColor: "#EEEEEE",
                                     fillColor: 'rgba(0,0,0,0)',
                                 }
                             ); //建立多边形覆盖物
