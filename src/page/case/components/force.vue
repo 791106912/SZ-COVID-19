@@ -240,33 +240,43 @@
                 
                 const _this = this
 
-                container
-                    .append('g')
-                    .classed('path', true)
-                    .selectAll("path")
+                const arcG = container
+                    .selectAll('g.timelineArc')
                     .data(arcs)
-                    .join("path")
+                    .enter()
+                    .append('g')
+                    .classed('timelineArc', true)
+
+                arcG.append('path')
                     .attr("fill", d => color(d.data.value))
                     .attr("d", arc)
                     .attr('cursor', () => type ? 'pointer' : null)
                     .on('click', function(d) {
                         if (!type) return
                         const { name } = d.data;
+                        const arcG = d3.select(this.parentNode)
+
                         if(_this.filterObj[type].includes(name)) {
-                            d3.select(this).attr('stroke', 'none');
+                            arcG.classed('outer-bigger', false);
                             _this.filterObj[type] = _this.filterObj[type].filter(d => d !== name);
                         } else {
-                            d3.select(this).attr('stroke', '#fff');
+                            arcG.classed('outer-bigger', true);
                             _this.filterObj[type].push(name);
                         }
                         _this.selectType();
                     })
+                    .transition()
+                    .duration(750)
+                    .ease(d3.easeBounce)
+                    .attrTween('d',function(d){
+                        const a = d3.interpolate(d.startAngle,d.endAngle);
+                        return function(t){
+                            d.endAngle   = a(t);
+                            return self.arc(d);
+                        };
+                    });
 
-                const text = container.append("g")
-                    .classed('text', true)
-                    .selectAll("text")
-                    .data(arcs)
-                    .join("text")
+                const text = arcG.append('text')
                     .attr("dy", "0.35em")
 
                 text.append('path')
@@ -284,7 +294,6 @@
                         path.arc(0, 0, r, angles[0], angles[1], invertDirection)
                         return path.toString()
                     })
-                    
                 text.append('textPath')
                     .attr('text-anchor', 'middle')
                     .attr('startOffset', '50%')
@@ -299,7 +308,7 @@
                         const calWidth =  innerRadius * rad
                         return type && width >= calWidth ? 'none' : null
                     });
-                    
+
                 const radius = this.timeRadius[1] + (this.deminRadius[0] - this.timeRadius[1]) / 2;
 
                 const indexScale = d3.scaleLinear()
@@ -455,18 +464,17 @@
                 const container = this.svg
                     .append('g')
                     .classed('sunBurst', true)
-                
-                const pathContainer = container
-                    .append('g')
-                    .classed('path', true)
-                
-                const _this = this;
 
-                pathContainer
-                    .selectAll("path")
+                const arcG = container
+                    .selectAll('g.sunBurstArc')
                     .data(arcs)
                     .enter()
-                    .append("path")
+                    .append('g')
+                    .classed('sunBurstArc', true)
+
+                const _this = this
+
+                arcG.append('path')
                     .attr("fill", d => {
                         this.colorObj[d.data.name] = color(d.data.name);
                         return color(d.data.name)
@@ -475,20 +483,16 @@
                     .attr('stroke','none')
                     .on('click', function(d) {
                         const {sortkey} = d.data;
-                        const arc = d3.select(this)
-                        const arcs = d3.select(this.parentNode)
-                            .selectAll('path')
-                        if (arc.attr('stroke') === 'none') {
-                            arcs._groups[0].forEach(item => {
-                                if (item === this) {
-                                    arc.attr('stroke', '#fff')
-                                } else {
-                                    d3.select(item).attr('stroke', 'none')
-                                }
-                            })
+                        const arc = d3.select(this.parentNode)
+                        const arcs = d3.select(arc.node().parentNode)
+                            .selectAll('.sunBurstArc')
+
+                        if (!arc.classed('outer-bigger')) {
+                            arcs.classed('outer-bigger', false)
+                            arc.classed('outer-bigger', true)
                             _this.initTimeCircle(sortkey)
                         } else {
-                            arcs.attr('stroke', 'none')
+                            arcs.classed('outer-bigger', false)
                             _this.initTimeCircle()
                         }
                         // if(_this.filterObj[sortkey].includes(name)) {
@@ -500,14 +504,10 @@
                         // }
                         // _this.selectType();
                     })
-
-                const text = container.append("g")
-                    .classed('text', true)
-                    .selectAll("text")
-                    .data(arcs)
-                    .join("text")
+                
+                const text = arcG.append("text")
                     .attr("dy", "0.35em")
-                // const typeDir = {};
+
                 text.append('path')
                     .attr('fill', 'none')
                     .attr('id', d => `hiddenArc${d.data.name}_${d.data.type}`)
@@ -530,11 +530,12 @@
                         path.arc(0, 0, r, angles[0], angles[1], invertDirection)
                         return path.toString()
                     })
-                    
+
                 text.append('textPath')
                     .attr('startOffset', '50%')
                     .attr('href', d => `#hiddenArc${d.data.name}_${d.data.type}`)
                     .text(d => d.data.name);
+
             },
             pythag(r, b, coord) {
                 const radius = this.forceRadius[1];
@@ -986,15 +987,24 @@
         }
     }
 
-    .sunBurst {
-        .text{
-            pointer-events: none;
-            text-anchor: middle;
-            user-select: none;
-            fill: #fff;
+    .timeLine {
+        .timelineArc {
+            transition: .3s;
         }
-        .path{
-            cursor: pointer;
+    }
+
+    .sunBurst {
+        .sunBurstArc {
+            transition: .3s;
+            &>path {
+                cursor: pointer;
+            }
+            &>text {
+                pointer-events: none;
+                text-anchor: middle;
+                user-select: none;
+                fill: #fff;
+            }
         }
     }
 
@@ -1033,5 +1043,8 @@
     .fisheye-bg>circle {
         fill: #4f659b;
         opacity: .3;
+    }
+    .outer-bigger {
+        transform: scale(1.01);
     }
 </style>
