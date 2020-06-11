@@ -12,7 +12,7 @@
     // import { scaleLinear } from 'd3'
 
 
-    const DIM = ['age_range', 'xb','fbrq','origin', 'tran', ]
+    const DIM = ['age_range', 'xb','period','origin', 'tran', ]
 
     const ITEM_STYLE = {
         xb(){
@@ -38,22 +38,67 @@
 
     const SORT_FUN = {
         'age_range': data => {
-            return _.orderBy(data, 'name')
-        },
-        'fbrq': data => {
-            return data
+            return _.orderBy(data, d => {
+                switch(d.name) {
+                    case '青少年': return 0
+                    case '青年': return 1
+                    case '中年': return 2
+                    case '老年': return 3
+                }
+            })
         },
         'origin': data => {
             return data.sort(a => COUNTRY.indexOf(a.name) !== -1 ? 1 : -1)
         },
         'tran': data => {
             return _.orderBy(data, d => TRAN_ORDER[d.name])
+        },
+        'period': data => {
+            return _.orderBy(data, d => {
+                switch(d.name) {
+                    case '疫情初期': return 0
+                    case '高峰期': return 1
+                    case '国外输入期': return 2
+                }
+            })
         }
     }
 
     const COUNTRY = ["巴西", "法国", "柬埔寨", "澳门", "荷兰",
         "菲律宾", "俄罗斯", "新加坡", "西班牙", "瑞士", "泰国",
         "英国", "美国"]
+
+    const getAgeCategory = age => {
+        if (age > 0 && age <= 17) {
+            return '青少年'
+        }
+        if (age > 18 && age <= 45) {
+            return '青年'
+        }
+        if (age > 46 && age <= 69) {
+            return '中年'
+        }
+        if (age > 69) {
+            return '老年'
+        }
+    }
+
+    const ChinaPeriod = ['2020/1/23', '2020/4/8']
+        .map(d => new Date(d).getTime())
+
+    const getPeriod = date => {
+        const newDate = new Date(date).getTime()
+        if (newDate <= ChinaPeriod[0]) {
+            return '疫情初期'
+        }
+        if (newDate > ChinaPeriod[0] && newDate <= ChinaPeriod[1]) {
+            return '高峰期'
+        }
+        if (newDate >= ChinaPeriod[1]) {
+            return '国外输入期'
+        }
+        
+    }
 
     // const scale = scaleLinear()
     //     .domain([1, 200])
@@ -104,18 +149,19 @@
             initData() {
                 const data = _.chain(TrackJSON)
                     // .slice(0, 400)
+                    .filter(d => d.track.length)
                     .map(d => {
                         const {track, nl} = d
                         let tran = track.length ? track[track.length - 1].tran : ''
                         tran = tran.indexOf('航班') !== -1 ? '航空' : tran
                         tran = /(私家)|(自驾)|(专车)|(商务车)/.test(tran) ? '私家/专车' : tran
                         tran = /(的士)|(出租车)/.test(tran) ? '出租车' : tran
-                        const age_left = +nl - (nl % 5)
-                        const age_range = `${age_left}岁-${age_left + 5}岁`
+                        const age_range = getAgeCategory(+nl)
                         return _.pick({
                             ...d,
                             tran: tran || '不明',
                             age_range,
+                            period: getPeriod(d.track[d.track.length - 1].time)
                         },
                         DIM
                         )
