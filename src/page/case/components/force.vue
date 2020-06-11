@@ -58,7 +58,7 @@
     import _ from 'lodash'
     import TrackJSON from '@/data/track'
     import province from '@/data/province'
-    import Bar from './bar'
+    // import Bar from './bar'
     import Section from '@/components/section'
     import NoData from '@/components/noData'
     import { initData, calculateNodeAndLink } from '../methods/dataProcessor'
