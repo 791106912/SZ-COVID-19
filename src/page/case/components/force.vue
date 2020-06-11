@@ -266,13 +266,13 @@
                         _this.selectType();
                     })
                     .transition()
-                    .duration(750)
-                    .ease(d3.easeBounce)
+                    .duration(300)
+                    .ease(d3.easeCubicIn)
                     .attrTween('d',function(d){
                         const a = d3.interpolate(d.startAngle,d.endAngle);
                         return function(t){
                             d.endAngle   = a(t);
-                            return self.arc(d);
+                            return arc(d);
                         };
                     });
 
