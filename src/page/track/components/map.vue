@@ -37,7 +37,7 @@
         name: 'Map',
         data() {
             return {
-                isAll: false,
+                isAll: true,
                 currentDate: '',
             }
         },
