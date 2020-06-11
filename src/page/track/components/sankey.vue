@@ -40,10 +40,11 @@
         'age_range': data => {
             return _.orderBy(data, d => {
                 switch(d.name) {
-                    case '青少年': return 0
-                    case '青年': return 1
-                    case '中年': return 2
-                    case '老年': return 3
+                    case '婴幼儿/青少年(0~15)': return 0
+                    case '青年(16~30)': return 1
+                    case '中青年(30~45)': return 2
+                    case '中年(45~60)': return 3
+                    case '老年(>60)': return 4
                 }
             })
         },
@@ -69,21 +70,24 @@
         "英国", "美国"]
 
     const getAgeCategory = age => {
-        if (age > 0 && age <= 17) {
-            return '青少年'
+        if (age >= 0 && age <= 15) {
+            return '婴幼儿/青少年(0~15)'
         }
-        if (age > 18 && age <= 45) {
-            return '青年'
+        if (age > 15 && age <= 30) {
+            return '青年(16~30)'
         }
-        if (age > 46 && age <= 69) {
-            return '中年'
+        if (age > 30 && age <= 45) {
+            return '中青年(30~45)'
         }
-        if (age > 69) {
-            return '老年'
+        if (age > 45 && age <= 60) {
+            return '中年(45~60)'
+        }
+        if (age > 60) {
+            return '老年(>60)'
         }
     }
 
-    const ChinaPeriod = ['2020/1/23', '2020/4/8']
+    const ChinaPeriod = ['2020/2/23', '2020/3/15']
         .map(d => new Date(d).getTime())
 
     const getPeriod = date => {
