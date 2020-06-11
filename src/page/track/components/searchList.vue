@@ -21,7 +21,7 @@
                 :options="swiperOption"
                 :auto-update="true"
             >
-                <SwiperSlide v-for="item in transArr" :key="item.tran">
+                <SwiperSlide v-for="item in transArr" :key="item.time">
                     <div class="traffic-list-item">
                         <div class="item-date">
                             {{item.date}}
@@ -33,8 +33,8 @@
                                 </span>
                                 <span class="item-child-value">
                                     <span
-                                        v-for="d in item.train"
-                                        :key="d"
+                                        v-for="(d, k) in item.train"
+                                        :key="k"
                                     >{{d}}</span>
                                 </span>
                             </div>
@@ -44,8 +44,8 @@
                                 </span>
                                 <span class="item-child-value">
                                     <span
-                                        v-for="d in item.bus"
-                                        :key="d"
+                                        v-for="(d, k) in item.bus"
+                                        :key="k"
                                     >{{d}}</span>
                                 </span>
                             </div>
@@ -55,8 +55,8 @@
                                 </span>
                                 <span class="item-child-value">
                                     <span
-                                        v-for="d in item.plane"
-                                        :key="d"
+                                        v-for="(d, k) in item.plane"
+                                        :key="k"
                                     >{{d}}</span>
                                 </span>
                             </div>
@@ -66,8 +66,8 @@
                                 </span>
                                 <span class="item-child-value">
                                     <span
-                                        v-for="d in item.ship"
-                                        :key="d"
+                                        v-for="(d, k) in item.ship"
+                                        :key="k"
                                     >{{d}}</span>
                                 </span>
                             </div>
@@ -129,11 +129,11 @@ export default {
                 ...d,
                 place: _.chain(d.track)
                     .slice(0, 1)
-                    .reduce((arr, d1) => {
+                    .reduce((arr, d1, i, arr1) => {
                         arr.push({
                             name: d1.from,
-                            date: d1.time,
-                            time: new Date(d1.time).getTime(),
+                            date: arr1[arr1.length - 1].time,
+                            time: new Date(arr1[arr1.length - 1].time).getTime(),
                         },
                         // {
                         //     name: d1.to,

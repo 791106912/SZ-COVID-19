@@ -190,7 +190,7 @@
                         }
                     })
                     .reduce((o, d) => {
-                        const key = d.track[0].time
+                        const key = d.track[1].time
                         if (o[key]) {
                             o[key].push(d)
                         } else {
@@ -235,7 +235,7 @@
                 const timeTrack = this.initData()
                 this.timeTrack = timeTrack
                 const options = _.chain(timeTrack)
-                    .orderBy(d => new Date(d[0].track[0].time).getTime())
+                    .orderBy(d => new Date(d[0].track[1].time).getTime())
                     .map((d, i, arr) => {
                         const trackData = d.map(d1 => d1.track)
                         const addTrackData = this.isAll
@@ -248,7 +248,7 @@
                         const scatterData = this.getScatterData(trackData)
                         const addScatterData = this.getScatterData(addTrackData)
                         
-                        const newDate = new Date(d[0].track[0].time)
+                        const newDate = new Date(d[0].track[1].time)
                         const currentDate = `${newDate.getFullYear()}-${
                             newDate.getMonth() + 1}-${newDate.getDate()}`
                         const heatData = this.getHeatData(currentDate)
