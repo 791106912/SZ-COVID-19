@@ -15,7 +15,9 @@
             data () {
                 return {
                     chart: echarts.ECharts,
-                    bmap: {},
+                    bmap: {
+                        enableMapClick: false,
+                    },
                     linesSeries: [],
                     scatterSeries: [],
                     effectScatterSeries: [],
@@ -52,7 +54,7 @@
                     this.chart.setOption({
                         animation: false,
                         bmap: { 
-                            center: [114.06455183658751, 22.598456637984177],
+                            center: [114.06455183658751, 22.628456637984177],
                             zoom: 12,
                             roam: true,
                             mapStyle: {
@@ -63,6 +65,7 @@
                             trigger: 'item',
                             formatter: d => {
                                 let final = '';
+                                console.log(d.seriesName);
                                 switch (d.seriesName) {
                                     case '码头':
                                     case '火车站':
@@ -98,7 +101,7 @@
                             orient: 'vertical',
                             y: 'bottom',
                             x: 'right',
-                            data: ['确诊病例小区', '发热门诊', '码头', '火车站', '机场'],
+                            data: ['码头', '火车站', '机场', '发热门诊', '确诊病例小区'],
                             textStyle: {
                                 color: '#fff'
                             },
@@ -118,7 +121,7 @@
                             hoverAnimation: true,
                             zlevel: 1,
                             itemStyle: {
-                                // color: 'blue',
+                                color: 'rgba(239, 83, 80, 0.54)',
                                 shadowBlur: 0,
                             },
                         }, {
@@ -134,21 +137,15 @@
                             type: 'scatter',
                             coordinateSystem: 'bmap',
                             data: this.initAddLocation(addLocation.filter(d => d.type==="码头")),
-                            symbolSize: 13,
+                            symbolSize: 16,
                             symbol: matouStr,
                             zlevel: 2,
-                            tooltip: {
-                                formatter: a => {
-                                    console.log(a);
-                                    return  a.seriesName + '<br />' + a.marker + a.name
-                                }
-                            },
                             label: {
                                 normal: {
                                     formatter: '{b}',
                                     position: 'right',
                                     show: true,
-                                    color: 'gray',
+                                    color: '#fff',
                                 },
                                 emphasis: {
                                     show: true
@@ -159,7 +156,7 @@
                             type: 'scatter',
                             coordinateSystem: 'bmap',
                             data: this.initAddLocation(addLocation.filter(d => d.type==="火车站")),
-                            symbolSize: 13,
+                            symbolSize: 16,
                             symbol: huocheStr,
                             zlevel: 2,
                             label: {
@@ -167,7 +164,7 @@
                                     formatter: '{b}',
                                     position: 'right',
                                     show: true,
-                                    color: 'gray',
+                                    color: '#fff',
                                 },
                                 emphasis: {
                                     show: true
@@ -178,7 +175,7 @@
                             type: 'scatter',
                             coordinateSystem: 'bmap',
                             data: this.initAddLocation(addLocation.filter(d => d.type==="机场")),
-                            symbolSize: 13,
+                            symbolSize: 16,
                             symbol: feijiStr,
                             zlevel: 2,
                             label: {
@@ -186,7 +183,7 @@
                                     formatter: '{b}',
                                     position: 'right',
                                     show: true,
-                                    color: 'gray',
+                                    color: '#fff',
                                 },
                                 emphasis: {
                                     show: true
@@ -195,10 +192,35 @@
                         }
                         ]
                     })
+                    // this.bmap = new window.BMap.Map("allmap")
                     this.bmap = this.chart.getModel().getComponent('bmap').getBMap()
                     this.bmap.setMinZoom(10) // 设置地图最小缩放比例
                     this.bmap.setMaxZoom(15) // 设置地图最大缩放比例
+                    const name = ['南山', '光明', '大鹏', '福田', '龙岗', '盐田', '宝安', '坪山', '罗湖', '龙华']
+                    name.map(d => {
+                        this.drawLine(`广东省深圳市${d}区`);
+                    })
                 },
+                drawLine (name) {
+                    var bdary = new window.BMap.Boundary();
+                    bdary.get(name, rs => {//获取行政区域
+                        // this.bmap.clearOverlays();//清除地图覆盖物
+                        var count = rs.boundaries.length; //行政区域的点有多少个
+                        var pointArray = [];
+                        for (var i = 0; i < count; i++) {
+                            var ply = new window.BMap.Polygon(rs.boundaries[i], 
+                                {
+                                    strokeWeight: 1,
+                                    strokeColor: "#EEEEEE",
+                                    fillColor: 'rgba(0,0,0,0)',
+                                }
+                            ); //建立多边形覆盖物
+                            this.bmap.addOverlay(ply);  //添加覆盖物
+                            pointArray = pointArray.concat(ply.getPath());
+                        }    
+                        // this.bmap.setViewport(pointArray);    //调整视野  
+                    });   
+                }
             }
         }
 </script>

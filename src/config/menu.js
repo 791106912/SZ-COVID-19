@@ -1,18 +1,14 @@
 module.exports = [{
-    name: '疫情防控',
+    name: '疫情防控分析',
     comName: 'PC',
     path: 'pc',
   }, {
-    name: '轨迹分析',
+    name: '传播模式分析',
     comName: 'Track',
     path: 'track',
   }, {
-    name: '病例分析',
+    name: '病例特征分析',
     comName: 'Case',
     path: 'case',
-  }, {
-    name: '其他',
-    comName: 'Other',
-    path: 'other',
-  },
+  }
 ]
