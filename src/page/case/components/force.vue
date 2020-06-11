@@ -67,7 +67,7 @@
         name: 'Force',
         components: {
             Section,
-            Bar,
+            // Bar,
             NoData,
         },
         data() {
