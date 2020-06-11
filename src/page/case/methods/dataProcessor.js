@@ -49,6 +49,7 @@ export function initData() {
 
         d.realDate = `2020/${d.fbrq.replace(/月/, '/').replace(/日/, '')}`;
         // d.origin = d.track && d.track.length > 0 ? d.track[0].from : '深圳';
+        d.qzDate = `${d.fbrq.replace(/月/, '/').replace(/日/, '')}`
     })
 }
 

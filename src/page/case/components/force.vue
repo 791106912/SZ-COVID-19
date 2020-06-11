@@ -159,7 +159,7 @@
                 this.initDemiCircle();
                 this.createForce();
             },
-            initTimeCircle() {
+            initTimeCircle(type) {
                 const gapTimeArr = _.chain(TrackJSON)
                     .reduce((obj, d) => {
                         obj[d.realDate] = {
@@ -189,6 +189,34 @@
                     }
                 })
 
+                if (type) {
+                    timeArr.length = 0
+                    _.chain(TrackJSON)
+                        // .filter(d => {
+                        //     if (type === 'origin') {
+                        //         if (typeName.includes('国内')) {
+                        //             return province.includes(d[type])
+                        //         }
+                        //         else {
+                        //             return !province.includes(d[type])
+                        //         }
+                        //     }
+                        //     return true
+                        // })
+                        .map(type)
+                        .countBy()
+                        .map((d, k) => ({
+                            name: k,
+                            value: d,
+                            sortkey: type,
+                        }))
+                        .orderBy('name')
+                        .forEach(d => {
+                            timeArr.push(d)
+                        })
+                        .value()
+                }
+
                 const [min, max] = d3.extent(timeArr, d => d.value);
                 const color = d3.scaleLinear()
                     .domain([min, max / 2, max])
@@ -197,7 +225,7 @@
                 const pie = d3.pie()
                     .padAngle(0)
                     .sort(null)
-                    .value(() => 1)
+                    .value(d => type ? d.value : 1)
 
                 const arc = d3.arc()
                     .innerRadius(this.timeRadius[0])
@@ -205,9 +233,13 @@
 
                 const arcs = pie(timeArr);
 
+                this.svg.select('g.timeLine').remove()
+
                 const container = this.svg.append('g')
                     .classed('timeLine', true);
                 
+                const _this = this
+
                 container
                     .append('g')
                     .classed('path', true)
@@ -216,6 +248,19 @@
                     .join("path")
                     .attr("fill", d => color(d.data.value))
                     .attr("d", arc)
+                    .attr('cursor', () => type ? 'pointer' : null)
+                    .on('click', function(d) {
+                        if (!type) return
+                        const { name } = d.data;
+                        if(_this.filterObj[type].includes(name)) {
+                            d3.select(this).attr('stroke', 'none');
+                            _this.filterObj[type] = _this.filterObj[type].filter(d => d !== name);
+                        } else {
+                            d3.select(this).attr('stroke', '#fff');
+                            _this.filterObj[type].push(name);
+                        }
+                        _this.selectType();
+                    })
 
                 const text = container.append("g")
                     .classed('text', true)
@@ -246,7 +291,14 @@
                     .attr('font-size', '9px')
                     .attr('fill', '#fff')
                     .attr('href', d => `#hiddenArc${d.data.name}`)
-                    .text(d => d.data.name.replace('2020/', ''));
+                    .text(d => d.data.name.replace('2020/', ''))
+                    .attr('display', function(d) {
+                        const { width } = this.getBoundingClientRect()
+                        const rad = d.endAngle - d.startAngle
+                        const [innerRadius] = _this.timeRadius;
+                        const calWidth =  innerRadius * rad
+                        return type && width >= calWidth ? 'none' : null
+                    });
                     
                 const radius = this.timeRadius[1] + (this.deminRadius[0] - this.timeRadius[1]) / 2;
 
@@ -291,10 +343,11 @@
                     .attr('transform', () => {
                         return `translate(${0}, ${radius * Math.sin( - Math.PI / 2)})`
                     })
+                    .attr('display', () => type ? 'none' : null)
                     .call(
                         d3.drag()
                         .on("drag", dragStart)
-                    );
+                    )
 
                 container.append('polygon')
                     .attr('fill', 'red')
@@ -303,26 +356,38 @@
                     .attr('transform', () => {
                         return `translate(${0}, ${radius * Math.sin( - Math.PI / 2)})`
                     })
+                    .attr('display', function() {
+                        return type ? 'none' : null})
                     .call(
                         d3.drag()
                         .on("drag", dragStart)
                         .on("end",  () =>  dragEnd(1))
-                    );
+                    )
             },
             initDemiCircle() {
                 const deminArr = [{
                     name: '染病原因',
                     sortkey: 'reason',
                 }, {
+                    name: '确诊时间',
+                    sortkey: 'qzDate',
+                },
+                {
                     name: '年龄',
                     sortkey: 'nlRange',
-                }, {
-                    name: '来源地(国内)',
-                    sortkey: 'origin',
-                }, {
-                    name: '来源地(国外)',
-                    sortkey: 'origin',
-                }, {
+                }, 
+                // {
+                //     name: '来源地(国内)',
+                //     sortkey: 'origin',
+                // }, {
+                //     name: '来源地(国外)',
+                //     sortkey: 'origin',
+                // }, 
+                {
+                    name: '来源地',
+                    sortkey: 'origin'
+                },
+                {
                     name: '病例关系',
                     sortkey: 'relation',
                 }]
@@ -380,7 +445,7 @@
                     .innerRadius(this.deminRadius[0])
                     .outerRadius(this.deminRadius[1]);
 
-                const arcs = pie(deminData);
+                const arcs = pie(deminArr);
 
                 const colorArr = ["#416eb6", "#ffa354", "#8f8754",
                 "#dc8e79", "#715ca8", "#8c564b", "#e377c2",
@@ -403,21 +468,37 @@
                     .enter()
                     .append("path")
                     .attr("fill", d => {
-                        this.colorObj[d.data.type] = color(d.data.type);
-                        return color(d.data.type)
+                        this.colorObj[d.data.name] = color(d.data.name);
+                        return color(d.data.name)
                     })
                     .attr("d", arc)
                     .attr('stroke','none')
                     .on('click', function(d) {
-                        const {sortkey, name} = d.data;
-                        if(_this.filterObj[sortkey].includes(name)) {
-                            d3.select(this).attr('stroke', 'none');
-                            _this.filterObj[sortkey] = _this.filterObj[sortkey].filter(d => d !== name);
+                        const {sortkey} = d.data;
+                        const arc = d3.select(this)
+                        const arcs = d3.select(this.parentNode)
+                            .selectAll('path')
+                        if (arc.attr('stroke') === 'none') {
+                            arcs._groups[0].forEach(item => {
+                                if (item === this) {
+                                    arc.attr('stroke', '#fff')
+                                } else {
+                                    d3.select(item).attr('stroke', 'none')
+                                }
+                            })
+                            _this.initTimeCircle(sortkey)
                         } else {
-                            d3.select(this).attr('stroke', '#fff');
-                            _this.filterObj[sortkey].push(name);
+                            arcs.attr('stroke', 'none')
+                            _this.initTimeCircle()
                         }
-                        _this.selectType();
+                        // if(_this.filterObj[sortkey].includes(name)) {
+                            // d3.select(this).attr('stroke', 'none');
+                            // _this.filterObj[sortkey] = _this.filterObj[sortkey].filter(d => d !== name);
+                        // } else {
+                            // d3.select(this).attr('stroke', '#fff');
+                            // _this.filterObj[sortkey].push(name);
+                        // }
+                        // _this.selectType();
                     })
 
                 const text = container.append("g")
@@ -743,16 +824,16 @@
                     }))
                     const filterObj = {
                         ...this.filterObj,
-                        origin: this.filterObj.origin.filter(d => !this.forignOrigin.includes(d)),
-                        forignOrigin: this.filterObj.origin.filter(d => this.forignOrigin.includes(d)),
+                        // origin: this.filterObj.origin.filter(d => !this.forignOrigin.includes(d)),
+                        // forignOrigin: this.filterObj.origin.filter(d => this.forignOrigin.includes(d)),
                     }
                     
                     const filterStr =  _.chain(filterObj)
                         .keys()
-                        .filter(key => filterObj[key].length > 0)
+                        // .filter(key => filterObj[key].length > 0)
                         .reduce((str, key) => {
                             const realKey = deminArr.find(d => d.sortkey === key).name;
-                            return str + realKey + ': ' + filterObj[key].join(', ') + '\n'
+                            return str + realKey + ': ' + (filterObj[key].join(', ') || '全部') + '\n'
                         }, '')
                         .value();
                     info =[
