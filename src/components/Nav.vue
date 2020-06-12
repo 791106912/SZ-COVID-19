@@ -26,7 +26,7 @@
 <script>
     import menu from '@/config/menu'
     import picture from '@/assets/top-bg.png'
-    // import picture2 from '@/assets/menu-bg.png'
+    import picture2 from '@/assets/nav-bg.png'
 
     export default {
         name: 'Nav',
@@ -43,10 +43,13 @@
                 },
                 activeStyle: {
                     color: '#fff !important',
-                    background: 'radial-gradient(100% 90% ellipse, #4e99ce 10%, #071227 38%, transparent 20%) !important',
+                    background: `url(${picture2}) no-repeat`,
+                    backgroundSize: '100% 78%',
+                    backgroundPosition: '0px 6px',
+
                 },
                 defaultStyle: {
-                    color: '#36ACAC !important',
+                    color: '#62c4ff !important',
                     background: 'none !important',
                 }
             };
@@ -81,7 +84,7 @@
 </script>
 
 <style lang="less" scoped>
-    @green: #36ACAC;
+    @green: #62c4ff;
     @borderWidth: 2px;
     .vis-nav{
         display: flex;
@@ -111,7 +114,6 @@
                     }
                     &.is-active{
                         color: #fff !important;
-                        background: radial-gradient(100% 90% ellipse, #4e99ce 10%, #071227 38%, transparent 20%) !important;
                     }
                 }
             }
