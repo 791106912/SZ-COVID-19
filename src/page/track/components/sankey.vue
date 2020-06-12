@@ -197,7 +197,7 @@
                         focusNodeAdjacency: "allEdges", // 鼠标划上时高亮的节点和连线，allEdges表示鼠标划到节点上点亮节点上的连线及连线对应的节点
                         label: {
                             fontSize: 10,
-                            color: "#666"
+                            color: "rgba(255,255,255,.8)"
                         },
                         lineStyle: {
                             color: 'source',
