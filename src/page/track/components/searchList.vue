@@ -319,6 +319,7 @@ export default {
                 font-size: 14px;
             }
             .swiper-container {
+                z-index: 0;
                 margin-top: 20px;
                 color: #aaa;
                 .traffic-list-item {
