@@ -206,9 +206,9 @@
                     this.drawLine(`广东省深圳市`,  {
                         strokeWeight: 2,
                         strokeStyle: 'dashed',
-                        strokeColor: 'yellow',
+                        strokeColor: '#23caed',
                         fillColor: 'rgba(0,0,0,0)',
-                        strokeOpacity: .5,
+                        strokeOpacity: 1,
                     });
                 },
                 drawLine (name, style) {
