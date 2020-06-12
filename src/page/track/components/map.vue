@@ -142,6 +142,10 @@
                                     show: false
                                 }
                             },
+                            scaleLimit: {
+                                min: 1,
+                                max: 12
+                            },
                             roam: true, //是否允许缩放
                             itemStyle: {
                                 normal: {
@@ -526,10 +530,11 @@
         .map-title {
             position: absolute;
             top: 10px;
-            right: 20%;
-            font-size: 16px;
-            color: #fff;
+            right: 100px;
             z-index: 2;
+            color: white;
+            font-size: 32px;
+            text-shadow: 3px 3px black, -2px -2px black, 2px -2px black,
         }
         #trackMap{
             width: 100%;
