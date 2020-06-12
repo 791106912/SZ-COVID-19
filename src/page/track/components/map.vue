@@ -9,6 +9,7 @@
                 @change="handleAllChange"
             />
         </div>
+        <div class="map-title">{{currentDate}}</div>
         <div id="trackMap">
 
         </div>
@@ -359,6 +360,7 @@
                         animation: false,
                     },
                     {
+                        id: 'addScatter',
                         type: 'scatter',
                         coordinateSystem: 'geo',
                         zlevel: 1,
@@ -467,6 +469,10 @@
                             id: 'heatmap',
                             min: heatExtent[0] + 1,
                             max: heatExtent[1] + heatExtent[1] * .2
+                        },
+                        series: {
+                            id: 'addScatter',
+                            label: false
                         }
                     }, this)
 
@@ -516,6 +522,14 @@
             bottom: 5px;
             z-index: 2;
             transform: scale(.8);
+        }
+        .map-title {
+            position: absolute;
+            top: 10px;
+            right: 20%;
+            font-size: 16px;
+            color: #fff;
+            z-index: 2;
         }
         #trackMap{
             width: 100%;
