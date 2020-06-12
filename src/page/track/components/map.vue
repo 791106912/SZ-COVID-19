@@ -49,6 +49,7 @@
                 var option = {
                     baseOption: {
                         timeline: {
+                            currentIndex: this.timelineIndex || 0,
                             orient: 'vertical',
                             top: '20',
                             left: '90%',
@@ -444,6 +445,7 @@
             hanleTimelinechanged() {
                 this.updateDate(0)
                 this.myChart.on('timelinechanged', ({ currentIndex }) => {
+                    this.timelineIndex = currentIndex
                     const { series } = this.myChart.getOption()
                     const seriesIndex = this.isAll ? 3 : 1
                     const geoArr = _.chain(series[seriesIndex].data)
