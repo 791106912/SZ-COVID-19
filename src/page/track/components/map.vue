@@ -111,27 +111,41 @@
                             extraCssText: 'z-index:100',
                         },
                         visualMap: [
-                        //     { //图例值控制
-                        //     show: false,
-                        //     seriesIndex: 1,
-                        //     min: 0,
-                        //     max: 1,
-                        //     calculable: true,
-                        //     // color: ['#f44336', '#fc9700', '#ffde00', '#ffde00', '#00eaff'],
-                        //     textStyle: {
-                        //         color: '#fff'
-                        //     }
-                        // },
                         {
                             id: 'heatmap',
-                            show: false,
+                            show: true,
                             seriesIndex: 5,
-                            min: 1,
+                            min: 0,
                             max: 10000,
-                            inRange: {
-                                color: ['rgba(51, 69, 89, .5)', '#bfb139', '#a54343'],
-                                opacity: [.3, .5, .7]
-                            }
+                            left: 10,
+                            itemGap: 4,
+                            itemSymbol: 'circle',
+                            textStyle: {
+                                color: '#aaa',
+                            },
+                            pieces: [{
+                                gt: 10000,
+                                label: "> 10000 人",
+                                color: "rgba(57, 111, 255)"
+                            }, {
+                                gte: 5000,
+                                lte: 10000,
+                                label: "5000 - 100000 人",
+                                color: "rgba(50, 97, 222)"
+                            }, {
+                                gte: 200,
+                                lt: 5000,
+                                label: "200 - 5000 人",
+                                color: "rgba(42, 82, 189)"
+                            }, {
+                                gt: 0,
+                                lt: 200,
+                                label: "0 - 200人",
+                                color: "rgba(35, 68, 156)"
+                            }, {
+                                value: 0,
+                                color: "rgba(51, 69, 89, .5)"
+                            }],
                         }],
                         geo: {
                             map: 'world',
@@ -154,7 +168,7 @@
                                     borderWidth: 1
                                 },
                                 emphasis: {
-                                    color: 'rgba(37, 43, 61, .5)' //悬浮背景
+                                    color: 'rgba(51, 69, 89, .5)' //悬浮背景
                                 }
                             }
                         },
@@ -299,11 +313,10 @@
                             loop: false,
                         },
                         lineStyle: {
-                            normal: {
-                                width: 1, //尾迹线条宽度
-                                opacity: 0.4, //尾迹线条透明度
-                                curveness: 0.3 //尾迹线条曲直度
-                            }
+                            width: 1, //尾迹线条宽度
+                            opacity: 0.4, //尾迹线条透明度
+                            curveness: 0.3, //尾迹线条曲直度
+                            color: '#fe7335',
                         },
                     },
                     {
@@ -330,36 +343,20 @@
                             }
                         },
                         symbol: 'circle',
-                        symbolSize: function(val) {
-                            return val[2] * 3 >= 6 ? 5 : val[2] * 3; //圆环大小
-                        },
+                        symbolSize: d => d[2] * 3 >= 10 ? 10 : d[2] * 3,
                         itemStyle: {
-                            normal: {
-                                show: false,
-                                color: 'white'
-                            }
+                            color: '#fe7335',
                         },
                     },
                     {
                         id: 'allLines',
                         type: "lines",
                         zlevel: 2,
-                        effect: {
-                            show: false,
-                            color: '#37A2DA',
-                            period: 0, //箭头指向速度，值越小速度越快
-                            trailLength: 0.02, //特效尾迹长度[0,1]值越大，尾迹越长重
-                            symbol: "arrow", //箭头图标
-                            symbolSize: 5, //图标大小
-                            loop: false,
-                        },
                         lineStyle: {
-                            normal: {
-                                color: '#37A2DA',
-                                width: 1, //尾迹线条宽度
-                                opacity: 0.8, //尾迹线条透明度
-                                curveness: 0.3 //尾迹线条曲直度
-                            }
+                            color: '#fe7335',
+                            width: 1, //尾迹线条宽度
+                            opacity: 0.8, //尾迹线条透明度
+                            curveness: 0.3 //尾迹线条曲直度
                         },
                         animation: false,
                     },
@@ -369,29 +366,13 @@
                         coordinateSystem: 'geo',
                         zlevel: 1,
                         label: {
-                            normal: {
-                                show: true,
-                                position: 'right', //显示位置
-                                offset: [5, 0], //偏移设置
-                                formatter: function(params){//圆环显示文字
-                                    return params.data.name;
-                                },
-                                fontSize: 10
-                            },
-                            emphasis: {
-                                show: true
-                            }
+                            show: false,
                         },
                         symbol: 'circle',
-                        symbolSize: function(val) {
-                            return val[2] * 3 >= 6 ? 5 : val[2] * 3; //圆环大小
-                        },
+                        symbolSize: d => d[2] * 3 >= 10 ? 10 : d[2] * 3,
                         itemStyle: {
-                            normal: {
-                                show: false,
-                                color: 'whites',
-                                opacity: .8,
-                            }
+                            color: '#fe7335',
+                            opacity: .8,
                         },
                         animation: false,
                     },
@@ -409,10 +390,10 @@
                                 show: true,
                                 position: 'right',
                                 //offset:[5, 0],
-                                color: '#0f0',
+                                color: '#1cf3e8',
                                 formatter: '{b}',
                                 textStyle: {
-                                    color: "#0f0"
+                                    color: "#1cf3e8"
                                 }
                             },
                             emphasis: {
@@ -475,8 +456,10 @@
                             max: heatExtent[1] + heatExtent[1] * .2
                         },
                         series: {
-                            id: 'addScatter',
-                            label: false
+                            id: 'allLines',
+                            lineStyle: {
+                                opacity: '.1',
+                            },
                         }
                     }, this)
 
@@ -516,6 +499,9 @@
 </script>
 
 <style lang="less">
+   .el-switch__label{
+        color: #aaa;
+    }
     .lines-map-container {
         position: relative;
         padding: 0;
@@ -523,7 +509,7 @@
         width: 70%;
         .map-tool {
             position: absolute;
-            bottom: 5px;
+            top: 5px;
             z-index: 2;
             transform: scale(.8);
         }
