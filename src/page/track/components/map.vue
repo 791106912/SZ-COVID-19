@@ -297,6 +297,14 @@
                     .value()
                 return {options, timelineData}
             },
+            calculateRadius(d) {
+                if(d[2] >= 10) {
+                    return 10
+                } else if(d[2]<=4){
+                    return 4;
+                }
+                return d[2] 
+            },
             initSeries() {
                 const series = [];
                 series.push(
@@ -342,7 +350,7 @@
                             }
                         },
                         symbol: 'circle',
-                        symbolSize: d => d[2] * 3 >= 10 ? 10 : d[2] * 3,
+                        symbolSize: d => this.calculateRadius(d),
                         itemStyle: {
                             color: '#fe7335',
                         },
@@ -368,7 +376,7 @@
                             show: false,
                         },
                         symbol: 'circle',
-                        symbolSize: d => d[2] * 3 >= 10 ? 10 : d[2] * 3,
+                        symbolSize: d => this.calculateRadius(d),
                         itemStyle: {
                             color: '#fe7335',
                             opacity: .8,
