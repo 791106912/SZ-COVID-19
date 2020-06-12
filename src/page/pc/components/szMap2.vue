@@ -54,8 +54,8 @@
                     this.chart.setOption({
                         animation: false,
                         bmap: { 
-                            center: [114.06455183658751, 22.628456637984177],
-                            zoom: 12,
+                            center: [114.16455183658751, 22.628456637984177],
+                            zoom: 11,
                             roam: true,
                             mapStyle: {
                                 styleJson:  style
