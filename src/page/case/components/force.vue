@@ -44,6 +44,9 @@
                 </div>
                 <NoData v-else title="请选择病例" />
             </Section>
+            <Section title="选定病例关系">
+                <Tree :data="treeData" />
+            </Section>
             <!-- <div>
                 <Bar />
             </div> -->
@@ -59,6 +62,7 @@
     import TrackJSON from '@/data/track'
     import province from '@/data/province'
     // import Bar from './bar'
+    import Tree from './tree'
     import Section from '@/components/section'
     import NoData from '@/components/noData'
     import { initData, calculateNodeAndLink } from '../methods/dataProcessor'
@@ -69,6 +73,7 @@
             Section,
             // Bar,
             NoData,
+            Tree,
         },
         data() {
             initData();
@@ -78,6 +83,7 @@
             });
             
             return {
+                treeData: [],
                 fisheyeRadius,
                 deminArr: [],
                 colorObj: {},
@@ -268,6 +274,7 @@
 
                 arcG.append('path')
                     .attr("fill", d => color(d.data.value))
+                    // .attr("fill", '#116cd5')
                     .attr("d", arc)
                     .attr('cursor', () => type ? 'pointer' : null)
                     .classed('normal', true)
@@ -364,6 +371,7 @@
 
                 container.append('polygon')
                     .attr('fill', 'yellow')
+                    .attr('fill', '#fff')
                     .attr('cursor', 'pointer')
                     .attr('points', '0,10 -8,-8 8,-8')
                     .attr('transform', () => {
@@ -377,6 +385,7 @@
 
                 container.append('polygon')
                     .attr('fill', 'red')
+                    .attr('fill', '#1778e8')
                     .attr('cursor', 'pointer')
                     .attr('points', '0,10 -8,-8 8,-8')
                     .attr('transform', () => {
@@ -529,10 +538,11 @@
 
 
                 arcG.append('path')
-                    .attr("fill", d => {
-                        this.colorObj[d.data.name] = color(d.data.name);
-                        return color(d.data.name)
-                    })
+                    // .attr("fill", d => {
+                    //     this.colorObj[d.data.name] = color(d.data.name);
+                    //     return color(d.data.name)
+                    // })
+                    .attr('fill', '#2f50a5')
                     .attr("d", arc)
                     .attr('stroke','none')
                     .classed('normal', true)
@@ -648,11 +658,14 @@
 
                 this.svg.on('mousemove', function() {
                     const mouse = d3.mouse(this);
+                    _this.simulation.stop()
                     fisheye.focus(mouse);
                     d3.selectAll('.circleG').each(d => {
                             d.fisheye = fisheye([d.x, d.y]);
                         })
                         .attr('transform', d => `translate(${d.fisheye[0]}, ${d.fisheye[1]})`)
+                        .attr('opacity', d => d.fisheye[2] === 1 ? '.2' : '1')
+                        
                     d3.selectAll('.circleG')
                         .select('circle')
                         .attr('r', d => d.fisheye[2] * d.r);
@@ -662,12 +675,15 @@
                         .attr('font-size', d => d.fisheye[2] * 5);
 
                     d3.selectAll('.linkItem')
-                        .attr('transform', d => `translate(${d.source.fisheye[0]}, ${d.source.fisheye[1]})`)
+                        .attr('transform', d => {
+                            return `translate(${d.source.fisheye[0]}, ${d.source.fisheye[1]})`
+                        })
                         .select('line')
                         .attr("x1", 0)
                         .attr("y1", 0)
                         .attr("x2", d => d.target.fisheye[0] - d.source.fisheye[0])
                         .attr("y2", d => d.target.fisheye[1] - d.source.fisheye[1])
+                        .attr('opacity', d => (d.target.fisheye[2] === 1 || d.source.fisheye[2] === 1) ? '.2' : '1')
 
                     d3.selectAll('.linkItem')
                         .select('text')
@@ -700,6 +716,8 @@
 
                         d3.selectAll('.circleG')
                             .attr('transform', d => `translate(${d.x}, ${d.y})`)
+                            .attr('opacity', 1)
+
                         d3.selectAll('.circleG')
                             .select('circle')
                             .attr('r', d => d.r);
@@ -709,6 +727,7 @@
                             .attr('font-size', 5);
 
                         d3.selectAll('.linkItem')
+                            .attr('opacity', 1)
                             .attr('transform', d => `translate(${d.source.x}, ${d.source.y})`)
                             .select('line')
                             .attr("x1", 0)
@@ -773,6 +792,24 @@
                     .classed('circleG', true)
                     .attr('cursor', 'pointer')
                     .on('click', d => {
+                        const relationArr = links.reduce((arr, d1) => {
+                            if(d1.source.blh === d.blh) {
+                                arr.push(d1.target)
+                            } else if( d1.target.blh === d.blh ){
+                                arr.push(d1.source)
+                            }
+                            return arr;
+                        }, [])
+                        var obj = {
+                            name: d.blh,
+                            children: [],
+                        }
+                        relationArr.forEach(d => {
+                            obj.children.push({
+                                name: `${d.blh}(${d.yqtblgx})`,
+                            })
+                        })
+                        this.treeData = obj;
                         this.calcualteDetailInfo(d)
                     })
                     .call(this.drag(this.simulation))
@@ -1016,8 +1053,10 @@
     .force{
         circle {
             stroke: #fff;
+            stroke: rgba(255, 255, 255, 0.5);
             stroke-width: 1;
             fill: #bf5658;
+            fill: rgba(255, 0, 0, 0.45);
             cursor: pointer;
         }
         text{
@@ -1025,8 +1064,12 @@
             text-anchor: middle;
         }
         .linkItem{
-            stroke: #bf5658;
-            stroke-width: 1
+            stroke: rgba(255, 0, 0, 0.45);
+            stroke-width: 1;
+            text{
+                stroke: #fff;
+                stroke-width: .2;
+            }
         }
     }
 
@@ -1073,6 +1116,7 @@
                 width: 100px;
                 font-weight: bolder;
                 font-size: 14px;
+                text-align: right;
             }
             .info-item-value{
                 flex: 1;
