@@ -226,14 +226,13 @@
                     .flattenDeep()
                     .reduce((obj, d) => {
                         if(d.name === '深圳') return obj;
-                        let value = d.coord.concat(d.value);
-                        if(obj[d.name]) {
-                            value[2] += 1;
+                        if (!obj[d.name]) {
+                            obj[d.name] = {
+                                name: d.name,
+                                value: d.coord.concat(0),
+                            }
                         }
-                        obj[d.name] = {
-                            name: d.name,
-                            value,
-                        }
+                        obj[d.name].value[2] += 1
                         return obj;
                     }, {})
                     .values()
@@ -458,7 +457,7 @@
                         series: {
                             id: 'allLines',
                             lineStyle: {
-                                opacity: '.1',
+                                opacity: '.2',
                             },
                         }
                     }, this)
