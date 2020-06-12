@@ -4,27 +4,14 @@
             <div class="filter">
                 <Section title="筛选条件">
                     <div
+                        v-for="item in filterCondition"
                         class="filter-item"
+                        :key="item.name"
                     >
-                        <span class="filter-item-value">{{filterCondition[0] && filterCondition[0].value}}</span>
-                    </div>
-                    <div
-                        class="filter-item"
-                    >
-                        <span class="filter-item-key">{{filterCondition[1] && filterCondition[1].key}}</span>
-                        <span class="filter-item-value">{{filterCondition[1] &&filterCondition[1].value}}</span>
+                        <span class="filter-item-name">{{item.name}}</span>：
+                        <span class="filter-item-value">{{item.value}}</span>
                     </div>
                 </Section>
-            </div>
-            <div class="legend">
-                <div
-                    v-for="item in deminArr"
-                    :class="{'legend-item': true, disabled: disbaled.includes(item.name)}"
-                    :key="item.name"
-                >
-                    <span class="legend-name">{{item.name}}</span>
-                    <span class="legend-color" :style="{background: colorObj[item.name]}"></span>
-                </div>
             </div>
         </div>
         <div id="chart" ref='chart'></div>
@@ -198,17 +185,6 @@
                 if (type) {
                     timeArr.length = 0
                     _.chain(TrackJSON)
-                        // .filter(d => {
-                        //     if (type === 'origin') {
-                        //         if (typeName.includes('国内')) {
-                        //             return province.includes(d[type])
-                        //         }
-                        //         else {
-                        //             return !province.includes(d[type])
-                        //         }
-                        //     }
-                        //     return true
-                        // })
                         .map(type)
                         .countBy()
                         .map((d, k) => ({
@@ -236,6 +212,11 @@
                 const arc = d3.arc()
                     .innerRadius(this.timeRadius[0])
                     .outerRadius(this.timeRadius[1]);
+
+                if(type) {
+                    pie.padAngle(0.01)
+                    // arc.cornerRadius(10)
+                }
 
                 const arcs = pie(timeArr);
 
@@ -273,9 +254,9 @@
                     })
 
                 arcG.append('path')
-                    .attr("fill", d => color(d.data.value))
-                    // .attr("fill", '#116cd5')
+                    .attr("fill", d => type ? '#116cd5' : color(d.data.value))
                     .attr("d", arc)
+                    .attr("stroke", () => type ? '#aaa' : 'none')
                     .attr('cursor', () => type ? 'pointer' : null)
                     .classed('normal', true)
                     .transition()
@@ -294,7 +275,7 @@
                     .outerRadius(this.timeRadius[1] + 5);
 
                 arcG.append('path')
-                    .attr("fill", d => color(d.data.value))
+                    .attr("fill", d => type ? '#116cd5' : color(d.data.value))
                     .attr("d", arcBigger)
                     .attr('cursor', () => type ? 'pointer' : null)
                     .classed('bigger', true)
@@ -411,13 +392,6 @@
                     name: '年龄',
                     sortkey: 'nlRange',
                 }, 
-                // {
-                //     name: '来源地(国内)',
-                //     sortkey: 'origin',
-                // }, {
-                //     name: '来源地(国外)',
-                //     sortkey: 'origin',
-                // }, 
                 {
                     name: '来源地',
                     sortkey: 'origin'
@@ -486,11 +460,6 @@
 
                 const arcs = pie(deminArr);
 
-                const colorArr = ["#416eb6", "#ffa354", "#8f8754",
-                "#dc8e79", "#715ca8", "#8c564b", "#e377c2",
-                "#7f7f7f", "#bcbd22", "#17becf"]
-                const color =  d3.scaleOrdinal(colorArr)
-
                 const container = this.svg
                     .append('g')
                     .classed('sunBurst', true)
@@ -504,7 +473,6 @@
                     .append('g')
                     .classed('sunBurstArc', true)
                     .on('click', function(d) {
-                        // d3.event.stopProppagation()
                         const {sortkey} = d.data;
                         const arc = d3.select(this)
                             .select('path.normal')
@@ -526,22 +494,10 @@
                                 .classed('arc-none', true)
                             _this.initTimeCircle()
                         }
-                        // if(_this.filterObj[sortkey].includes(name)) {
-                            // d3.select(this).attr('stroke', 'none');
-                            // _this.filterObj[sortkey] = _this.filterObj[sortkey].filter(d => d !== name);
-                        // } else {
-                            // d3.select(this).attr('stroke', '#fff');
-                            // _this.filterObj[sortkey].push(name);
-                        // }
-                        // _this.selectType();
                     })
 
 
                 arcG.append('path')
-                    // .attr("fill", d => {
-                    //     this.colorObj[d.data.name] = color(d.data.name);
-                    //     return color(d.data.name)
-                    // })
                     .attr('fill', '#2f50a5')
                     .attr("d", arc)
                     .attr('stroke','none')
@@ -549,10 +505,7 @@
                     
 
                 arcG.append('path')
-                    .attr("fill", d => {
-                        this.colorObj[d.data.name] = color(d.data.name);
-                        return color(d.data.name)
-                    })
+                    .attr('fill', '#2f50a5')
                     .attr("d", arcBigger)
                     .attr('stroke','none')
                     .classed('bigger', true)
@@ -668,11 +621,23 @@
                         
                     d3.selectAll('.circleG')
                         .select('circle')
-                        .attr('r', d => d.fisheye[2] * d.r);
+                        .attr('r', d => {
+                            const r = d.fisheye[2] * d.r;
+                            if(r>12) {
+                                return 12;
+                            }
+                            return r
+                        });
 
                     d3.selectAll('.circleG')
                         .select('text')
-                        .attr('font-size', d => d.fisheye[2] * 5);
+                        .attr('font-size', d => {
+                            const r =  d.fisheye[2] * 5;
+                            if(r>9) {
+                                return 9;
+                            }
+                            return r
+                        });
 
                     d3.selectAll('.linkItem')
                         .attr('transform', d => {
@@ -713,6 +678,7 @@
                     // 鼠标移出后移除效果
                     if (mouseR > (_this.forceRadius[1])) {
                         fisheyeBg.attr('display', 'none')
+                        _this.simulation.restart();
 
                         d3.selectAll('.circleG')
                             .attr('transform', d => `translate(${d.x}, ${d.y})`)
@@ -727,9 +693,9 @@
                             .attr('font-size', 5);
 
                         d3.selectAll('.linkItem')
-                            .attr('opacity', 1)
                             .attr('transform', d => `translate(${d.source.x}, ${d.source.y})`)
                             .select('line')
+                            .attr('opacity', 1)
                             .attr("x1", 0)
                             .attr("y1", 0)
                             .attr("x2", d => d.target.x - d.source.x)
@@ -899,46 +865,29 @@
                     })
                     this.caseDetail = info
                 } else {
+                    const filterArr = [];
                     const deminArr = this.deminArr.map(d => ({
                         name: d.name,
                         sortkey: d.name === '来源地(国外)' ? 'forignOrigin' : d.sortkey,
                     }))
                     const filterObj = {
                         ...this.filterObj,
-                        // origin: this.filterObj.origin.filter(d => !this.forignOrigin.includes(d)),
-                        // forignOrigin: this.filterObj.origin.filter(d => this.forignOrigin.includes(d)),
                     }
                     
-                    const filterStr =  _.chain(filterObj)
+                    _.chain(filterObj)
                         .keys()
-                        // .filter(key => filterObj[key].length > 0)
-                        .reduce((str, key) => {
-                            const realKey = deminArr.find(d => d.sortkey === key).name;
-                            return str + realKey + ': ' + (filterObj[key].join(', ') || '全部') + '\n'
-                        }, '')
+                        .forIn(key => {
+                            filterArr.push({
+                                name: deminArr.find(d => d.sortkey === key).name,
+                                value: filterObj[key].join(', ') || '全部',
+                            })
+                        })
                         .value();
-                    info =[
-                        {
-                            key: '选择条件',
-                            value: filterStr || '全部',
-                        }, {
-                            key: '病例数量',
-                            value: this.selectData.length,
-                        }, 
-                        // {
-                        //     key: '病例占比',
-                        //     value: (
-                        //         this.selectData.length / TrackJSON.length  * 100
-                        //     ).toFixed(2) + '%',
-                        // }, {
-                        //     key: '男性',
-                        //     value: this.selectData.filter(d => d.xb === '男').length,
-                        // }, {
-                        //     key: '女性',
-                        //     value: this.selectData.filter(d => d.xb === '女').length,
-                        // },
-                    ]
-                this.filterCondition = info;
+                    filterArr.push({
+                        name: '病例数量',
+                        value: this.selectData.length,
+                    })
+                    this.filterCondition = filterArr;
                 }
             },
             handleReset() {
@@ -978,7 +927,7 @@
         justify-content: space-between;
         flex-direction: column;
         height: 100%;
-        width: 15%;
+        width: 20%;
     }
     .filter {
         width: 100%;
@@ -998,16 +947,13 @@
         .filter-item {
             width: 100%;
             display: flex;
-            flex-wrap: wrap;
-            white-space: pre-wrap;
-            .filter-item-key{
-                display: inline-block;
-                width: 5em;
+            .filter-item-name{
+                text-align: right;
+                width: 80px;
                 font-size: 14px;
             }
             .filter-item-value{
                 flex: 1;
-                white-space: pre-wrap;
             }
         }
     }
