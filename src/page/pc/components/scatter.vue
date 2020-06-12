@@ -51,6 +51,7 @@
                         }
                     },
                     tooltip: {
+                        confine: true,
                         formatter: ({data}) => {
                             return `${data[0]}<br />新增确诊人数：${data[1]}`
                         },
