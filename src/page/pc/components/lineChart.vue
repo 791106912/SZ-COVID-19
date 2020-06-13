@@ -190,7 +190,12 @@
                 const option = this.myChart.getOption();
                 option.xAxis[0].data = timeArr;
                 cityArr.forEach((d, i) => {
-                    option.series[i].data = d.data.map(d1 => d1.confirmed - d1.cured - d1.dead);
+                    option.series[i].data = d.data.map((d1, i) => {
+                        if (i === 0) {
+                            return d1.confirmed;
+                        }
+                        return d1.confirmed - d.data[i-1].confirmed
+                    });
                 })
                 this.myChart.setOption(option);
             },
