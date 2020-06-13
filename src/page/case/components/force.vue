@@ -54,7 +54,7 @@
         </div>
         <div id="chart" ref='chart'></div>
         <div class="info">
-            <Section title="病例信息">
+            <Section title="病例信息" class="infoData">
                 <div v-if="caseDetail.length"
                     class="info-container"
                 >
@@ -1116,6 +1116,9 @@
         margin-left: 30px;
         flex-direction: column;
         justify-content: space-between;
+        .infoData{
+            height: 50%;
+        }
         .info-container{
             min-height: 200px;
             display: flex;
@@ -1140,7 +1143,7 @@
             }
         }
         .treeData {
-            flex: 1;
+            height: 50%;
             margin-bottom: 0;
             .tree-container{
                 height: 100%;
