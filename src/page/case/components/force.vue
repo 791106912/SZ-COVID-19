@@ -90,7 +90,7 @@
     import Section from '@/components/section'
     import NoData from '@/components/noData'
     import { initData, calculateNodeAndLink } from '../methods/dataProcessor'
-    
+
     export default {
         name: 'Force',
         components: {
@@ -105,7 +105,7 @@
             const timeRange = d3.extent(TrackJSON, d => {
                 return new Date(d.realDate).getTime()
             });
-            
+            this.TIME_RANGE = [...timeRange]
             return {
                 treeData: [],
                 fisheyeRadius,
@@ -538,6 +538,9 @@
                                 .classed('arc-none', true)
                             _this.initTimeCircle()
                         }
+                        // 重置选择的时间范围
+                        _this.timeRange = [..._this.TIME_RANGE]
+                        _this.selectType()
                     })
 
 
@@ -918,8 +921,17 @@
                         name: d.name,
                         sortkey: d.name === '来源地(国外)' ? 'forignOrigin' : d.sortkey,
                     }))
+
+                    const dateRange = this.timeRange.join('~') === this.TIME_RANGE.join('~')
+                        ? []
+                        : [this.timeRange.map(d => {
+                            const date  = new Date(d)
+                            return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
+                            }).join('~')]
+                    
                     const filterObj = {
                         ...this.filterObj,
+                        qzDate: dateRange,
                     }
                     
                     _.chain(filterObj)
