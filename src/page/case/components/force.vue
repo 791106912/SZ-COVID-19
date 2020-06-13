@@ -188,6 +188,10 @@
                 this.initTimeCircle();
                 this.initDemiCircle();
                 this.createForce();
+
+                // 默认选中确诊时间
+                this.svg.select('g[data-sortKey=qzDate]')
+                    .dispatch('click')
             },
             initTimeCircle(type) {
                 const gapTimeArr = _.chain(TrackJSON)
@@ -511,6 +515,7 @@
                     .enter()
                     .append('g')
                     .classed('sunBurstArc', true)
+                    .attr('data-sortKey', d => d.data.sortkey)
                     .on('click', function(d) {
                         const {sortkey} = d.data;
                         const arc = d3.select(this)
@@ -525,7 +530,7 @@
                                 .classed('arc-none', true)
                             arcBigger.classed('arc-none', false)
                             arc.classed('arc-none', true)
-                            _this.initTimeCircle(sortkey)
+                            _this.initTimeCircle(sortkey === 'qzDate' ? undefined : sortkey)
                         } else {
                             arcG.selectAll('path.normal')
                                 .classed('arc-none', false)
@@ -541,7 +546,7 @@
                     .attr("d", arc)
                     .attr('stroke','none')
                     .classed('normal', true)
-                    .classed('arc-none', d => d.data.sortkey === 'qzDate')
+                    .classed('arc-none', false)
                     
 
                 arcG.append('path')
@@ -549,7 +554,7 @@
                     .attr("d", arcBigger)
                     .attr('stroke','none')
                     .classed('bigger', true)
-                    .classed('arc-none', d => d.data.sortkey !== 'qzDate')
+                    .classed('arc-none', true)
                     
                 
                 const text = arcG.append("text")
