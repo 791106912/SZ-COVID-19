@@ -69,12 +69,11 @@
                 </div>
                 <NoData v-else title="请选择病例" />
             </Section>
-            <Section title="选定病例关系" height="100%" class="treeData">
-                <Tree :data="treeData" />
+            <Section title="选定病例关系" class="treeData" height="100%">
+                <div class="tree-container">
+                    <Tree :data="treeData" />
+                </div>
             </Section>
-            <!-- <div>
-                <Bar />
-            </div> -->
         </div>
     </div>
     
@@ -809,8 +808,10 @@
                             children: [],
                         }
                         relationArr.forEach(d => {
+                            const blharr = d.yqtblgx.match(/(\d+、?)+/g)[0];
+                            const showText = d.yqtblgx.split(blharr)[1];
                             obj.children.push({
-                                name: `${d.blh}(${d.yqtblgx})`,
+                                name: `${d.blh}(${showText})`,
                             })
                         })
                         this.treeData = obj;
@@ -873,7 +874,7 @@
             calcualteDetailInfo(d) {
                 let info = [];
                 if(d) {
-                    const include = ['blh','xb', 'nl', 'yqtblgx',  'bk', 'fbrq', 'rysj', 'rbyy', 'bzzzytjd'];
+                    const include = ['blh','xb', 'nl',  'bk', 'fbrq', 'rysj', 'rbyy', 'bzzzytjd'];
                     const descObj = {
                         "yqtblgx": "与其他病例关系",
                         "zwhsjqj": "在武汉时间",
@@ -1140,6 +1141,10 @@
         }
         .treeData {
             flex: 1;
+            margin-bottom: 0;
+            .tree-container{
+                height: 100%;
+            }
         }
     }
     .circle-bg {

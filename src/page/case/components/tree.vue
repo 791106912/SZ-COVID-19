@@ -10,6 +10,7 @@
 <script>
     import echarts from 'echarts/lib/echarts';
     import 'echarts/lib/chart/tree'
+    import 'echarts/lib/component/tooltip'
     import NoData from '@/components/noData'
 
     export default {
@@ -30,6 +31,7 @@
                     },
                     series:[
                         {
+                            name: '病例号',
                             type: 'tree',
 
                             data: [this.data],
@@ -45,7 +47,7 @@
 
                             expandAndCollapse: true,
                             // symbol: 'circle',
-                            symbolSize: 30,
+                            symbolSize: 20,
 
                             lineStyle: {
                                 curveness: 1,
@@ -63,7 +65,7 @@
                                 rotate: 0,
                                 verticalAlign: 'middle',
                                 align: 'center',
-                                fontSize: 10,
+                                fontSize: 9,
                                 color: '#fff',
                             },
 
@@ -78,7 +80,15 @@
                                 }
                             },
 
-                            animationDurationUpdate: 750
+                            animationDurationUpdate: 750,
+
+                            tooltip: {
+                                // formatter: '病例号：{b0}'
+                                formatter: d => {
+                                    let name = d.data.name.split('(')[0];
+                                    return '病例号：' + name;
+                                }
+                            }
                         }
                     ]
                 }
@@ -98,8 +108,6 @@
             }
         },
         mounted() {
-            console.log(this.data);
-            
             this.initChart();
         }
     }
@@ -111,7 +119,7 @@
         position: relative;
     }
     #tree-chart{
-        height: 400px;
+        height: 100%;
     }
     .noData {
         position: absolute;
