@@ -3,7 +3,7 @@
        <div class="pc-left">
             <Section
                 class="left-map"
-                title="深圳疫情"
+                title="深圳疫情地图"
                 height="100%"
             >
                 <div class="part-sz">
@@ -15,7 +15,7 @@
         <div class="pc-right">
              <Section
                 class="right-list"
-                title="各区新增确诊分布(3月18号止)"
+                title="各区新增确诊趋势(3月18号止)"
                 height="100%"
             >
                 <div class="part-list">
@@ -23,7 +23,7 @@
                 </div>
             </Section>
             <Section
-                title="主要城市新增病例"
+                title="主要城市新增确诊趋势"
                 class="right-map"
                 height="100%"
             >
