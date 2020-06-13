@@ -752,6 +752,7 @@
                 this.nodeContainer = forceContainer.append('g').classed('nodes', true);
             },
             draw() {
+                this.treeData = [];
                 this.calcualteDetailInfo();
                 this.calcualteDetailInfo(-1);
                 const [nodes, links] = calculateNodeAndLink(this.selectData);
