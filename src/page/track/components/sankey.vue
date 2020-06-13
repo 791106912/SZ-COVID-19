@@ -59,8 +59,8 @@
                 switch(d.name) {
                     case '疫情初期(~1/23)': return 0
                     case '发展期(1/23~2/6)': return 1
-                    case '高峰期(2/6~2/24)': return 2
-                    case '国外输入期(2/24~)': return 3
+                    case '国内二次传播期(2/6~2/20)': return 2
+                    case '国外输入期(2/20~)': return 3
                 }
             })
         }
@@ -88,7 +88,7 @@
         }
     }
 
-    const ChinaPeriod = ['2020/1/23', '2020/2/6', '2020/2/24']
+    const ChinaPeriod = ['2020/1/23', '2020/2/6', '2020/2/20']
         .map(d => new Date(d).getTime())
 
     const getPeriod = date => {
@@ -100,10 +100,10 @@
             return '发展期(1/23~2/6)'
         }
         if (newDate > ChinaPeriod[1] && newDate < ChinaPeriod[2]) {
-            return '高峰期(2/6~2/24)'
+            return '国内二次传播期(2/6~2/20)'
         }
         if (newDate >= ChinaPeriod[2]) {
-            return '国外输入期(2/24~)'
+            return '国外输入期(2/20~)'
         }
         
     }
