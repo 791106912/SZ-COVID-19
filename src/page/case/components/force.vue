@@ -34,21 +34,21 @@
                 </div>
                 <div class="legend-item">
                     <div class="legend-item-icon">
-                        <div class="legend-time min"></div>
-                    </div>
-                    <div class="legend-item-desc">确诊时间分布，拨动指针选择</div>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-item-icon">
                         <div class="legend-filter-one min">条件</div>
                     </div>
                     <div class="legend-item-desc">一级筛选条件，点击选择</div>
                 </div>
                 <div class="legend-item">
                     <div class="legend-item-icon">
+                        <div class="legend-time min"></div>
+                    </div>
+                    <div class="legend-item-desc">二级筛选条件(确诊时间)，拨动指针选择</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-item-icon">
                         <div class="legend-filter-two min">条件</div>
                     </div>
-                    <div class="legend-item-desc">二级筛选条件，点击选择</div>
+                    <div class="legend-item-desc">二级筛选条件(其他)，点击选择</div>
                 </div>
             </div>
         </div>
@@ -219,7 +219,9 @@
                     }
                 })
 
-                if (type) {
+                const isQZDate = type === 'qzDate'
+
+                if (type && !isQZDate) {
                     timeArr.length = 0
                     _.chain(TrackJSON)
                         .map(type)
@@ -244,7 +246,7 @@
                 const pie = d3.pie()
                     .padAngle(0)
                     .sort(null)
-                    .value(d => type ? d.value : 1)
+                    .value(d => type && !isQZDate ? d.value : 1)
 
                 const arc = d3.arc()
                     .innerRadius(this.timeRadius[0])
@@ -271,7 +273,7 @@
                     .append('g')
                     .classed('timelineArc', true)
                     .on('click', function(d) {
-                        if (!type) return
+                        if (!type || isQZDate) return
                         const { name } = d.data;
                         const arc = d3.select(this)
                             .select('path.normal')
@@ -291,7 +293,7 @@
                     })
 
                 arcG.append('path')
-                    .attr("fill", d => type ? '#116cd5' : color(d.data.value))
+                    .attr("fill", d => type && !isQZDate ?  '#116cd5' : color(d.data.value))
                     .attr("d", arc)
                     .attr("stroke", () => type ? '#aaa' : 'none')
                     .attr('cursor', () => type ? 'pointer' : null)
@@ -395,7 +397,7 @@
                     .attr('transform', () => {
                         return `translate(${0}, ${radius * Math.sin( - Math.PI / 2)})`
                     })
-                    .attr('display', () => type ? 'none' : null)
+                    .attr('display', () => type && !isQZDate ? 'none' : null)
                     .call(
                         d3.drag()
                         .on("drag", dragStart)
@@ -410,7 +412,7 @@
                         return `translate(${0}, ${radius * Math.sin( - Math.PI / 2)})`
                     })
                     .attr('display', function() {
-                        return type ? 'none' : null})
+                        return type && !isQZDate ? 'none' : null})
                     .call(
                         d3.drag()
                         .on("drag", dragStart)
@@ -539,6 +541,7 @@
                     .attr("d", arc)
                     .attr('stroke','none')
                     .classed('normal', true)
+                    .classed('arc-none', d => d.data.sortkey === 'qzDate')
                     
 
                 arcG.append('path')
@@ -546,7 +549,8 @@
                     .attr("d", arcBigger)
                     .attr('stroke','none')
                     .classed('bigger', true)
-                    .classed('arc-none', true)
+                    .classed('arc-none', d => d.data.sortkey !== 'qzDate')
+                    
                 
                 const text = arcG.append("text")
                     .attr("dy", "0.35em")
