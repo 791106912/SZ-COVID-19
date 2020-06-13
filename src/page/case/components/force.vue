@@ -69,7 +69,7 @@
                 </div>
                 <NoData v-else title="请选择病例" />
             </Section>
-            <Section title="选定病例关系">
+            <Section title="选定病例关系" height="100%" class="treeData">
                 <Tree :data="treeData" />
             </Section>
             <!-- <div>
@@ -1123,6 +1123,7 @@
             justify-content: space-around;
         }
         .info-item{
+            height: 50%;
             line-height: 30px;
             display: flex;
             .info-item-key{
@@ -1136,6 +1137,9 @@
                 flex: 1;
                 white-space: pre-wrap;
             }
+        }
+        .treeData {
+            flex: 1;
         }
     }
     .circle-bg {
