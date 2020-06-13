@@ -13,6 +13,44 @@
                     </div>
                 </Section>
             </div>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-item-icon">
+                        <div class="legend-link min"></div>
+                    </div>
+                    <div class="legend-item-desc">病例关系</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-item-icon">
+                        <div class="legend-circle min">0</div>
+                    </div>
+                    <div class="legend-item-desc">病例个体，点击选择</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-item-icon">
+                        <div class="legend-pointer"></div>
+                    </div>
+                    <div class="legend-item-desc">指针，可拨动</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-item-icon">
+                        <div class="legend-time min"></div>
+                    </div>
+                    <div class="legend-item-desc">确诊时间分布，拨动指针选择</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-item-icon">
+                        <div class="legend-filter-one min">条件</div>
+                    </div>
+                    <div class="legend-item-desc">一级筛选条件，点击选择</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-item-icon">
+                        <div class="legend-filter-two min">条件</div>
+                    </div>
+                    <div class="legend-item-desc">二级筛选条件，点击选择</div>
+                </div>
+            </div>
         </div>
         <div id="chart" ref='chart'></div>
         <div class="info">
@@ -967,32 +1005,62 @@
         justify-content: space-between;
     }
     .legend{
-        max-height: 80%;
-        margin-right: 40px;
-        // width: 300px;
         .legend-item{
             display: flex;
-            justify-content: flex-end;
-            flex-direction: row-reverse;
             align-items: center;
-            width: 100%;
-            &.disabled{
-                opacity: .3;
+            margin-top: 10px;
+            .legend-item-icon{
+                width: 40px;
+                text-align: center;
+                &>div{
+                    display: inline-block;
+                }
+                .legend-circle{
+                    height: 22px;
+                    width: 22px;
+                    line-height: 22px;
+                    text-align: center;
+                    border-radius: 40px;
+                    font-size: 12px;
+                    color: #fff;
+                    background: rgba(255, 0, 0, 0.45);
+                    border: solid 1px rgba(255, 255, 255, 0.5);
+                }
+                .legend-link{
+                    margin-bottom:3px;
+                    height: 1px;
+                    width: 40px;
+                    background: rgba(255, 0, 0, 0.45);
+                }
+                .legend-pointer{
+                    width: 0;
+                    height: 0;
+                    border: 8px solid transparent;
+                    border-top: 14px solid #1778e8;
+                    transform: translateY(6px);
+                }
+                .legend-time{
+                    height: 20px;
+                    width: 40px;
+                    background: linear-gradient(to right, #009688, #ffc107, #ff0000);
+                }
+                .min {
+                    transform: scale(.8)
+                }
+                .legend-filter-one{
+                    height: 20px;
+                    width: 40px;
+                    background: #2f50a5;   
+                }
+                .legend-filter-two{
+                    height: 20px;
+                    width: 40px;
+                    background: #116cd5;
+                    border: solid 1px #aaa;
+                }
             }
-            &>span{
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow: hidden;
-            }
-            .legend-color{
-                height: 10px;
-                width: 10px;
-                border-radius: 100px;
-                margin-right: 20px;
-            }
-            .legend-name{
-                width: 100px;
-                text-align: left;
+            .legend-item-desc{
+                margin-left: 10px;
             }
         }
     }
