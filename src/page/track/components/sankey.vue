@@ -57,9 +57,10 @@
         'period': data => {
             return _.orderBy(data, d => {
                 switch(d.name) {
-                    case '疫情初期': return 0
-                    case '高峰期': return 1
-                    case '国外输入期': return 2
+                    case '疫情初期(~1/23)': return 0
+                    case '发展期(1/23~2/6)': return 1
+                    case '高峰期(2/6~2/24)': return 2
+                    case '国外输入期(2/24~)': return 3
                 }
             })
         }
@@ -87,19 +88,22 @@
         }
     }
 
-    const ChinaPeriod = ['2020/2/23', '2020/3/15']
+    const ChinaPeriod = ['2020/1/23', '2020/2/6', '2020/2/24']
         .map(d => new Date(d).getTime())
 
     const getPeriod = date => {
         const newDate = new Date(date).getTime()
         if (newDate <= ChinaPeriod[0]) {
-            return '疫情初期'
+            return '疫情初期(~1/23)'
         }
-        if (newDate > ChinaPeriod[0] && newDate <= ChinaPeriod[1]) {
-            return '高峰期'
+        if (newDate > ChinaPeriod[0] && newDate < ChinaPeriod[1]) {
+            return '发展期(1/23~2/6)'
         }
-        if (newDate >= ChinaPeriod[1]) {
-            return '国外输入期'
+        if (newDate > ChinaPeriod[1] && newDate < ChinaPeriod[2]) {
+            return '高峰期(2/6~2/24)'
+        }
+        if (newDate >= ChinaPeriod[2]) {
+            return '国外输入期(2/24~)'
         }
         
     }
