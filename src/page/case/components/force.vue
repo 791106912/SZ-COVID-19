@@ -90,7 +90,7 @@
     import Section from '@/components/section'
     import NoData from '@/components/noData'
     import { initData, calculateNodeAndLink } from '../methods/dataProcessor'
-    
+
     export default {
         name: 'Force',
         components: {
@@ -105,7 +105,7 @@
             const timeRange = d3.extent(TrackJSON, d => {
                 return new Date(d.realDate).getTime()
             });
-            
+            this.TIME_RANGE = [...timeRange]
             return {
                 treeData: [],
                 fisheyeRadius,
@@ -188,6 +188,10 @@
                 this.initTimeCircle();
                 this.initDemiCircle();
                 this.createForce();
+
+                // 默认选中确诊时间
+                this.svg.select('g[data-sortKey=qzDate]')
+                    .dispatch('click')
             },
             initTimeCircle(type) {
                 const gapTimeArr = _.chain(TrackJSON)
@@ -511,6 +515,7 @@
                     .enter()
                     .append('g')
                     .classed('sunBurstArc', true)
+                    .attr('data-sortKey', d => d.data.sortkey)
                     .on('click', function(d) {
                         const {sortkey} = d.data;
                         const arc = d3.select(this)
@@ -525,7 +530,7 @@
                                 .classed('arc-none', true)
                             arcBigger.classed('arc-none', false)
                             arc.classed('arc-none', true)
-                            _this.initTimeCircle(sortkey)
+                            _this.initTimeCircle(sortkey === 'qzDate' ? undefined : sortkey)
                         } else {
                             arcG.selectAll('path.normal')
                                 .classed('arc-none', false)
@@ -533,6 +538,9 @@
                                 .classed('arc-none', true)
                             _this.initTimeCircle()
                         }
+                        // 重置选择的时间范围
+                        _this.timeRange = [..._this.TIME_RANGE]
+                        _this.selectType()
                     })
 
 
@@ -541,7 +549,7 @@
                     .attr("d", arc)
                     .attr('stroke','none')
                     .classed('normal', true)
-                    .classed('arc-none', d => d.data.sortkey === 'qzDate')
+                    .classed('arc-none', false)
                     
 
                 arcG.append('path')
@@ -549,7 +557,7 @@
                     .attr("d", arcBigger)
                     .attr('stroke','none')
                     .classed('bigger', true)
-                    .classed('arc-none', d => d.data.sortkey !== 'qzDate')
+                    .classed('arc-none', true)
                     
                 
                 const text = arcG.append("text")
@@ -914,8 +922,17 @@
                         name: d.name,
                         sortkey: d.name === '来源地(国外)' ? 'forignOrigin' : d.sortkey,
                     }))
+
+                    const dateRange = this.timeRange.join('~') === this.TIME_RANGE.join('~')
+                        ? []
+                        : [this.timeRange.map(d => {
+                            const date  = new Date(d)
+                            return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
+                            }).join('~')]
+                    
                     const filterObj = {
                         ...this.filterObj,
+                        qzDate: dateRange,
                     }
                     
                     _.chain(filterObj)
