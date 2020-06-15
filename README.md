@@ -1,5 +1,8 @@
 # 深圳疫情可视分析系统
 
+## 预览地址
+https://791106912.github.io/SZ-COVID-19/#/PC
+
 ## 1、安装Node环境
 https://www.runoob.com/nodejs/nodejs-install-setup.html
 
