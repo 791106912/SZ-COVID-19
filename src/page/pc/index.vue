@@ -23,7 +23,7 @@
                 </div>
             </Section>
             <Section
-                title="国内主要城市疫情数据对比"
+                title="国内主要城市新增确诊趋势"
                 class="right-map"
                 height="100%"
             >
