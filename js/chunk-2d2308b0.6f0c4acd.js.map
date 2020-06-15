@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./src/page/track/eventBus.js"],"names":["vue"],"mappings":"gHAAA,uBAEe,iBAAIA","file":"js/chunk-2d2308b0.6f0c4acd.js","sourcesContent":["import vue from 'vue'\n\nexport default new vue()"],"sourceRoot":""}
