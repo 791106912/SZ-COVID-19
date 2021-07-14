@@ -1,4 +1,4 @@
-# 深圳市疫情可视分析系统（ChinaVis2020挑战赛）
+# 深圳市疫情可视分析系统（ChinaVis2020挑战赛 一等奖）
 
 ## 预览地址
 https://791106912.github.io/SZ-COVID-19/#/PC
